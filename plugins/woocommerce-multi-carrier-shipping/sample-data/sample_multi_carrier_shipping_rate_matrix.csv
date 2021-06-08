@@ -1,0 +1,5 @@
+shipping_name,shipping_group,area_list,shipping_class,product_category,min_weight,max_weight,cost_based_on,fee,cost_per_unit,adjustment,shipping_companies,shipping_services
+DHL test rule 1,G1,1,any_shipping_class,any_product_category,0,0.1,weight,1.99,1,10,dhl,0
+DHL test rule 2,G2,1,any_shipping_class,any_product_category,0.1,0.2,weight,26.75,1,20,dhl,0
+DHL test rule 3,G3,1,any_shipping_class,any_product_category,0,0.1,weight,25.63,5,-15,dhl,G
+DHL test rule 3,G4,2,any_shipping_class,any_product_category,0.1,0.2,weight,40.65,10,-20,dhl,D

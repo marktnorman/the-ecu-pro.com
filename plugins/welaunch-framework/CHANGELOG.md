@@ -1,0 +1,48 @@
+# Changelog
+======
+1.0.7
+======
+- NEW:	Added shop look & dark pattern plugins
+- NEW:	Restyled the weLaunch framework admin page
+		Added How to Videos (more coming soon)
+
+======
+1.0.6
+======
+- NEW:	Added ultimate pricing plugin
+- FIX:	Catalog mode plugin missing
+
+======
+1.0.5
+======
+- FIX:	CURL error
+- FIX:	Store Locator Plugin missing
+
+======
+1.0.4
+======
+- NEW:	Support for agency licenses
+- NEW:	Remove google font loading
+
+======
+1.0.3
+======
+- NEW:	Remove license option
+		PLEASE REMOVE and READD your store locator license
+
+======
+1.0.2
+======
+- FIX:	Updater now centralized in this plugin
+
+======
+1.0.1
+======
+- NEW:	Bundle support
+- FIX:	Licenses not showed after adding
+- FIX:	Removed more tracking stuff
+
+======
+1.0.0
+======
+- Inital release

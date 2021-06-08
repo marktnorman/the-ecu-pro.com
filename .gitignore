@@ -1,6 +1,5 @@
 .DS_Store
 .idea
-plugins/*
 cache
 backup-*
 upgrade
