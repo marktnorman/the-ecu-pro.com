@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="27" height="39.72" viewBox="0 0 27 39.72">
+  <g id="Group_111" data-name="Group 111" transform="translate(-27 -608.28)">
+    <text id="Home" transform="translate(29 645)" fill="#24437e" font-size="9" font-family="OpenSans-Bold, Open Sans" font-weight="700"><tspan x="0" y="0">Home</tspan></text>
+    <g id="housing" transform="translate(27 580.483)">
+      <g id="Group_93" data-name="Group 93" transform="translate(-0.001 27.798)">
+        <g id="Group_92" data-name="Group 92">
+          <path id="Path_166" data-name="Path 166" d="M26.712,37.3l-12.8-9.371a.7.7,0,0,0-.829,0L.287,37.3a.7.7,0,0,0,.829,1.132L13.5,29.368l12.384,9.067a.7.7,0,0,0,.829-1.132Z" transform="translate(0.001 -27.798)" fill="#24437e"/>
+        </g>
+      </g>
+      <g id="Group_95" data-name="Group 95" transform="translate(2.976 38.595)">
+        <g id="Group_94" data-name="Group 94">
+          <path id="Path_167" data-name="Path 167" d="M76.8,232.543a.7.7,0,0,0-.7.7v11.166H70.483v-6.1a3.508,3.508,0,1,0-7.016,0v6.1H57.855V233.245a.7.7,0,1,0-1.4,0v11.868a.7.7,0,0,0,.7.7h7.015a.7.7,0,0,0,.7-.647.53.53,0,0,0,0-.055v-6.8a2.1,2.1,0,0,1,4.21,0v6.8a.515.515,0,0,0,0,.054.7.7,0,0,0,.7.648H76.8a.7.7,0,0,0,.7-.7V233.245A.7.7,0,0,0,76.8,232.543Z" transform="translate(-56.452 -232.543)" fill="#24437e"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

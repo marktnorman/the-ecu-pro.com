@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="86" height="86" viewBox="0 0 86 86">
+  <g id="Group_114" data-name="Group 114" transform="translate(-140 -575)">
+    <rect id="Rectangle_685" data-name="Rectangle 685" width="86" height="86" rx="43" transform="translate(140 575)" fill="#fff"/>
+    <g id="Group_110" data-name="Group 110">
+      <g id="Group_67" data-name="Group 67" transform="translate(148.631 583.037)">
+        <rect id="Rectangle_177" data-name="Rectangle 177" width="67" height="67" rx="33.5" transform="translate(0.369 -0.037)" fill="#0188cc"/>
+      </g>
+      <g id="chat-bubble" transform="translate(164 548.623)">
+        <g id="Group_97" data-name="Group 97" transform="translate(0 50.758)">
+          <g id="Group_96" data-name="Group 96" transform="translate(0 0)">
+            <path id="Path_168" data-name="Path 168" d="M27.995,50.758H2.168A2.17,2.17,0,0,0,0,52.926V68.42a2.17,2.17,0,0,0,2.168,2.168H3.843v5.768A.908.908,0,0,0,5.393,77l6.41-6.41H13.09a.908.908,0,0,0,0-1.816s-1.706,0-1.724,0a.9.9,0,0,0-.581.263L5.659,74.164s0-4.541,0-4.565a.908.908,0,0,0-.9-.827H2.168a.352.352,0,0,1-.351-.351V52.926a.352.352,0,0,1,.351-.351H27.995a.352.352,0,0,1,.351.351V58.87a.908.908,0,0,0,1.816,0V52.926A2.17,2.17,0,0,0,27.995,50.758Z" transform="translate(0 -50.758)" fill="#fff"/>
+          </g>
+        </g>
+        <g id="Group_99" data-name="Group 99" transform="translate(16.086 61.867)">
+          <g id="Group_98" data-name="Group 98" transform="translate(0 0)">
+            <path id="Path_169" data-name="Path 169" d="M234.169,198.492H216.091a2.17,2.17,0,0,0-2.168,2.168v10.57a2.17,2.17,0,0,0,2.168,2.168h11.318l4.585,4.585a.908.908,0,0,0,1.55-.642V213.4h.624a2.17,2.17,0,0,0,2.168-2.168V200.66A2.17,2.17,0,0,0,234.169,198.492Zm.352,12.738a.352.352,0,0,1-.351.351h-1.532a.908.908,0,0,0-.9.838c0,.02,0,2.729,0,2.729l-3.3-3.3-.011-.01-.037-.033a.9.9,0,0,0-.6-.226H216.091a.352.352,0,0,1-.351-.351V200.66a.352.352,0,0,1,.351-.351h18.078a.352.352,0,0,1,.351.351Z" transform="translate(-213.923 -198.492)" fill="#fff"/>
+          </g>
+        </g>
+        <g id="Group_101" data-name="Group 101" transform="translate(26.385 68.412)">
+          <g id="Group_100" data-name="Group 100" transform="translate(0 0)">
+            <path id="Path_170" data-name="Path 170" d="M351.794,285.53a.908.908,0,1,0,.908.908A.909.909,0,0,0,351.794,285.53Z" transform="translate(-350.886 -285.53)" fill="#fff"/>
+          </g>
+        </g>
+        <g id="Group_103" data-name="Group 103" transform="translate(5.908 56.763)">
+          <g id="Group_102" data-name="Group 102" transform="translate(0 0)">
+            <path id="Path_171" data-name="Path 171" d="M96.01,130.611H79.48a.908.908,0,0,0,0,1.816H96.01a.908.908,0,0,0,0-1.816Z" transform="translate(-78.572 -130.611)" fill="#fff"/>
+          </g>
+        </g>
+        <g id="Group_105" data-name="Group 105" transform="translate(5.908 62.767)">
+          <g id="Group_104" data-name="Group 104" transform="translate(0 0)">
+            <path id="Path_172" data-name="Path 172" d="M85.753,210.465H79.48a.908.908,0,0,0,0,1.816h6.273a.908.908,0,0,0,0-1.816Z" transform="translate(-78.572 -210.465)" fill="#fff"/>
+          </g>
+        </g>
+        <g id="Group_107" data-name="Group 107" transform="translate(22.165 68.412)">
+          <g id="Group_106" data-name="Group 106" transform="translate(0 0)">
+            <path id="Path_173" data-name="Path 173" d="M295.667,285.53a.908.908,0,1,0,.908.908A.909.909,0,0,0,295.667,285.53Z" transform="translate(-294.759 -285.53)" fill="#fff"/>
+          </g>
+        </g>
+        <g id="Group_109" data-name="Group 109" transform="translate(30.605 68.412)">
+          <g id="Group_108" data-name="Group 108" transform="translate(0 0)">
+            <path id="Path_174" data-name="Path 174" d="M407.909,285.53a.908.908,0,1,0,.908.908A.909.909,0,0,0,407.909,285.53Z" transform="translate(-407.001 -285.53)" fill="#fff"/>
+          </g>
+        </g>
+      </g>
+      <text id="Chat" transform="translate(172 640)" fill="#fff" font-size="9" font-family="OpenSans-Bold, Open Sans" font-weight="700"><tspan x="0" y="0">Chat</tspan></text>
+    </g>
+  </g>
+</svg>

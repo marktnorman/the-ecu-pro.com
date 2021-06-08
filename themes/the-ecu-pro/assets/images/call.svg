@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="86" height="86" viewBox="0 0 86 86">
+  <g id="Group_113" data-name="Group 113" transform="translate(-140 -575)">
+    <rect id="Rectangle_685" data-name="Rectangle 685" width="86" height="86" rx="43" transform="translate(140 575)" fill="#fff"/>
+    <g id="Group_67" data-name="Group 67" transform="translate(148.631 583.037)">
+      <rect id="Rectangle_177" data-name="Rectangle 177" width="67" height="67" rx="33.5" transform="translate(0.369 -0.037)" fill="#0188cc"/>
+      <g id="Group_64" data-name="Group 64" transform="translate(19.491 20.377)">
+        <path id="Icon_feather-phone-call" data-name="Icon feather-phone-call" d="M20.15,6.75a6.563,6.563,0,0,1,5.185,5.185M20.15,1.5A11.813,11.813,0,0,1,30.585,11.922M29.273,22.4v3.938a2.625,2.625,0,0,1-2.861,2.625,25.976,25.976,0,0,1-11.328-4.03,25.6,25.6,0,0,1-7.876-7.876,25.976,25.976,0,0,1-4.03-11.38A2.625,2.625,0,0,1,5.791,2.813H9.728A2.625,2.625,0,0,1,12.353,5.07a16.853,16.853,0,0,0,.919,3.688,2.625,2.625,0,0,1-.591,2.77L11.015,13.2a21,21,0,0,0,7.876,7.876L20.557,19.4a2.625,2.625,0,0,1,2.77-.591,16.854,16.854,0,0,0,3.688.919A2.625,2.625,0,0,1,29.273,22.4Z" transform="translate(-3.168 -1.5)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      </g>
+    </g>
+  </g>
+</svg>

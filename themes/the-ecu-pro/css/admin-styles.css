@@ -1,0 +1,12 @@
+.welaunch-container .welaunch-group-tab .welaunch-section-desc,
+#menu-tools ul li:last-child,
+#menu-posts-viwec_template ul li:nth-child(5),
+#menu-posts-viwec_template ul li:last-child,
+#the-list tr[data-slug="woocommerce-email-template-customizer"],
+#the-list tr[data-slug="advanced-custom-fields-pro"],
+#the-list tr[data-slug="mmenu-app-look-alike-menus"],
+#the-list tr[data-slug="welaunch-framework"],
+#the-list tr[data-slug="woocommerce-single-variations"],
+#toplevel_page_mmenu {
+    display: none !important;
+}
