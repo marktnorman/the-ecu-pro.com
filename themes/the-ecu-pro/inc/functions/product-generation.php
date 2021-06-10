@@ -1,10 +1,10 @@
 <?php
 
 //Schedule an action if it's not already scheduled
-if (!wp_next_scheduled('generate_products_hook')) {
+//if (!wp_next_scheduled('generate_products_hook')) {
     //wp_schedule_event(time(), 'every_3_minutes', 'generate_products_hook');
     //wp_schedule_event(time(), 'daily', 'generate_products_hook');
-}
+//}
 
 //add_action('generate_products_hook', 'generateProductContent');
 
@@ -57,7 +57,7 @@ function generateProductContent()
             $wpdb->insert(
                 'wp_missing_image_names',
                 array(
-                    'row_id'     => $product->product_id,
+                    'row_id'     => $product->row_id,
                     'image_name' => $product->product_image_2
                 )
             );
@@ -73,7 +73,7 @@ function generateProductContent()
             $wpdb->insert(
                 'wp_missing_image_names',
                 array(
-                    'row_id'     => $product->product_id,
+                    'row_id'     => $product->row_id,
                     'image_name' => $product->product_image_3
                 )
             );
@@ -160,7 +160,7 @@ function generateProductContent()
             $wpdb->insert(
                 'wp_missing_image_names',
                 array(
-                    'row_id'     => $product->product_id,
+                    'row_id'     => $product->row_id,
                     'image_name' => $product->product_image_1
                 )
             );
@@ -320,7 +320,7 @@ function generateProductContent()
         $product_insert_status = $wpdb->update(
             $products_table,
             array('product_created' => 1),
-            array('product_id' => $product->product_id)
+            array('product_sku' => $product->product_sku)
         );
 
         if ($product_insert_status) {
