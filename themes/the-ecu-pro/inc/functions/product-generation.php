@@ -6,7 +6,7 @@ if (!wp_next_scheduled('generate_products_hook')) {
     //wp_schedule_event(time(), 'daily', 'generate_products_hook');
 }
 
-//add_action('generate_products_hook', 'generateProductContent');
+add_action('generate_products_hook', 'generateProductContent');
 
 /**
  * generateProductContent
