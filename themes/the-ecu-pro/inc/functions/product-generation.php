@@ -1,12 +1,12 @@
 <?php
 
 //Schedule an action if it's not already scheduled
-if (!wp_next_scheduled('generate_products_hook')) {
-    wp_schedule_event(time(), 'every_3_minutes', 'generate_products_hook');
+//if (!wp_next_scheduled('generate_products_hook')) {
+    //wp_schedule_event(time(), 'every_3_minutes', 'generate_products_hook');
     //wp_schedule_event(time(), 'daily', 'generate_products_hook');
-}
+//}
 
-add_action('generate_products_hook', 'generateProductContent');
+//add_action('generate_products_hook', 'generateProductContent');
 
 /**
  * generateProductContent
