@@ -2713,6 +2713,7 @@ h2.homepage-section-title::after {
 
 .homepage-section-outer .col-lg-6.second {
     max-width: 47.5%;
+    margin-top: -100px;
 }
 
 .youtube-video-container iframe {
@@ -2765,9 +2766,9 @@ li.cat-item.cat-item-15 {
 
 .featured-product-container img {
     vertical-align: top;
-    margin-top: -100px;
     margin-right: 50px;
     width: 100%;
+    display: inline-block;
 }
 
 .products-inner li img {

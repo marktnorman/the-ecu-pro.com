@@ -279,56 +279,6 @@
 </div>
 
 <div class="page-wrapper">
-
-    <?php if (!is_front_page()) : ?>
-        <section class="page-top page-header-6">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 clearfix">
-                        <div class="breadcrumbs-wrap pt-left">
-                            <?php
-
-                            // use yoast breadcrumbs if enabled
-                            if (function_exists('yoast_breadcrumb')) {
-                                $yoast_breadcrumbs = yoast_breadcrumb('', '', false);
-                                if ($yoast_breadcrumbs) {
-                                    return $yoast_breadcrumbs;
-                                }
-                            }
-
-                            ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    <?php endif; ?>
-
-    <?php if (is_product()) { ?>
-        <div class="align-items-center">
-            <ul>
-                <li>
-                    <div class="services-icon">
-                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/car.png' ?>"/>
-                    </div>
-                    <h3>FREE FEDEX<br/>SHIPPING</h3>
-                </li>
-                <li>
-                    <div class="services-icon">
-                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/warranty.png' ?>"/>
-                    </div>
-                    <h3>1 YEAR<br/>WARRANTY</h3>
-                </li>
-                <li>
-                    <div class="services-icon">
-                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/secure.png' ?>"/>
-                    </div>
-                    <h3>SAFE AND SECURE<br/>SHOPPING</h3>
-                </li>
-            </ul>
-        </div>
-    <?php } ?>
-
     <div id="main" class="column1 boxed no-breadcrumbs"><!-- main -->
 
         <?php
