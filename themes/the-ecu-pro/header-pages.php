@@ -293,10 +293,17 @@
             $post->ID
         );
 
+        if (wp_is_mobile()){
+            $hero_url = get_field(
+                "mobile_hero_bg_image",
+                $post->ID
+            );
+        } else {
+            $hero_url = wp_get_attachment_url(get_post_thumbnail_id($post->ID));
+        }
+
         if ($hero_top_element) { ?>
-            <div id="home-background-image" style="background: url('<?php echo wp_get_attachment_url(
-                get_post_thumbnail_id($post->ID)
-            ); ?>') no-repeat center center;" class="">
+            <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;" class="">
                 <div class="ecu-filter-wrapper">
                     <div id="ecu-mmy-filter-home-decorator"></div>
                     <?php
