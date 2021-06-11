@@ -348,8 +348,10 @@
                 "mobile_hero_bg_image",
                 $post->ID
             );
+            $hero_url = !empty($hero_url) ? $hero_url : '/wp-content/uploads/2021/06/hero-bg-mobile.png';
         } else {
             $hero_url = wp_get_attachment_url(get_post_thumbnail_id($post->ID));
+            $hero_url = !empty($hero_url) ? $hero_url : '/wp-content/uploads/2021/06/hero-bg.png';
         }
 
         if ($hero_top_element) { ?>
