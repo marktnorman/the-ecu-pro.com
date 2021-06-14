@@ -716,8 +716,10 @@
                     $('.entry-summary .tabs').css('display', 'flex');
                     $('ul.cta-container').css('display', 'none');
 
+                    let container_height = $('.entry-summary .tabs').outerHeight(true)
+
                     $('html, body').animate({
-                        scrollTop: $('#tabs-main-container').offset().top
+                        scrollTop: $('#below-tabs-container').offset().top - container_height
                     }, 2000);
                 }
             });

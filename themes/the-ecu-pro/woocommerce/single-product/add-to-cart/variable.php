@@ -153,6 +153,7 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
         </div>
 
     </div>
+    <div id="below-tabs-container"></div>
     </form>
 
     <div id="video-popup-container-overlay">
