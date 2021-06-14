@@ -68,7 +68,7 @@ $show_ctvnf_form_with_error = $tecup_form_error && isset($_POST['which-form']) &
             if (!form_status) {
                 ctvnfFormCont.classList.add('is-open')
             } else {
-                $(ctvnfFormContSkip).trigger("click");
+                jQuery('.ctvnf-skip').trigger("click");
             }
         })
     })
