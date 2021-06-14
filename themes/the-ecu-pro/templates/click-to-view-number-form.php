@@ -67,9 +67,15 @@ $show_ctvnf_form_with_error = $tecup_form_error && isset($_POST['which-form']) &
             e.preventDefault()
 
             if (!form_status) {
-                ctvnfFormCont.classList.add('is-open')
+                ctvnfFormCont.classList.add('is-open');
             } else {
-                jQuery(ctvnfFormContSkip).trigger("click");
+                ctvnfFormContSm.classList.add('is-open');
+                ctvnfNumber.forEach(numberSlot => {
+                    numberSlot.innerText = '+1-888-723-2080'
+                })
+                ctvnfMsg.forEach(msgSlot => {
+                    msgSlot.remove()
+                })
             }
         })
     })
