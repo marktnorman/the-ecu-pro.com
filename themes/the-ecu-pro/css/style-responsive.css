@@ -622,7 +622,7 @@
         border-color: #d2322d !important;
     }
 
-    .home #ecu-mmy-filter-home-wrapper.ecu-mmy-filter-home {
+    .page-template #ecu-mmy-filter-home-wrapper.ecu-mmy-filter-home {
         right: unset !important;
         top: unset !important;
         bottom: -389px;
