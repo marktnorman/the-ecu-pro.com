@@ -389,6 +389,10 @@
 
 @media only screen and (max-width: 790px) {
 
+    .entry-summary .tabs .tab-2 div.outer-container.first {
+        padding: 20px 20px 70px 20px !important;
+    }
+
     .woocommerce div.product .woocommerce-tabs ul.tabs {
         margin: 0 auto 20px auto;
     }
