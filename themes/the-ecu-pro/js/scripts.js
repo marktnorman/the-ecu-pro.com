@@ -717,7 +717,7 @@
                     $('ul.cta-container').css('display', 'none');
 
                     $('html, body').animate({
-                        scrollTop: $('#below-tabs-container').offset().top -  - $(window).height()
+                        scrollTop: $('#below-tabs-container').offset().top - $(window).height()
                     }, 2000);
                 }
             });
