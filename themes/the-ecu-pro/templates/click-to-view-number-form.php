@@ -66,13 +66,10 @@ $show_ctvnf_form_with_error = $tecup_form_error && isset($_POST['which-form']) &
         toggle.addEventListener('click', e => {
             e.preventDefault()
 
-            console.log(form_status);
-            console.log(!form_status);
-
             if (!form_status) {
                 ctvnfFormCont.classList.add('is-open')
             } else {
-                jQuery('.ctvnf-skip').trigger("click");
+                jQuery(ctvnfFormContSkip).trigger("click");
             }
         })
     })
