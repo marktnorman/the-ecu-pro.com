@@ -3437,7 +3437,7 @@ ul.contact-info li a:hover {
     color: #224180 !important;
 }
 
-.page-top .yoast-breadcrumbs, .page-top .breadcrumbs-wrap .woocommerce{
+.page-top .yoast-breadcrumbs, .page-top .breadcrumbs-wrap .woocommerce {
     padding-top: 20px;
 }
 
@@ -3563,7 +3563,7 @@ body.home .no-breadcrumbs .main-content {
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0,0,0,.8);
+    background: rgba(0, 0, 0, .8);
     display: none;
     z-index: 9999;
 }
@@ -5197,14 +5197,14 @@ a.ecu-repair-request:hover {
     padding: 0;
 }
 
-.page-top .breadcrumbs-wrap .woocommerce-MyAccount-navigation ul li{
+.page-top .breadcrumbs-wrap .woocommerce-MyAccount-navigation ul li {
     margin: 0;
     padding: 0;
     display: block;
     position: relative;
 }
 
-.page-top .breadcrumbs-wrap .woocommerce-MyAccount-navigation ul li a{
+.page-top .breadcrumbs-wrap .woocommerce-MyAccount-navigation ul li a {
     transition: background 0.1s;
     padding: 10px 0 8px 25px;
     display: block;
@@ -5235,7 +5235,7 @@ a.ecu-repair-request:hover {
     position: relative;
 }
 
-.woocommerce-account .woocommerce-MyAccount-content a{
+.woocommerce-account .woocommerce-MyAccount-content a {
     color: #d03433 !important;
 }
 
@@ -5276,7 +5276,7 @@ a.ecu-repair-request:hover {
     padding: 0;
 }
 
-.woocommerce-account .woocommerce .woocommerce-MyAccount-content .woocommerce-address-fields button.button{
+.woocommerce-account .woocommerce .woocommerce-MyAccount-content .woocommerce-address-fields button.button {
     white-space: nowrap;
     color: #fff !important;
     background: #224180;
@@ -5423,7 +5423,7 @@ a.ecu-repair-request:hover {
     position: fixed;
     top: 0;
     left: 0;
-    background: rgba(0,0,0, .6);
+    background: rgba(0, 0, 0, .6);
     overflow: scroll;
     z-index: 10000; /* to get it above unnecessarily high z-index values elsewhere --> ¯\_(ツ)_/¯ */
 }
@@ -5463,3 +5463,6 @@ a.ecu-repair-request:hover {
     text-decoration: none;
 }
 
+.post-type-archive ul.products li:not(.woocommerce-single-variations-attribute-pa_variation) {
+    display: none !important;
+}
