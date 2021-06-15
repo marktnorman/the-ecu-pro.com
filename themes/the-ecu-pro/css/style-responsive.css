@@ -399,6 +399,11 @@
         padding-left: 0px !important;
     }
 
+    .homepage-section-outer .col-lg-12,
+    .homepage-section-outer .col-lg-6 {
+        padding: 0 !important;
+    }
+
     #video-popup-container {
         max-width: 100% !important;
         width: 100% !important;
