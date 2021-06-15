@@ -4039,11 +4039,6 @@ span.helper-text {
     margin-top: 10px;
 }
 
-#ecu-mmy-filter-home-wrapper.ecu-mmy-filter-home .blockUI.blockOverlay {
-    width: calc(100% - 20px) !important;
-    margin-left: 10px !important;
-}
-
 a.ecu-repair-request {
     color: #eee;
     text-decoration: underline;
