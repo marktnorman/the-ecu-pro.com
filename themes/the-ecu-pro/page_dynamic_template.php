@@ -49,6 +49,9 @@ get_header('pages');
 
                                     while (have_rows('dynamic_flexible_content')) : the_row();
 
+                                        $layout = get_row_layout();
+                                        var_dump($layout);
+
                                         switch ($loop_count) {
                                             case 1:
                                                 $how_it_works_title = get_sub_field(
