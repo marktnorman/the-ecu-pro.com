@@ -153,64 +153,86 @@ get_header('pages');
                                                     </div>
                                                 </div>
 
-                                                <div class="our-service-outer-container homepage-section-outer">
-                                                    <div class="our-service-outer-container-inner">
-                                                        <h2 class="homepage-section-title">Our service</h2>
-                                                        <div class="col-lg-12 white-bg">
-                                                            <div class="products-outer">
-                                                                <?php
+                                                <?php break;
+                                            case 'service_products_section':
 
-                                                                $products = wc_get_products(
-                                                                    [
-                                                                        'category'    => array('bmw'),
-                                                                        'numberposts' => '4'
-                                                                    ]
-                                                                );
+                                                $services_title = get_sub_field(
+                                                    'services_title'
+                                                );
+                                                $services_title         = !empty($services_title) ? $services_title : '';
 
-                                                                echo '<ul class="products-inner">';
+                                                $services_product_term_id = get_sub_field(
+                                                    'product_category'
+                                                );
+                                                $services_product_term_id         = !empty($services_product_term_id) ? $services_product_term_id : '';
 
-                                                                foreach ($products as $product) {
+                                                if (!empty($services_title) && !empty($services_product_term_id)) {
 
-                                                                    echo '<li>';
-
-                                                                    $post_id      = $product->get_id();
-                                                                    $content_post = wc_get_product($post_id); ?>
-                                                                    <a class="products-image-container"
-                                                                       href="<?php echo get_the_permalink(
-                                                                           $post_id
-                                                                       ); ?>"><?php echo get_the_post_thumbnail(
-                                                                            $post_id,
-                                                                            'medium'
-                                                                        ); ?></a>
-                                                                    <?php echo '<span class="tag">DME Testing Service DME Testing Service</span>';
-                                                                    echo '<h3>' . $content_post->get_title() . '</h3>';
-                                                                    echo '<span class="price">$' . $content_post->get_regular_price(
-                                                                        ) . '</span>';
-
-                                                                    ?>
-
-                                                                    <a class="products-permalink"
-                                                                       href="<?php echo get_the_permalink(
-                                                                           $post_id
-                                                                       ); ?>">View
-                                                                        service</a>
-
+                                                    ?>
+                                                    <div class="our-service-outer-container homepage-section-outer">
+                                                        <div class="our-service-outer-container-inner">
+                                                            <h2 class="homepage-section-title">$services_title</h2>
+                                                            <div class="col-lg-12 white-bg">
+                                                                <div class="products-outer">
                                                                     <?php
 
-                                                                    echo '</li>';
+                                                                    $term = get_term( $services_product_term_id, 'product_cat' );
+                                                                    $slug = $term->slug;
 
-                                                                }
+                                                                    $products = wc_get_products(
+                                                                        [
+                                                                            'category'    => array($slug),
+                                                                            'numberposts' => '4'
+                                                                        ]
+                                                                    );
 
-                                                                echo '</ul>';
+                                                                    echo '<ul class="products-inner">';
 
-                                                                ?>
+                                                                    foreach ($products as $product) {
+
+                                                                        echo '<li>';
+
+                                                                        $post_id      = $product->get_id();
+                                                                        $content_post = wc_get_product($post_id); ?>
+                                                                        <a class="products-image-container"
+                                                                           href="<?php echo get_the_permalink(
+                                                                               $post_id
+                                                                           ); ?>"><?php echo get_the_post_thumbnail(
+                                                                                $post_id,
+                                                                                'medium'
+                                                                            ); ?></a>
+                                                                        <?php echo '<span class="tag">DME Testing Service DME Testing Service</span>';
+                                                                        echo '<h3>' . $content_post->get_title() . '</h3>';
+                                                                        echo '<span class="price">$' . $content_post->get_regular_price(
+                                                                            ) . '</span>';
+
+                                                                        ?>
+
+                                                                        <a class="products-permalink"
+                                                                           href="<?php echo get_the_permalink(
+                                                                               $post_id
+                                                                           ); ?>">View
+                                                                            service</a>
+
+                                                                        <?php
+
+                                                                        echo '</li>';
+
+                                                                    }
+
+                                                                    echo '</ul>';
+
+                                                                    ?>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                    <?php
 
-                                                <?php break;
-                                            case 'more_info_section':
+                                                }
+
+                                                break;
+                                                case 'more_info_section':
 
                                                 $info_title = get_sub_field(
                                                     'more_info_title'
@@ -258,7 +280,6 @@ get_header('pages');
                                 endif;
 
                                 ?>
-
 
                             </div>
                         </article>
