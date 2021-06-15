@@ -45,15 +45,13 @@ get_header('pages');
 
                                 if (have_rows('dynamic_flexible_content')):
 
-                                    $loop_count = 1;
-
                                     while (have_rows('dynamic_flexible_content')) : the_row();
 
-                                        $layout = get_row_layout();
-                                        var_dump($layout);
+                                        // Grab the current layout in loop
+                                        $layout                     = get_row_layout();
 
-                                        switch ($loop_count) {
-                                            case 1:
+                                        switch ($layout) {
+                                            case 'how_it_works_section':
                                                 $how_it_works_title = get_sub_field(
                                                     'how_it_works_title'
                                                 );
@@ -111,11 +109,11 @@ get_header('pages');
                                                 </div>
 
                                                 <?php break;
-                                            case 2:
+                                            case 'recommended_service_section':
                                                 $recommended_title = get_sub_field(
                                                     'recommended_service_title'
                                                 );
-                                                $recommended_title = !empty($recommended_title) ? $recommended_title : '';
+                                                $recommended_title  = !empty($recommended_title) ? $recommended_title : '';
 
                                                 $recommended_body = get_sub_field(
                                                     'recommended_service_body'
@@ -212,12 +210,12 @@ get_header('pages');
                                                 </div>
 
                                                 <?php break;
-                                            case 3:
+                                            case 'more_info_section':
 
                                                 $info_title = get_sub_field(
                                                     'more_info_title'
                                                 );
-                                                $info_title = !empty($info_title) ? $info_title : '';
+                                                $info_title         = !empty($info_title) ? $info_title : '';
 
                                                 $info_upper_body = get_sub_field(
                                                     'more_info_upper_body'
@@ -255,8 +253,6 @@ get_header('pages');
 
                                                 break;
                                         }
-
-                                        $loop_count++;
 
                                     endwhile;
                                 endif;
