@@ -159,12 +159,12 @@ get_header('pages');
                                                 $services_title = get_sub_field(
                                                     'services_title'
                                                 );
-                                                $services_title         = !empty($services_title) ? $services_title : '';
+                                                $services_title     = !empty($services_title) ? $services_title : '';
 
                                                 $services_product_term_id = get_sub_field(
                                                     'product_category'
                                                 );
-                                                $services_product_term_id         = !empty($services_product_term_id) ? $services_product_term_id : '';
+                                                $services_product_term_id = !empty($services_product_term_id) ? $services_product_term_id : '';
 
                                                 if (!empty($services_title) && !empty($services_product_term_id)) {
 
@@ -176,7 +176,10 @@ get_header('pages');
                                                                 <div class="products-outer">
                                                                     <?php
 
-                                                                    $term = get_term( $services_product_term_id, 'product_cat' );
+                                                                    $term = get_term(
+                                                                        $services_product_term_id,
+                                                                        'product_cat'
+                                                                    );
                                                                     $slug = $term->slug;
 
                                                                     $products = wc_get_products(
@@ -202,10 +205,12 @@ get_header('pages');
                                                                                 'medium'
                                                                             ); ?></a>
                                                                         <?php echo '<span class="tag">DME Testing Service DME Testing Service</span>';
-                                                                        echo '<h3>' . $content_post->get_title() . '</h3>';
-                                                                        echo '<span class="price">$' . $content_post->get_regular_price(
-                                                                            ) . '</span>';
-
+                                                                        echo '<h3>' . $content_post->get_title(
+                                                                            ) . '</h3>';
+                                                                        if (!empty($content_post->get_price())) {
+                                                                            echo '<span class="price">$' . $content_post->get_price(
+                                                                                ) . '</span>';
+                                                                        }
                                                                         ?>
 
                                                                         <a class="products-permalink"
@@ -232,7 +237,7 @@ get_header('pages');
                                                 }
 
                                                 break;
-                                                case 'more_info_section':
+                                            case 'more_info_section':
 
                                                 $info_title = get_sub_field(
                                                     'more_info_title'
