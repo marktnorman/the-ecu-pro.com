@@ -140,7 +140,7 @@ get_header('pages');
                                                                 <img src="<?php echo $image_url; ?>"
                                                                      data-spai="1"
                                                                      class="attachment-medium size-medium wp-post-image"
-                                                                     alt="ECU Testing Service" /><span
+                                                                     alt="ECU Testing Service"/><span
                                                                         class="tag"><?php echo 'Testing Service'; ?></span>
                                                                 <h3><?php echo $recommended_product_object->post_title; ?></h3>
                                                                 <span class="price">$99</span>
@@ -231,20 +231,26 @@ get_header('pages');
                                                 );
                                                 $info_image_url = !empty($info_image_url) ? $info_image_url : '';
 
-                                                ?>
-                                                <div class="more-info-outer-container homepage-section-outer">
-                                                    <h2 class="homepage-section-title"><?php echo $info_title; ?></h2>
-                                                    <div class="col-lg-12">
-                                                        <p><?php echo $info_upper_body; ?></p>
-                                                        <div class="col-4">
-                                                            <img src="<?php echo $info_image_url; ?>"/>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <?php echo $info_bottom_body; ?>
+                                                if (!empty($info_title) && !empty($info_upper_body) && !empty($info_image_url) && !empty($info_bottom_body)) {
+
+                                                    ?>
+                                                    <div class="more-info-outer-container homepage-section-outer">
+                                                        <h2 class="homepage-section-title"><?php echo $info_title; ?></h2>
+                                                        <div class="col-lg-12">
+                                                            <p><?php echo $info_upper_body; ?></p>
+                                                            <div class="col-4">
+                                                                <img src="<?php echo $info_image_url; ?>"/>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <?php echo $info_bottom_body; ?>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <?php break;
+                                                    <?php
+
+                                                }
+
+                                                break;
                                         }
 
                                         $loop_count++;
