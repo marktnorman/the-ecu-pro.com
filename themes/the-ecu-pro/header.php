@@ -317,7 +317,7 @@
                     <div class="services-icon">
                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/warranty.png' ?>"/>
                     </div>
-                    <h3>1 YEAR<br/>WARRANTY</h3>
+                    <h3>6 MONTH<br/>WARRANTY</h3>
                 </li>
                 <li>
                     <div class="services-icon">
@@ -343,7 +343,7 @@
             $post->ID
         );
 
-        if (wp_is_mobile()){
+        if (wp_is_mobile()) {
             $hero_url = get_field(
                 "mobile_hero_bg_image",
                 $post->ID
@@ -355,7 +355,8 @@
         }
 
         if ($hero_top_element) { ?>
-            <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;" class="">
+            <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;"
+                 class="">
                 <div class="ecu-filter-wrapper">
                     <div id="ecu-mmy-filter-home-decorator"></div>
                     <?php
@@ -386,7 +387,7 @@
                         <div class="services-icon">
                             <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/warranty.png' ?>"/>
                         </div>
-                        <h3>1 YEAR<br/>WARRANTY</h3>
+                        <h3>6 MONTH<br/>WARRANTY</h3>
                     </li>
                     <li>
                         <div class="services-icon">
