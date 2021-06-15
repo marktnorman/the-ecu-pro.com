@@ -1811,6 +1811,12 @@ ul.cta-container li.service-button a {
     box-sizing: border-box;
 }
 
+.page-wrapper .blockUi,
+.page-wrapper .blockOverlay,
+.page-wrapper .blockMessage {
+    background: transparent !important;
+}
+
 .entry-summary .tabs .tab-2:nth-child(2) [type="radio"] + div {
     margin-left: -100%;
 }

@@ -457,7 +457,7 @@
             $('.cta-buttons-product .continue-button.added').click(function (e) {
                 e.preventDefault();
 
-                let form_identifier = "form#woocommerce-checkout";
+                let form_identifier = "form.wpcf7-form";
 
                 $(form_identifier).validate({
                     rules: {
