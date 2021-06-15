@@ -171,7 +171,7 @@ get_header('pages');
                                                     ?>
                                                     <div class="our-service-outer-container homepage-section-outer">
                                                         <div class="our-service-outer-container-inner">
-                                                            <h2 class="homepage-section-title">$services_title</h2>
+                                                            <h2 class="homepage-section-title"><?php echo $services_title; ?></h2>
                                                             <div class="col-lg-12 white-bg">
                                                                 <div class="products-outer">
                                                                     <?php
