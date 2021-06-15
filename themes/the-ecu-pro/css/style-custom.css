@@ -3255,7 +3255,9 @@ ul.contact-info li a:hover {
 
 #footer .footer-bottom .container .footer-center {
     text-align: center !important;
-    font-size: 15px
+    font-size: 15px;
+    color: #fff;
+    line-height: 60px;
 }
 
 #footer .footer-bottom .container .footer-center .footer-payment-img {
@@ -3452,7 +3454,7 @@ ul.contact-info li a:hover {
 
 #footer .footer-bottom {
     background-color: #33332f;
-    padding: 10px 0;
+    padding: 5px 0 !important;
 }
 
 .contact-info [class^="porto-icon-"]:before, [class*=" porto-icon-"]:before {
