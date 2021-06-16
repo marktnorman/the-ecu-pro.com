@@ -3628,11 +3628,9 @@ a.video-informational-popup-trigger {
     text-indent: -9999px;
     height: 25px;
     display: inline-block;
-    margin: 0 0 0px 20px;
-    position: absolute;
-    top: 0px;
+    margin: 15px;
     background: url(../assets/images/info-icon.png) no-repeat center center;
-    background-size: 100%;
+    background-size: 25px;
 }
 
 .woocommerce div.product .woocommerce-tabs .woocommerce-Tabs-panel--description a.video-informational-popup-trigger {

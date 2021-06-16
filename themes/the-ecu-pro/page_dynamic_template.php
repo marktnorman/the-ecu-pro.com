@@ -11,7 +11,7 @@ get_header();
     <div id="main" class="column1 boxed no-breadcrumbs"><!-- main -->
         <div class="container">
             <div class="row main-content-wrap">
-                
+
                 <div id="content" role="main">
                     <article class="page type-page status-publish">
                         <div class="page-content">
