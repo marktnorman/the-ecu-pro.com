@@ -135,14 +135,6 @@
         right: 0;
     }
 
-    div.accordian-title::after {
-        width: 32%;
-    }
-
-    .wrap-3 div.accordian-title::after, .wrap-4 div.accordian-title::after {
-        width: 63%;
-    }
-
     #footer .col-lg-3 {
         padding: 0 10px;
     }
@@ -209,6 +201,11 @@
 
 @media screen and (max-width: 994px) {
 
+    h2.homepage-section-title::after,
+    div.accordian-title::after {
+        display: none !important;
+    }
+
     .woocommerce div.product .woocommerce-tabs ul.tabs li a {
         width: 100%;
         background: url(/wp-content/uploads/2021/05/angle-down.png) no-repeat center right;
@@ -235,10 +232,6 @@
     #content div.product div.images, .woocommerce #content div.product div.summary, .woocommerce div.product div.images, .woocommerce div.product div.summary, .woocommerce-page #content div.product div.images, .woocommerce-page #content div.product div.summary, .woocommerce-page div.product div.images, .woocommerce-page div.product div.summary {
         float: none;
         width: 100%;
-    }
-
-    h2.homepage-section-title::after {
-        width: 100px;
     }
 
     .porto-icon-phone-1:before {
@@ -359,8 +352,6 @@
 
     .steps-outer-container, .homepage-section-outer {
         max-width: 100%;
-        padding-right: 20px;
-        padding-left: 20px;
     }
 
     #footer .col-lg-3 {
@@ -439,17 +430,6 @@
         max-width: 100%;
     }
 
-    h2.homepage-section-title::after {
-        content: '';
-        width: 100px;
-        height: 2px;
-        background: #224180;
-        position: absolute;
-        top: 25px;
-        margin-left: 1rem;
-        right: 0;
-    }
-
     .rec-service-outer-container h2.homepage-section-title {
         max-width: 400px;
     }
@@ -464,24 +444,6 @@
 
     .post-type-archive .left-sidebar {
         display: none;
-    }
-
-    .wrap-1 div.accordian-title::after,
-    .wrap-2 div.accordian-title::after {
-        width: 65px !important;
-    }
-
-    div.accordian-title::after {
-        width: 165px !important;
-        right: 20px;
-    }
-
-    .wrap-3 div.accordian-title::after {
-        width: 74%;
-    }
-
-    .wrap-4 div.accordian-title::after {
-        width: 70%;
     }
 
     .how-it-works-outer-container .cross {
@@ -704,11 +666,6 @@
         width: 100%;
     }
 
-    div.accordian-title::after {
-        width: 50% !important;
-        right: 20px;
-    }
-
     .pre-footer-container {
         height: 700px;
         padding-top: 0px;
@@ -817,10 +774,6 @@
 }
 
 @media (max-width: 575px) {
-
-    div.accordian-title::after {
-        width: 25% !important;
-    }
 
     #custom-sticky-footer {
         display: flex !important;
