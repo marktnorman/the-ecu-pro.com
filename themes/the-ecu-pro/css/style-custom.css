@@ -2418,6 +2418,14 @@ input[type="text"]::placeholder {
     box-sizing: border-box;
 }
 
+#header .logo {
+    width: 140px !important;
+}
+
+#header .header-main .header-left {
+    padding: 12px 0 !important;
+}
+
 .woocommerce div.product form.cart .variations td {
     border: 0;
     vertical-align: top;
