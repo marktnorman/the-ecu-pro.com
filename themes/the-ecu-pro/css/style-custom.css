@@ -1443,7 +1443,7 @@ html #topcontrol {
     color: #224180;
     letter-spacing: -0.01em;
     font-weight: 600;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     font-family: Roboto;
     font-style: italic;
 }
@@ -2764,6 +2764,10 @@ h2.homepage-section-title::after {
     font-size: 18px;
     color: #000000;
     margin-bottom: 80px;
+}
+
+.homepage-section-outer.how-it-works-outer-container p {
+    margin-bottom:10px !important;
 }
 
 .accordian-title {

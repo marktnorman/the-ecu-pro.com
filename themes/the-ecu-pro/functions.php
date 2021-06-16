@@ -224,7 +224,7 @@ function child_theme_admin_styles()
 add_action('wp_enqueue_scripts', 'theecupro_enqueue_assets');
 function theecupro_enqueue_assets()
 {
-    $version = '10.4.6';
+    $version = '10.4.7';
 
     // CARRY ON
     wp_enqueue_style('theecupro-default-style', get_stylesheet_uri());
@@ -914,7 +914,7 @@ function advanced_search_query($query)
     return $query;
 }
 
-add_action('pre_get_posts', 'advanced_search_query', 1000);
+//add_action('pre_get_posts', 'advanced_search_query', 1000);
 
 // Replace add to cart button by a linked button to the product in Shop and archives pages
 add_filter('woocommerce_loop_add_to_cart_link', 'replace_loop_add_to_cart_button', 10, 2);
