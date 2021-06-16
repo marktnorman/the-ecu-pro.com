@@ -1457,10 +1457,12 @@ html #topcontrol {
 }
 
 .woocommerce div.product .price {
-    color: #3A89D8;
-    font-size: 25px;
-    font-family: 'Roboto';
-    font-weight: bold;
+    font-size: 20px;
+    line-height: 1.2;
+    color: #224180 !important;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+    font-family: Roboto;
     font-style: italic;
 }
 
