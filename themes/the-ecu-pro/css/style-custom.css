@@ -5468,3 +5468,31 @@ a.ecu-repair-request:hover {
 .post-type-archive ul.products li:not(.woocommerce-single-variations-attribute-pa_variation) {
     display: none !important;
 }
+
+#header #main-header-menu #menu-menu ul.sub-menu {
+    position: absolute;
+    z-index: 9999;
+    display: none;
+    min-width: 210px;
+    max-width: unset;
+    width: auto;
+}
+
+#header #main-header-menu #menu-menu li.menu-item-has-children:hover ul.sub-menu {
+    display: block !important;
+}
+
+#header #main-header-menu #menu-menu ul.sub-menu li a {
+    text-decoration: none !important;
+    color: #fff;
+    font-family: 'Roboto', serif !important;
+    font-size: 12px !important;
+    background: #224180 !important;
+    padding: 15px 10px 0 10px;
+    text-transform: uppercase;
+    line-height: initial !important;
+}
+
+#header #main-header-menu #menu-menu ul.sub-menu li a:last-child {
+    padding-bottom: 15px !important;
+}
