@@ -53,7 +53,7 @@
                 <h2 class="homepage-section-title"><?php echo $how_it_works_product_title; ?></h2>
                 <div class="col-lg-12">
                     <div class="col-lg-6 first">
-                        <p><?php echo $how_it_works_product_copy; ?></p>
+                        <?php echo $how_it_works_product_copy; ?>
                         <div class="accordion">
                             <?php echo $accordian_product_html; ?>
                         </div>
