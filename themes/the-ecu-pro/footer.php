@@ -3,99 +3,75 @@
 </div><!-- end main-content-wrap -->
 </div><!-- end main-content -->
 
-<?php if (is_product()) { ?>
-    <div class="how-it-works-outer-container homepage-section-outer">
-        <h2 class="homepage-section-title">How it works</h2>
-        <div class="col-lg-12">
-            <div class="col-lg-6 first">
-                <p>Electrical parts are tested prior to purchase and if returned, all units
-                    will be inspected for burnt components, physical damage and water
-                    damage.
-                    Returns will be processed in the order received and may have a greater
-                    handling time than order processing. The warranty shall be void if
-                    an item is returned with any signs of (a).</p>
-                <div class="accordion">
-                    <div class="wrap-1">
-                        <input type="radio" id="tab-1" name="tabs">
-                        <label for="tab-1">
-                            <div class="accordian-title">Shipping within the US</div>
-                            <div class="cross"></div>
-                        </label>
-                        <div class="content">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing
-                            elit. Mollitia autem quasi inventore unde nobis voluptatibus
-                            illum
-                            quae rerum laudantium minima, excepturi quis maiores. Eaque
-                            quae,
-                            nam delectus explicabo, deserunt ipsum!
-                        </div>
-                    </div>
-                    <div class="wrap-2">
-                        <input type="radio" id="tab-2" name="tabs">
-                        <label for="tab-2">
-                            <div class="accordian-title">International Shipping</div>
-                            <div class="cross"></div>
-                        </label>
-                        <div class="content">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing
-                            elit. Mollitia autem quasi inventore unde nobis voluptatibus
-                            illum
-                            quae rerum laudantium minima, excepturi quis maiores. Eaque
-                            quae,
-                            nam delectus explicabo, deserunt ipsum!
-                        </div>
-                    </div>
-                    <div class="wrap-3">
-                        <input type="radio" id="tab-3" name="tabs">
-                        <label for="tab-3">
-                            <div class="accordian-title">Returns</div>
-                            <div class="cross"></div>
-                        </label>
-                        <div class="content">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing
-                            elit. Mollitia autem quasi inventore unde nobis voluptatibus
-                            illum
-                            quae rerum laudantium minima, excepturi quis maiores. Eaque
-                            quae,
-                            nam delectus explicabo, deserunt ipsum!
-                        </div>
-                    </div>
-                    <div class="wrap-4">
-                        <input type="radio" id="tab-4" name="tabs">
-                        <label for="tab-4">
-                            <div class="accordian-title">Warranty</div>
-                            <div class="cross"></div>
-                        </label>
-                        <div class="content">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing
-                            elit. Mollitia autem quasi inventore unde nobis voluptatibus
-                            illum
-                            quae rerum laudantium minima, excepturi quis maiores. Eaque
-                            quae,
-                            nam delectus explicabo, deserunt ipsum!
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 second">
-                <div class="youtube-video-container">
-                    <?php
-                    global $post;
+<?php if (is_product()) {
 
-                    if (!empty(get_post_meta($post->ID, 'video_embed_url', true))) {
-                        $video_url = get_post_meta($post->ID, 'video_embed_url', true);
-                    } else {
-                        $video_url = 'https://www.youtube.com/embed/JESCRzDYdqE';
-                    }
-                    ?>
-                    <iframe width="560" height="315"
-                            src="<?php echo $video_url; ?>" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
+    global $product;
+    $id           = $product->get_id();
+    $product_type = get_post_meta($id, 'product_type', true);
+    $term_object  = get_term_by('name', $product_type, 'pa_product-type-data');
+
+    if (have_rows('how_ti_works_product_data', $term_object)):
+
+        while (have_rows('how_ti_works_product_data', $term_object)) : the_row();
+
+            $how_it_works_product_title = get_sub_field(
+                'how_it_works_product_title'
+            );
+            $how_it_works_product_title = !empty($how_it_works_product_title) ? $how_it_works_product_title : '';
+
+            $how_it_works_product_copy = get_sub_field(
+                'how_it_works_product_copy'
+            );
+            $how_it_works_product_copy = !empty($how_it_works_product_copy) ? $how_it_works_product_copy : '';
+
+            $how_it_works_product_video_url = get_sub_field(
+                'how_it_works_product_video_url'
+            );
+            $how_it_works_product_video_url = !empty($how_it_works_product_video_url) ? $how_it_works_product_video_url : 'https://www.youtube.com/embed/JESCRzDYdqE';
+
+            $accordian_product_items = get_sub_field('how_it_works_accordian_data');
+            $accordian_product_html  = '';
+            $counter                 = 1;
+            foreach ($accordian_product_items as $accordian_product_item) {
+
+                $accordian_title = $accordian_product_item['product_accordian_title'];
+                $accordian_copy  = $accordian_product_item['product_accordian_body'];
+
+                $accordian_product_html .= '<div class="wrap-' . $counter . '">';
+                $accordian_product_html .= '<input type="radio" id="tab-' . $counter . '" name="tabs">';
+                $accordian_product_html .= '<label for="tab-' . $counter . '">';
+                $accordian_product_html .= '<div class="accordian-title">' . $accordian_title . '</div>';
+                $accordian_product_html .= '<div class="cross"></div>';
+                $accordian_product_html .= '</label>';
+                $accordian_product_html .= '<div class="content">' . $accordian_copy . '</div>';
+                $accordian_product_html .= '</div>';
+
+                $counter++;
+            } ?>
+
+            <div class="how-it-works-outer-container homepage-section-outer">
+                <h2 class="homepage-section-title"><?php echo $how_it_works_product_title; ?></h2>
+                <div class="col-lg-12">
+                    <div class="col-lg-6 first">
+                        <p><?php echo $how_it_works_product_copy; ?></p>
+                        <div class="accordion">
+                            <?php echo $accordian_product_html; ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 second">
+                        <div class="youtube-video-container">
+                            <iframe width="560" height="315"
+                                    src="<?php echo $how_it_works_product_video_url; ?>"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        <?php
+        endwhile;
+    endif; ?>
 <?php } ?>
 
 <?php if (is_front_page()) { ?>
