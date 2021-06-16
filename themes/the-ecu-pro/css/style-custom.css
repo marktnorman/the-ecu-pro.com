@@ -1691,11 +1691,12 @@ ul.cta-container {
 
 ul.cta-container li {
     display: inline-block;
-    width: 48%;
+    width: 63%;
 }
 
 ul.cta-container li:first-child {
     margin-right: 2%;
+    width: 34%;
 }
 
 ul.cta-container li.single {
@@ -2399,6 +2400,22 @@ input[type="text"]::placeholder {
     background-repeat: no-repeat;
     background-position: left center;
     background-position-x: 30px !important;
+}
+
+.woocommerce div.product .cta-buttons-product a.contact-button {
+    color: #fff !important;
+    padding: 10px 0px;
+    background: #224180;
+    border-radius: 7px;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 34%;
+    margin-right: 0;
+    margin-bottom: 0;
+    display: inline-block;
+    text-align: center;
+    font-size: 12px;
+    box-sizing: border-box;
 }
 
 .woocommerce div.product form.cart .variations td {

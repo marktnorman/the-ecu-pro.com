@@ -502,8 +502,9 @@
     }
 
     .woocommerce div.product .cta-buttons-product {
-        padding: 0 20px;
+        padding: 0 10px;
         max-width: 100%;
+        margin-bottom: 10px;
     }
 
     .woocommerce div.product .cta-buttons-product a.call-me-back-button {
@@ -522,15 +523,19 @@
 
     .woocommerce div.product .cta-buttons-product a.continue-button {
         color: #fff !important;
-        padding: 10px 20px;
+        padding: 10px 0px;
         border-radius: 7px;
         font-weight: bold;
         text-transform: uppercase;
         display: inline-block;
         text-align: center;
         background-image: url(../assets/images/lock.png);
-        background-position-x: 25px !important;
-        width: 100%;
+        background-position-x: 11px !important;
+        width: 64%;
+        background-size: 10px;
+        background-position-y: 12px;
+        font-size: 12px;
+        box-sizing: border-box;
     }
 
     #order_review {

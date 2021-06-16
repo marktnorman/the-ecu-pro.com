@@ -149,6 +149,22 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
         </div>
 
         <div class="cta-buttons-product">
+            <?php
+
+            if (wp_is_mobile()) {
+                $date = new DateTime("now", new DateTimeZone('America/New_York'));
+
+                $currentTime = $date->format('H:i:s');
+                $currentTime = strtotime($currentTime);
+                $closingTime = strtotime('17:00:00');
+
+                if ($currentTime >= $closingTime) { ?>
+                    <a class="contact-button message-product-button" href="#">Message</a>
+                <?php } else { ?>
+                    <a class="contact-button" href="tel:+18887232080">Call us</a>
+                <?php }
+            }
+            ?>
             <a class="continue-button initial" href="#">Continue to checkout</a>
         </div>
 
@@ -159,7 +175,9 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
     <div id="video-popup-container-overlay">
         <div id="video-popup-container">
             <div id="close">x</div>
-            <iframe width="560" height="315" src="<?php echo $product_video_url; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+            <iframe width="560" height="315" src="<?php echo $product_video_url; ?>" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen=""></iframe>
         </div>
     </div>
 
