@@ -2778,11 +2778,7 @@ div.accordian-title::after {
     position: absolute;
     top: 50%;
     margin-left: 1rem;
-}
-
-.wrap-3 div.accordian-title::after,
-.wrap-4 div.accordian-title::after {
-    width: 80%;
+    right: 2%;
 }
 
 /*Custom CSS*/
