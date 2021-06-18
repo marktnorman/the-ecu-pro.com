@@ -159,12 +159,12 @@ get_header();
                                             );
                                             $services_title     = !empty($services_title) ? $services_title : '';
 
-                                            $services_product_term_id = get_sub_field(
-                                                'product_category'
+                                            $services_product_ids = get_sub_field(
+                                                'featured_products'
                                             );
-                                            $services_product_term_id = !empty($services_product_term_id) ? $services_product_term_id : '';
+                                            $services_product_ids = !empty($services_product_ids) ? $services_product_ids : '';
 
-                                            if (!empty($services_title) && !empty($services_product_term_id)) {
+                                            if (!empty($services_title) && !empty($services_product_ids)) {
 
                                                 ?>
                                                 <div class="our-service-outer-container homepage-section-outer">
@@ -174,15 +174,9 @@ get_header();
                                                             <div class="products-outer">
                                                                 <?php
 
-                                                                $term = get_term(
-                                                                    $services_product_term_id,
-                                                                    'product_cat'
-                                                                );
-                                                                $slug = $term->slug;
-
                                                                 $products = wc_get_products(
                                                                     [
-                                                                        'category'    => array($slug),
+                                                                        'include' => $services_product_ids,
                                                                         'numberposts' => '4'
                                                                     ]
                                                                 );
