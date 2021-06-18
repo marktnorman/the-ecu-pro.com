@@ -17,18 +17,7 @@
 </head>
 <body <?php body_class(); ?>>
 
-<?php
-
-global $post;
-$queried_object = get_queried_object_id();
-
-echo "<pre>";
-var_dump($post->ID);
-echo "</pre>";
-echo "<pre>";
-var_dump($queried_object);
-echo "</pre>";
-?>
+<?php $queried_object = get_queried_object_id(); ?>
 
 <div class="header-wrapper">
     <header id="header" class="header-separate header-1 sticky-menu-header">
@@ -346,24 +335,29 @@ echo "</pre>";
 
         $hero_top_element = get_field(
             "page_top_hero_element",
-            $post->ID
+            $queried_object
         );
 
         $services_top_element = get_field(
             "page_top_services_element",
-            $post->ID
+            $queried_object
         );
 
         if (wp_is_mobile()) {
             $hero_url = get_field(
                 "mobile_hero_bg_image",
-                $post->ID
+                $queried_object
             );
             $hero_url = !empty($hero_url) ? $hero_url : '/wp-content/uploads/2021/06/hero-bg-mobile.png';
         } else {
-            $hero_url = wp_get_attachment_url(get_post_thumbnail_id($post->ID));
+            $hero_url = wp_get_attachment_url(get_post_thumbnail_id($queried_object));
             $hero_url = !empty($hero_url) ? $hero_url : '/wp-content/uploads/2021/06/hero-bg.png';
         }
+
+        echo "<pre>";
+        var_dump($hero_top_element);
+        var_dump($hero_url);
+        echo "</pre>";
 
         if ($hero_top_element) { ?>
             <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;"
@@ -372,10 +366,10 @@ echo "</pre>";
                     <div id="ecu-mmy-filter-home-decorator"></div>
                     <?php
 
-                    $ecu_title = get_field("ecu_mmy_title", $post->ID);
+                    $ecu_title = get_field("ecu_mmy_title", $queried_object);
                     $ecu_title = !empty($ecu_title) ? $ecu_title : 'X5 DME Repairs';
 
-                    $ecu_desc = get_field("ecu_mmy_desc", $post->ID);
+                    $ecu_desc = get_field("ecu_mmy_desc", $queried_object);
                     $ecu_desc = !empty($ecu_desc) ? $ecu_desc : 'Select your vehicle';
 
                     echo do_shortcode(
