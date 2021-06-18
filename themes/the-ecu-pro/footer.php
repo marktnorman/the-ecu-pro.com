@@ -77,7 +77,7 @@
 
 <?php if (is_front_page()) { ?>
 
-    <div class="pre-footer-container">
+    <div class="pre-footer-container" style="display: none;">
         <div class="col-lg-12">
             <ul>
                 <li class="phone-container">

@@ -30,7 +30,7 @@ get_header();
                                     <li class="two">
                                         <img src="<?php echo get_stylesheet_directory_uri(
                                             ) . '/assets/images/Icon-awesome-bookmark.png' ?>"/>
-                                        <p>Book our express collection service</p>
+                                        <p>Send us your parts</p>
                                     </li>
                                     <li class="three">
                                         <img src="<?php echo get_stylesheet_directory_uri(
