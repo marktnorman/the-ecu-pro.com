@@ -353,7 +353,7 @@
         <div class="outer-parent-container">
             <div class="container">
                 <div class="row main-content-wrap">
-                    <?php if (is_product_category() || is_shop() || is_archive()) { ?>
+                    <?php if ((is_product_category() || is_shop() || is_archive()) && !wp_is_mobile()) { ?>
                     <div class="sidebar col-lg-3 left-sidebar">
                         <div class="sidebar-content">
                             <?php
