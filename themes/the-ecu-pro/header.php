@@ -354,6 +354,9 @@
             $hero_url = !empty($hero_url) ? $hero_url : '/wp-content/uploads/2021/06/hero-bg.png';
         }
 
+        var_dump($hero_top_element);
+        die();
+
         if ($hero_top_element) { ?>
             <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;"
                  class="">
