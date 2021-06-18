@@ -280,7 +280,7 @@
 
 <div class="page-wrapper">
 
-    <?php if (!is_front_page()) : ?>
+    <?php if (!is_front_page()) { ?>
         <section class="page-top page-header-6">
             <div class="container">
                 <div class="row">
@@ -302,7 +302,7 @@
                 </div>
             </div>
         </section>
-    <?php endif; ?>
+    <?php } ?>
 
     <?php if (is_product()) { ?>
         <div class="align-items-center">
@@ -333,6 +333,11 @@
 
         <?php
 
+        $hero_top_element = get_field(
+            "page_top_hero_element",
+            $post->ID
+        );
+
         $services_top_element = get_field(
             "page_top_services_element",
             $post->ID
@@ -349,7 +354,7 @@
             $hero_url = !empty($hero_url) ? $hero_url : '/wp-content/uploads/2021/06/hero-bg.png';
         }
 
-        if ($hero_url) { ?>
+        if ($hero_top_element) { ?>
             <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;"
                  class="">
                 <div class="ecu-filter-wrapper">

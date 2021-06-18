@@ -17,7 +17,7 @@
 
 defined('ABSPATH') || exit;
 
-get_header();
+get_header('primary');
 
 /**
  * Hook: woocommerce_before_main_content.

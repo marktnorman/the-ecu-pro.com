@@ -1,6 +1,6 @@
 <?php
 
-get_header(); ?>
+get_header('primary'); ?>
 
     <div id="content" class="no-content">
         <div class="container">
