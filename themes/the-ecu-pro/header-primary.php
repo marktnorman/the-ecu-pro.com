@@ -17,7 +17,18 @@
 </head>
 <body <?php body_class(); ?>>
 
-<?php global $post; ?>
+<?php
+
+global $post;
+$queried_object = get_queried_object_id();
+
+echo "<pre>";
+var_dump($post->ID);
+echo "</pre>";
+echo "<pre>";
+var_dump($queried_object);
+echo "</pre>";
+?>
 
 <div class="header-wrapper">
     <header id="header" class="header-separate header-1 sticky-menu-header">
