@@ -31,19 +31,11 @@ $variations_attr = function_exists('wc_esc_json') ? wc_esc_json($variations_json
 $product_type = get_post_meta($product->get_id(), 'product_type', true);
 $term_object  = get_term_by('name', $product_type, 'pa_product-type-data');
 
-$how_it_works_product_video_url = '';
-
-if (have_rows('how_ti_works_product_data', $term_object)):
-    while (have_rows('how_ti_works_product_data', $term_object)) : the_row();
-
-        $how_it_works_product_video_url = get_sub_field(
-            'how_it_works_product_video_url'
-        );
-
-    endwhile;
-endif;
-
-$how_it_works_product_video_url = !empty($how_it_works_product_video_url) ? $how_it_works_product_video_url : 'https://www.youtube.com/embed/JESCRzDYdqE';
+$product_video_url = get_field(
+    'video_embed_url',
+    $product->get_id()
+);
+$product_video_url = !empty($product_video_url) ? $product_video_url : 'https://www.youtube.com/embed/JESCRzDYdqE';
 
 do_action('woocommerce_before_add_to_cart_form'); ?>
 
@@ -188,7 +180,7 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
     <div id="video-popup-container-overlay">
         <div id="video-popup-container">
             <div id="close">x</div>
-            <iframe width="560" height="315" src="<?php echo $how_it_works_product_video_url; ?>" frameborder="0"
+            <iframe width="560" height="315" src="<?php echo $product_video_url; ?>" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen=""></iframe>
         </div>

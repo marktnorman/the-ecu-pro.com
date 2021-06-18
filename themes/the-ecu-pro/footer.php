@@ -10,6 +10,12 @@
     $product_type = get_post_meta($id, 'product_type', true);
     $term_object  = get_term_by('name', $product_type, 'pa_product-type-data');
 
+    $product_video_url = get_field(
+        'video_embed_url',
+        $id
+    );
+    $product_video_url = !empty($product_video_url) ? $product_video_url : 'https://www.youtube.com/embed/JESCRzDYdqE';
+
     if (have_rows('how_ti_works_product_data', $term_object)):
 
         while (have_rows('how_ti_works_product_data', $term_object)) : the_row();
@@ -23,11 +29,6 @@
                 'how_it_works_product_copy'
             );
             $how_it_works_product_copy = !empty($how_it_works_product_copy) ? $how_it_works_product_copy : '';
-
-            $how_it_works_product_video_url = get_sub_field(
-                'how_it_works_product_video_url'
-            );
-            $how_it_works_product_video_url = !empty($how_it_works_product_video_url) ? $how_it_works_product_video_url : 'https://www.youtube.com/embed/JESCRzDYdqE';
 
             $accordian_product_items = get_sub_field('how_it_works_accordian_data');
             $accordian_product_html  = '';
@@ -61,7 +62,7 @@
                     <div class="col-lg-6 second">
                         <div class="youtube-video-container">
                             <iframe width="560" height="315"
-                                    src="<?php echo $how_it_works_product_video_url; ?>"
+                                    src="<?php echo $product_video_url; ?>"
                                     frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen></iframe>
