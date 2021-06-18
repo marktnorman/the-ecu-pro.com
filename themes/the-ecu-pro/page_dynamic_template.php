@@ -5,7 +5,6 @@
  */
 
 ?>
-
     <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
     <head>
@@ -107,9 +106,9 @@
                                   class="searchform searchform-cats" role="search"
                                   wtx-context="33BF3DF1-8256-4006-9B74-F0D143CC8FF7">
                                 <div class="searchform-fields">
-                                <span class="text"><input name="s" type="text" value=""
-                                                          placeholder="Search ECU By Part Number" autocomplete="off"
-                                                          wtx-context="2D496482-E9B3-4959-8883-094627C44992"></span>
+                            <span class="text"><input name="s" type="text" value=""
+                                                      placeholder="Search ECU By Part Number" autocomplete="off"
+                                                      wtx-context="2D496482-E9B3-4959-8883-094627C44992"></span>
                                     <input type="hidden" name="post_type" value="product"
                                            wtx-context="DEBF0DCA-B3BF-45F4-872B-219449C3CBB3">
                                     <select name="category" id="product_cat" class="cat" tabindex="0"
@@ -138,8 +137,8 @@
                             ?>
                             <div id="mini-cart" class="mini-cart minicart-arrow-alt">
                                 <div class="cart-head">
-                            <span class="cart-icon"><i class="minicart-icon"></i><span
-                                        class="cart-items"><?php echo $_cart_qty; ?></span></span><span
+                        <span class="cart-icon"><i class="minicart-icon"></i><span
+                                    class="cart-items"><?php echo $_cart_qty; ?></span></span><span
                                             class="cart-items-text"><?php echo $_cart_qty; ?> items</span></div>
                                 <div class="cart-popup widget_shopping_cart">
                                     <div class="widget_shopping_cart_content">
@@ -215,9 +214,9 @@
                                   class="searchform searchform-cats" role="search"
                                   wtx-context="33BF3DF1-8256-4006-9B74-F0D143CC8FF7">
                                 <div class="searchform-fields">
-                            <span class="text"><input name="s" type="text" value=""
-                                                      placeholder="Search ECU By Part Number " autocomplete="off"
-                                                      wtx-context="2D496482-E9B3-4959-8883-094627C44992"></span>
+                        <span class="text"><input name="s" type="text" value=""
+                                                  placeholder="Search ECU By Part Number " autocomplete="off"
+                                                  wtx-context="2D496482-E9B3-4959-8883-094627C44992"></span>
                                     <input type="hidden" name="post_type" value="product"
                                            wtx-context="DEBF0DCA-B3BF-45F4-872B-219449C3CBB3">
                                     <select name="category" id="product_cat"
@@ -232,16 +231,16 @@
                                         <option class="level-0" value="mini">MINI</option>
                                     </select>
                                     <span class="button-wrap">
-          <button class="btn btn-special" title="Search" type="submit"><i
-                      class="fas fa-search"></i></button>
-        </span>
+      <button class="btn btn-special" title="Search" type="submit"><i
+                  class="fas fa-search"></i></button>
+    </span>
                                 </div>
                             </form>
                         </div>
                         <div id="mini-cart" class="mini-cart minicart-arrow-alt">
                             <div class="cart-head">
-                        <span class="cart-icon"><i class="minicart-icon"></i><span
-                                    class="cart-items">0</span></span><span class="cart-items-text">0 items</span>
+                    <span class="cart-icon"><i class="minicart-icon"></i><span
+                                class="cart-items">0</span></span><span class="cart-items-text">0 items</span>
                             </div>
                             <div class="cart-popup widget_shopping_cart">
                                 <div class="widget_shopping_cart_content">
@@ -363,7 +362,8 @@ if (wp_is_mobile()) {
 }
 
 if ($hero_top_element) { ?>
-    <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;" class="">
+    <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;"
+         class="">
         <div class="ecu-filter-wrapper">
             <div id="ecu-mmy-filter-home-decorator"></div>
             <?php
@@ -409,70 +409,7 @@ if ($services_top_element) { ?>
     <div class="outer-parent-container">
     <div class="container">
     <div class="row main-content-wrap">
-<?php if (is_product_category() || is_shop() || is_archive()) { ?>
-    <div class="sidebar col-lg-3 left-sidebar">
-        <div class="sidebar-content">
-            <div id="ecu-mmy-filter-footer-wrapper"
-                 class="ecu-mmy-filter-wrapper ecu-mmy-filter-footer">
-                <div class="ecu-wrapper">
-                    <div class="ecu-mmy-filter-title">
-                        <h3>Select Your</h3>
-                    </div>
-                    <div class="ecu-mmy-filter-desc">
-                    </div>
-                    <p>To view all our repair services</p>
-                    <div class="ecu-select-wrapper">
-                        <select class="ecu-mmy-filter-selector ecu-make" name="ecu-make"
-                                parent="ecu-mmy-filter-footer-wrapper"
-                                wtx-context="32DC183F-BEAC-4556-AD5C-BD9EC7D0ACB6">
-                            <option slug="" value="0">Select Make</option>
-                            <option slug="bmw" value="3920">BMW</option>
-                            <option slug="bmw-ecu-service" value="7886" style="display: none;">BMW ECU
-                                Service
-                            </option>
-                            <option slug="mini" value="8066">MINI</option>
-                            <option slug="mini-ecu-service" value="7929" style="display: none;">MINI ECU
-                                Service
-                            </option>
-                            <option slug="shop-by-ecu" value="7516">Shop by ECU</option>
-                        </select>
-                    </div>
-                    <div class="ecu-select-wrapper">
-                        <select class="ecu-mmy-filter-selector ecu-model" placeholder="Select Model"
-                                name="ecu-model" parent="ecu-mmy-filter-footer-wrapper"
-                                wtx-context="A561CBD8-C420-40AE-BF96-93463C26410D">
-                            <option slug="" value="0">Select Model</option>
-
-                        </select>
-                    </div>
-                    <div class="ecu-select-wrapper">
-                        <select class="ecu-mmy-filter-selector ecu-engine" name="ecu-engine"
-                                parent="ecu-mmy-filter-footer-wrapper"
-                                wtx-context="8245EF62-20C8-4306-86AF-DBE9848C3998">
-                            <option slug="" value="0">Select Engine</option>
-                        </select>
-                    </div>
-                    <div class="ecu-select-wrapper">
-                        <select class="ecu-mmy-filter-selector ecu-year" name="ecu-year"
-                                parent="ecu-mmy-filter-footer-wrapper"
-                                wtx-context="FA44D98E-E547-4097-9943-47CAAB761C44">
-                            <option slug="" value="0">Select Year</option>
-                        </select>
-                    </div>
-                    <div class="ecu-mmy-filter-apply">
-                        <button parent="ecu-mmy-filter-footer-wrapper"
-                                class="ecu-filter-button btn btn-danger red">SHOW REPAIR SERVICES
-                        </button>
-                    </div>
-                    <a class="bottom-cta" href="/ecu-repair-request">Can't find your vehicle?</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="main-content col-lg-9">
-    <?php } else { ?>
     <div class="main-content col-lg-12">
-<?php } ?>
 
 
     <div id="main" class="column1 boxed no-breadcrumbs"><!-- main -->
