@@ -333,11 +333,6 @@
 
         <?php
 
-        $hero_top_element = get_field(
-            "page_top_hero_element",
-            $post->ID
-        );
-
         $services_top_element = get_field(
             "page_top_services_element",
             $post->ID
@@ -354,10 +349,7 @@
             $hero_url = !empty($hero_url) ? $hero_url : '/wp-content/uploads/2021/06/hero-bg.png';
         }
 
-        var_dump($hero_top_element);
-        die();
-
-        if ($hero_top_element) { ?>
+        if ($hero_url) { ?>
             <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;"
                  class="">
                 <div class="ecu-filter-wrapper">
