@@ -670,22 +670,19 @@
             if ($('.single-product').length > 0) {
                 $('form.woocommerce-form-login').insertBefore($('.messages-container'));
             }
+        }
 
-            if ($('.home').length > 0) {
-                setTimeout(
-                    function () {
-                        // Our service homepage container
-                        let $window = $(window);
-                        let window_width = $window.width();
-                        let target = 'div.our-service-outer-container';
+        if ($('div.our-service-outer-container').length > 0) {
+            // Our service homepage container
+            let $window = $(window);
+            let window_width = $window.width();
+            let target = 'div.our-service-outer-container';
 
-                        let of = $(target).offset(),
-                            left = of.left;
+            let of = $(target).offset(),
+                left = of.left;
 
-                        $(target).css('width', window_width + 'px');
-                        $(target).css('max-width', 'unset');
-                    }, 2000);
-            }
+            $(target).css('width', window_width + 'px');
+            $(target).css('max-width', 'unset');
         }
 
         if ($('.video-informational-popup-trigger').length > 0) {
