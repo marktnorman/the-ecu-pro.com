@@ -1409,3 +1409,28 @@ function change_attachment_image_attributes($attr, $attachment)
 
     return $attr;
 }
+
+add_filter('pre_get_posts', 'remove_variations_pre_get_posts_query');
+
+/**
+ * @param $query
+ */
+function remove_variations_pre_get_posts_query($query)
+{
+
+    if (!$query->is_main_query()) {
+        return;
+    }
+
+    if (!$query->is_post_type_archive()) {
+        return;
+    }
+
+    $meta_query   = $query->get('meta_query');
+    $meta_query[] = array(
+        'key'     => 'attribute_pa_variation',
+        'compare' => 'NOT EXISTS',
+    );
+
+    $query->set('meta_query', $meta_query);
+}
