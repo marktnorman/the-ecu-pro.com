@@ -352,26 +352,27 @@
         } else {
             $hero_url = wp_get_attachment_url(get_post_thumbnail_id($queried_object));
             $hero_url = !empty($hero_url) ? $hero_url : '/wp-content/uploads/2021/06/hero-bg.png';
-        }
+        } ?>
 
-        if ($hero_top_element) { ?>
-            <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;" class="">
-                <div class="ecu-filter-wrapper">
-                    <div id="ecu-mmy-filter-home-decorator"></div>
-                    <?php
+        <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;"
+             class="">
+            <div class="ecu-filter-wrapper">
+                <div id="ecu-mmy-filter-home-decorator"></div>
+                <?php
 
-                    $ecu_title = get_field("ecu_mmy_title", $queried_object);
-                    $ecu_title = !empty($ecu_title) ? $ecu_title : 'X5 DME Repairs';
+                $ecu_title = get_field("ecu_mmy_title", $queried_object);
+                $ecu_title = !empty($ecu_title) ? $ecu_title : 'X5 DME Repairs';
 
-                    $ecu_desc = get_field("ecu_mmy_desc", $queried_object);
-                    $ecu_desc = !empty($ecu_desc) ? $ecu_desc : 'Select your vehicle';
+                $ecu_desc = get_field("ecu_mmy_desc", $queried_object);
+                $ecu_desc = !empty($ecu_desc) ? $ecu_desc : 'Select your vehicle';
 
-                    echo do_shortcode(
-                        '[ecu-mmy-filter where="home" title="' . $ecu_title . '" desc="' . $ecu_desc . '"]'
-                    ); ?>
-                </div>
+                echo do_shortcode(
+                    '[ecu-mmy-filter where="home" title="' . $ecu_title . '" desc="' . $ecu_desc . '"]'
+                ); ?>
             </div>
-        <?php }
+        </div>
+
+        <?php
 
         if ($services_top_element) { ?>
             <div class="align-items-center">
