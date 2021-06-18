@@ -672,18 +672,20 @@
             }
 
             if ($('.home').length > 0) {
+                setTimeout(
+                    function () {
+                        // Our service homepage container
+                        let $window = $(window);
+                        let window_width = $window.width();
+                        let target = 'div.our-service-outer-container';
 
-                // Our service homepage container
-                let $window = $(window);
-                let window_width = $window.width();
-                let target = 'div.our-service-outer-container';
+                        let of = $(target).offset(),
+                            left = of.left;
 
-                let of = $(target).offset(),
-                    left = of.left;
-
-                $(target).css('width', window_width + 'px');
-                $(target).css('left', '-' + left + 'px');
-                $(target).css('max-width', 'unset');
+                        $(target).css('width', window_width + 'px');
+                        $(target).css('left', '-' + left + 'px');
+                        $(target).css('max-width', 'unset');
+                    }, 2000);
             }
         }
 
