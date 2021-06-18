@@ -356,61 +356,11 @@
                     <?php if (is_product_category() || is_shop() || is_archive()) { ?>
                     <div class="sidebar col-lg-3 left-sidebar">
                         <div class="sidebar-content">
-                            <div id="ecu-mmy-filter-footer-wrapper"
-                                 class="ecu-mmy-filter-wrapper ecu-mmy-filter-footer">
-                                <div class="ecu-wrapper">
-                                    <div class="ecu-mmy-filter-title">
-                                        <h3>Select Your</h3>
-                                    </div>
-                                    <div class="ecu-mmy-filter-desc">
-                                    </div>
-                                    <p>To view all our repair services</p>
-                                    <div class="ecu-select-wrapper">
-                                        <select class="ecu-mmy-filter-selector ecu-make" name="ecu-make"
-                                                parent="ecu-mmy-filter-footer-wrapper"
-                                                wtx-context="32DC183F-BEAC-4556-AD5C-BD9EC7D0ACB6">
-                                            <option slug="" value="0">Select Make</option>
-                                            <option slug="bmw" value="3920">BMW</option>
-                                            <option slug="bmw-ecu-service" value="7886" style="display: none;">BMW ECU
-                                                Service
-                                            </option>
-                                            <option slug="mini" value="8066">MINI</option>
-                                            <option slug="mini-ecu-service" value="7929" style="display: none;">MINI ECU
-                                                Service
-                                            </option>
-                                            <option slug="shop-by-ecu" value="7516">Shop by ECU</option>
-                                        </select>
-                                    </div>
-                                    <div class="ecu-select-wrapper">
-                                        <select class="ecu-mmy-filter-selector ecu-model" placeholder="Select Model"
-                                                name="ecu-model" parent="ecu-mmy-filter-footer-wrapper"
-                                                wtx-context="A561CBD8-C420-40AE-BF96-93463C26410D">
-                                            <option slug="" value="0">Select Model</option>
-
-                                        </select>
-                                    </div>
-                                    <div class="ecu-select-wrapper">
-                                        <select class="ecu-mmy-filter-selector ecu-engine" name="ecu-engine"
-                                                parent="ecu-mmy-filter-footer-wrapper"
-                                                wtx-context="8245EF62-20C8-4306-86AF-DBE9848C3998">
-                                            <option slug="" value="0">Select Engine</option>
-                                        </select>
-                                    </div>
-                                    <div class="ecu-select-wrapper">
-                                        <select class="ecu-mmy-filter-selector ecu-year" name="ecu-year"
-                                                parent="ecu-mmy-filter-footer-wrapper"
-                                                wtx-context="FA44D98E-E547-4097-9943-47CAAB761C44">
-                                            <option slug="" value="0">Select Year</option>
-                                        </select>
-                                    </div>
-                                    <div class="ecu-mmy-filter-apply">
-                                        <button parent="ecu-mmy-filter-footer-wrapper"
-                                                class="ecu-filter-button btn btn-danger red">SHOW REPAIR SERVICES
-                                        </button>
-                                    </div>
-                                    <a class="bottom-cta" href="/contact-us">Can't find your vehicle?</a>
-                                </div>
-                            </div>
+                            <?php
+                            echo do_shortcode(
+                                '[ecu-mmy-filter where="home" title="Vehicle repairs" desc="Select your vehicle"]'
+                            );
+                            ?>
                         </div>
                     </div>
                     <div class="main-content col-lg-9">
