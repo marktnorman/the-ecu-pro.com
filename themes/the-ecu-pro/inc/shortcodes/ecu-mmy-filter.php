@@ -172,7 +172,7 @@ function ecu_mmy_filter_shortcode($atts)
                                     class='ecu-filter-button btn btn-danger red'>SHOW REPAIR SERVICES
                             </button>
                         </div>
-                        <a class="bottom-cta" href="/ecu-repair-request">Can't find your vehicle?</a>
+                        <a class="bottom-cta" href="/contact-us">Can't find your vehicle?</a>
                     </div>
                 </div>
             </div>
@@ -237,7 +237,7 @@ function ecu_mmy_filter_shortcode($atts)
                                 class='ecu-filter-button btn btn-danger red'>SHOW REPAIR SERVICES
                         </button>
                     </div>
-                    <a class="bottom-cta" href="/ecu-repair-request">Can't find your vehicle?</a>
+                    <a class="bottom-cta" href="/contact-us">Can't find your vehicle?</a>
                 </div>
             </div>
         <?php }

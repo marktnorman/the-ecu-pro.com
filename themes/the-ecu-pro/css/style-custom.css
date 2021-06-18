@@ -2605,6 +2605,17 @@ label.validation-checkbox-label {
     background-position-y: -80px;
 }
 
+#main .breadcrumb {
+    background: transparent;
+    font-family: 'Roboto', serif;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.how-it-works-outer-container .accordion {
+    margin-top: 60px;
+}
+
 .steps-outer-container ul li.one::after,
 .steps-outer-container ul li.two::after {
     content: url(/wp-content/uploads/2021/06/Icon-awesome-long-arrow-alt-right.png);
