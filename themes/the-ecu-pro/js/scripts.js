@@ -683,7 +683,6 @@
                             left = of.left;
 
                         $(target).css('width', window_width + 'px');
-                        $(target).css('left', '-' + left + 'px');
                         $(target).css('max-width', 'unset');
                     }, 2000);
             }
