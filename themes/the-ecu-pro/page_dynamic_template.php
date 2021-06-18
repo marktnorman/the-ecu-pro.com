@@ -4,7 +4,7 @@
  * Template which can be used on pages utilising ACF fields
  */
 
-get_header('primary');
+get_header();
 
 ?>
 

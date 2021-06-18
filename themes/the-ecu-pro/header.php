@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?>>
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <!--[if IE]>
@@ -354,14 +354,8 @@
             $hero_url = !empty($hero_url) ? $hero_url : '/wp-content/uploads/2021/06/hero-bg.png';
         }
 
-        echo "<pre>";
-        var_dump($hero_top_element);
-        var_dump($hero_url);
-        echo "</pre>";
-
         if ($hero_top_element) { ?>
-            <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;"
-                 class="">
+            <div id="home-background-image" style="background: url('<?php echo $hero_url; ?>') no-repeat center center;" class="">
                 <div class="ecu-filter-wrapper">
                     <div id="ecu-mmy-filter-home-decorator"></div>
                     <?php
@@ -406,7 +400,7 @@
 
         <div class="outer-parent-container">
             <div class="container">
-                <div class="row main-content-wrap>">
+                <div class="row main-content-wrap">
                     <?php if (is_product_category() || is_shop() || is_archive()) { ?>
                     <div class="sidebar col-lg-3 left-sidebar">
                         <div class="sidebar-content">

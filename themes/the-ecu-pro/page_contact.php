@@ -3,7 +3,7 @@
  * Template Name: Contact us
  */
 
-get_header('primary'); ?>
+get_header(); ?>
 
     <div id="main" class="column1 boxed no-breadcrumbs contact-us"><!-- main -->
         <div class="container">

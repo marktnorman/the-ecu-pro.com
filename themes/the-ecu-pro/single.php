@@ -1,6 +1,6 @@
 <?php
 
-get_header('primary');
+get_header();
 
 get_template_part( 'templates/loop', 'page' );
 
