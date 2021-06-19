@@ -758,5 +758,11 @@
             });
         }
 
+        // Accordian
+        $(document).on('click', '.accordion .accordian-title', function (e) {
+            e.preventDefault();
+            $(this).prev('input').prop('checked', true);
+        });
+
     });
 })(jQuery);
