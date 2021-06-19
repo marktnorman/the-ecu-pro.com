@@ -41,6 +41,8 @@ get_header();
                             </div>
                             <?php
 
+                            $counter         = 1;
+
                             if (have_rows('dynamic_flexible_content')):
 
                                 while (have_rows('dynamic_flexible_content')) : the_row();
@@ -66,7 +68,7 @@ get_header();
                                             $how_it_works_video_url = !empty($how_it_works_video_url) ? $how_it_works_video_url : 'https://www.youtube.com/embed/JESCRzDYdqE';
 
                                             $accordian_items = get_sub_field('how_it_works_accordian');
-                                            $counter         = 1;
+
                                             $accordian_html  = '';
                                             foreach ($accordian_items as $accordian_item) {
 
