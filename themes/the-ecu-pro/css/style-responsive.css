@@ -201,6 +201,15 @@
 
 @media screen and (max-width: 994px) {
 
+    .single-product .how-it-works-outer-container {
+        margin-top: 60px;
+        padding: 0 20px;
+    }
+
+    .footer-main {
+        padding-top: 10px;
+    }
+
     .filter-button {
         top: -37px;
         background: url(../assets/images/mobile-slideup-button-trigger.png) no-repeat;
