@@ -684,7 +684,7 @@
             $(target).css('width', window_width + 'px');
             $(target).css('max-width', 'unset');
 
-            if ($(window).width() < 997 && $('.single-product').length > 0) {
+            if ($(window).width() < 997) {
                 $(target).css('left', '-' + left + 'px');
             }
 
