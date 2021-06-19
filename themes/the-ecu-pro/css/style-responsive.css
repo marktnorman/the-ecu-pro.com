@@ -761,12 +761,14 @@
         vertical-align: top;
         width: 100%;
         margin-bottom: 20px;
+        padding: 0 !important;
     }
 
     .more-info-outer-container .col-8 {
         max-width: 100%;
         display: inline-block;
         width: 100%;
+        padding: 0 !important;
     }
 
     .more-info-outer-container .col-4 img {
