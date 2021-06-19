@@ -3933,7 +3933,7 @@ a.ecu-repair-request:hover {
 
 .filter-button {
     top: -37px;
-    background: url(/wp-content/uploads/2021/05/Group-546@2x.png) no-repeat;
+    background: url(../assets/images/mobile-slideup-button-trigger.png) no-repeat;
     background-size: 100%;
     display: inline-block;
     width: 70px;
@@ -3952,10 +3952,6 @@ a.ecu-repair-request:hover {
 
 .filter-button:hover {
     cursor: pointer;
-}
-
-.filter-button.hide {
-    display: none;
 }
 
 .porto-icon-phone-1:before {
