@@ -2922,11 +2922,13 @@ ul.products-inner li:last-child {
     max-width: 30%;
     display: inline-block;
     vertical-align: top;
+    padding: 0 !important;
 }
 
 .more-info-outer-container .col-8 {
     max-width: 68%;
     display: inline-block;
+    padding: 0 !important;
 }
 
 .info-blue {
@@ -3932,26 +3934,7 @@ a.ecu-repair-request:hover {
 }
 
 .filter-button {
-    top: -37px;
-    background: url(../assets/images/mobile-slideup-button-trigger.png) no-repeat;
-    background-size: 100%;
-    display: inline-block;
-    width: 70px;
-    height: 30px;
-    content: "";
-    text-indent: -9999px;
-    border: 0;
-    z-index: 9997;
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
-
-.filter-button:hover {
-    cursor: pointer;
+    display: none;
 }
 
 .porto-icon-phone-1:before {

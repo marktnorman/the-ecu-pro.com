@@ -201,6 +201,29 @@
 
 @media screen and (max-width: 994px) {
 
+    .filter-button {
+        top: -37px;
+        background: url(../assets/images/mobile-slideup-button-trigger.png) no-repeat;
+        background-size: 100%;
+        display: inline-block !important;
+        width: 70px;
+        height: 30px;
+        content: "";
+        text-indent: -9999px;
+        border: 0;
+        z-index: 9997;
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+
+    .filter-button:hover {
+        cursor: pointer;
+    }
+
     .our-service-outer-container {
         padding: 50px 20px 40px 20px;
     }

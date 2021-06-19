@@ -187,9 +187,7 @@ function ecu_mmy_filter_shortcode($atts)
             <div id='ecu-mmy-filter-<?php echo $props["where"] ?>-wrapper'
                  class="ecu-mmy-filter-wrapper ecu-mmy-filter-<?php echo $props['where'] ?>">
                 <div class='ecu-wrapper'>
-                    <?php if (wp_is_mobile()) { ?>
-                        <button class="filter-button">open</button>
-                    <?php } ?>
+                    <button class="filter-button">open</button>
                     <div class="button-container-helper">
                         <div class='ecu-mmy-filter-title'>
                             <h3><?php echo $props['title'] ?></h3>

@@ -240,17 +240,6 @@
                                 </div>
                             </div>
                         </aside>
-                        <aside id="follow-us-widget-3" class="widget follow-us">
-                            <div class="share-links disable-br">
-                                <a href="https://facebook.com" target="_blank" data-toggle="tooltip"
-                                   data-placement="bottom" title="" class="share-facebook"
-                                   data-original-title="Facebook">Facebook</a>
-                                <a href="https://instagram.com" target="_blank" data-toggle="tooltip"
-                                   data-placement="bottom" title="" class="share-instagram"
-                                   data-original-title="Instagram">Instagram</a>
-                            </div>
-
-                        </aside>
                     </div>
                     <div class="col-lg-3">
                         <aside id="block-widget-17" class="widget widget-block">
