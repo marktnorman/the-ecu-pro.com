@@ -149,7 +149,8 @@ function ecu_mmy_filter_shortcode($atts)
                             </select>
                         </div>
                         <div class='ecu-select-wrapper'>
-                            <select class='ecu-mmy-filter-selector ecu-model' placeholder='Select Model' name='ecu-model'
+                            <select class='ecu-mmy-filter-selector ecu-model' placeholder='Select Model'
+                                    name='ecu-model'
                                     parent='ecu-mmy-filter-<?php echo $props["where"] ?>-wrapper'>
                                 <option slug="" value='0'>Select Model</option>
 
@@ -186,7 +187,9 @@ function ecu_mmy_filter_shortcode($atts)
             <div id='ecu-mmy-filter-<?php echo $props["where"] ?>-wrapper'
                  class="ecu-mmy-filter-wrapper ecu-mmy-filter-<?php echo $props['where'] ?>">
                 <div class='ecu-wrapper'>
-                    <button class="filter-button">open</button>
+                    <?php if (wp_is_mobile()) { ?>
+                        <button class="filter-button">open</button>
+                    <?php } ?>
                     <div class="button-container-helper">
                         <div class='ecu-mmy-filter-title'>
                             <h3><?php echo $props['title'] ?></h3>
