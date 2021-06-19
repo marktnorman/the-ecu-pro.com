@@ -2583,7 +2583,7 @@ label.validation-checkbox-label {
     width: 33%;
     text-align: center;
     height: 240px;
-    vertical-align: bottom;
+    vertical-align: top;
     position: relative;
 }
 
