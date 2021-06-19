@@ -404,14 +404,14 @@ class Wt_Import_Export_For_Woo_Basic_Coupon {
         if ($base == $this->module_base)
         {
             /* altering help text of default fields */
-			$fields['limit']['label']=__('Total number of coupons to export'); 
-			$fields['limit']['help_text']=__('Exports specified number of coupons. e.g. Entering 500 with a skip count of 10 will export coupons from 11th to 510th position.');
-			$fields['offset']['label']=__('Skip first <i>n</i> coupons');
-			$fields['offset']['help_text']=__('Skips specified number of coupons from the beginning. e.g. Enter 10 to skip first 10 coupons from export.');
+            $fields['limit']['label']=__('Total number of coupons to export'); 
+            $fields['limit']['help_text']=__('Exports specified number of coupons. e.g. Entering 500 with a skip count of 10 will export coupons from 11th to 510th position.');
+            $fields['offset']['label']=__('Skip first <i>n</i> coupons');
+            $fields['offset']['help_text']=__('Skips specified number of coupons from the beginning. e.g. Enter 10 to skip first 10 coupons from export.');
 
             $fields['statuses'] = array(
-                'label' => __('Coupon Statuses'),
-                'placeholder' => __('All Statuses'),
+                'label' => __('Coupon status'),
+                'placeholder' => __('Any status'),
                 'field_name' => 'statuses',
                 'sele_vals' => self::get_coupon_statuses(),
                 'help_text' => __('Export coupons by their status. You can specify more than one status if required.'),
@@ -420,8 +420,8 @@ class Wt_Import_Export_For_Woo_Basic_Coupon {
                 'validation_rule' => array('type'=>'text_arr')
             );
             $fields['types'] = array(
-                'label' => __('Coupon Type'),
-                'placeholder' => __('All Types'),
+                'label' => __('Coupon type'),
+                'placeholder' => __('Any type'),
                 'field_name' => 'types',
                 'sele_vals' => self::get_coupon_types(),
                 'help_text' => __('Select the coupon type e.g, fixed cart, recurring etc to export only coupon of a specific type.'),
@@ -432,7 +432,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon {
 
             
             $fields['coupon_amount_from'] = array(
-                'label'=>__("Coupon amount: From"),
+                'label'=>__("Coupon amount: from"),
                 'placeholder' => __('From amount'),
                 'type'=>'number',
                 'value' =>'',
@@ -447,7 +447,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon {
             
             
             $fields['coupon_amount_to'] = array(
-                'label'=>__("Coupon amount: To"),
+                'label'=>__("Coupon amount: to"),
                 'placeholder' => __('To amount'),
                 'type'=>'number',
                 'value' =>'',
@@ -463,7 +463,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon {
             
             
             $fields['coupon_exp_date_from'] = array(
-                'label' => __('Coupon Expiry Date: From'),
+                'label' => __('Coupon expiry date: from'),
                 'placeholder' => __('From date'),
                 'field_name' => 'coupon_exp_date_from',
                 'sele_vals' => '',
@@ -473,7 +473,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon {
             );
             
             $fields['coupon_exp_date_to'] = array(
-                'label' => __('Coupon Expiry Date: To'),
+                'label' => __('Coupon expiry date: to'),
                 'placeholder' => __('To date'),
                 'field_name' => 'coupon_exp_date_to',
                 'sele_vals' => '',
@@ -494,7 +494,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon {
             );
 
             $fields['order_by'] = array(
-                'label' => __('Sort By'),
+                'label' => __('Sort by'),
                 'placeholder' => __('ASC'),
                 'field_name' => 'order_by',
                 'sele_vals' => array('ASC' => 'Ascending', 'DESC' => 'Descending'),

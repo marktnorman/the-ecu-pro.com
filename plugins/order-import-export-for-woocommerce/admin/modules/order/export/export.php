@@ -104,7 +104,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                         'customer_id' => $email,
                         'paginate' => true,
                         'return' => 'ids',
-                        'limit' => $export_limit, //user given limi,
+                        'limit' => $export_limit, //user given limit,
                         'offset' => $current_offset, //user given offset,
                     );                                        
 
@@ -312,7 +312,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                 $query_args = array(
                     'fields' => 'ids',
                     'post_type' => 'shop_order',
-                    'order' => 'DESC',
+                    'order' => 'ASC',
                     'orderby' => 'ID',
                     'post_status' => $export_order_statuses,
                     'date_query' => array(
@@ -524,6 +524,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                 'order_id' => $order->id,
                 'order_number' => $order->get_order_number(),
                 'order_date' => date('Y-m-d H:i:s', strtotime(get_post($order->id)->post_date)),
+                'paid_date' => date('Y-m-d H:i:s', get_post_meta($order->id, '_date_paid')),
                 'status' => $order->get_status(),
                 'shipping_total' => $order->get_total_shipping(),
                 'shipping_tax_total' => wc_format_decimal($order->get_shipping_tax(), 2),
@@ -536,6 +537,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                 'order_total' => wc_format_decimal($order->get_total(), 2),
                 'order_currency' => $order->get_order_currency(),
                 'payment_method' => $order->payment_method,
+                'payment_method' => $order->payment_method_title,
                 'shipping_method' => $order->get_shipping_method(),
                 'customer_id' => $order->get_user_id(),
                 'customer_user' => $order->get_user_id(),
@@ -575,6 +577,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                 'order_id' => $order->get_id(),
                 'order_number' => $order->get_order_number(),
                 'order_date' => date('Y-m-d H:i:s', strtotime(get_post($order->get_id())->post_date)),
+                'paid_date' => date('Y-m-d H:i:s', strtotime($order->get_date_paid())),
                 'status' => $order->get_status(),
                 'shipping_total' => $order->get_total_shipping(),
                 'shipping_tax_total' => wc_format_decimal($order->get_shipping_tax(), 2),
@@ -587,6 +590,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                 'order_total' => wc_format_decimal($order->get_total(), 2),
                 'order_currency' => $order->get_currency(),
                 'payment_method' => $order->get_payment_method(),
+                'payment_method_title' => $order->get_payment_method_title(),
                 'shipping_method' => $order->get_shipping_method(),
                 'customer_id' => $order->get_user_id(),
                 'customer_user' => $order->get_user_id(),
@@ -867,6 +871,13 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
         return $data;
     }
 
+    public static function highest_line_item_count($line_item_keys) {
+   
+        $all_items  = array_count_values(array_column($line_item_keys, 'order_id'));
+        return max($all_items);
+        
+    }
+    
     /**
      * Wrap a column in quotes for the CSV
      * @param  string data to wrap
@@ -877,6 +888,13 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
     }
     
     public static function get_max_line_items($order_ids) {
+        
+        global $wpdb;
+        $query_line_items = "select p.order_id, p.order_item_type from {$wpdb->prefix}woocommerce_order_items as p where order_item_type ='line_item' and p.order_item_id = p.order_item_id";
+        $line_item_keys = $wpdb->get_results($query_line_items, ARRAY_A);                
+        $max_line_items = self::highest_line_item_count($line_item_keys);
+        return $max_line_items;
+        /*
         $max_line_items = 0;
         foreach ($order_ids as $order_id) {
             $order = wc_get_order($order_id);
@@ -886,6 +904,8 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
             }
         }
         return $max_line_items;
+         * 
+         */
     }
 
 }

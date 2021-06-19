@@ -28,7 +28,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Export {
 
 
         $export_statuses = !empty($form_data['filter_form_data']['wt_iew_statuses']) ? $form_data['filter_form_data']['wt_iew_statuses'] : array('publish', 'pending', 'private', 'draft','future');
-        $cpn_categories = !empty($form_data['filter_form_data']['wt_iew_types']) ? $form_data['filter_form_data']['wt_iew_types'] : array('fixed_cart', 'percent', 'fixed_product', 'percent_product');
+        $cpn_categories = !empty($form_data['filter_form_data']['wt_iew_types']) ? $form_data['filter_form_data']['wt_iew_types'] : array_keys(wc_get_coupon_types());
         $coupon_amount_from = !empty($form_data['filter_form_data']['wt_iew_coupon_amount_from']) ? $form_data['filter_form_data']['wt_iew_coupon_amount_from'] : 0;
         $coupon_amount_to = !empty($form_data['filter_form_data']['wt_iew_coupon_amount_to']) ? $form_data['filter_form_data']['wt_iew_coupon_amount_to'] : 0;
         $coupon_exp_date_from = !empty($form_data['filter_form_data']['wt_iew_coupon_exp_date_from']) ? $form_data['filter_form_data']['wt_iew_coupon_exp_date_from'] : '0000-00-00';

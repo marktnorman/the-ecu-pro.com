@@ -9,6 +9,29 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+
+$summary = array(
+    'type' => array(
+        0 => array(
+            'count' => 0,
+            'description' => __('Item with same ID already exists.'),
+            'help_link' => 'https://www.webtoffee.com/how-to-resolve-id-conflict-during-import-in-woocommerce/',
+            'error_code' => 'already exists'
+        ),
+        1 => array(
+            'count' => 0,
+            'description' => __('Importing item conflicts with an existing post.'),
+            'help_link' => 'https://www.webtoffee.com/how-to-resolve-id-conflict-during-import-in-woocommerce/',
+            'error_code' => 'conflicts with an existing post'
+        ),
+        2 => array(
+            'count' => 0,
+            'description' => __('Invalid product type.'),
+            'help_link' => 'https://www.webtoffee.com/setting-up-product-import-export-plugin-for-woocommerce/',
+            'error_code' => 'Invalid product type'
+        )
+    )
+);
 if(isset($log_list) && is_array($log_list) && count($log_list)>0)
 {
 	if($offset==0)
@@ -27,7 +50,18 @@ if(isset($log_list) && is_array($log_list) && count($log_list)>0)
 	<?php
 	}
 	foreach($log_list as $key =>$log_item)
-	{
+	{   
+                if(!$log_item['status']){
+                    if(strpos($log_item['message'], 'already exists')!==false){
+                        $summary['type'][0]['count'] = $summary['type'][0]['count']+1;                      
+                    }
+                    if(strpos($log_item['message'], 'conflicts with an existing post')!==false){
+                        $summary['type'][1]['count'] = $summary['type'][1]['count']+1;                       
+                    }
+                    if(strpos($log_item['message'], 'Invalid product type')!==false){
+                        $summary['type'][2]['count'] = $summary['type'][2]['count']+1;                       
+                    }
+                }
 		?>
 		<tr>
 			<td><?php echo absint($log_item['row']); ?></td>
@@ -59,7 +93,23 @@ if(isset($log_list) && is_array($log_list) && count($log_list)>0)
 			</td>
 		</tr>
 		<?php	
-	}
+	}?>
+                <div style="background-color: #f6f7f7;padding: 10px;">
+            <?php
+
+            foreach ($summary['type'] as $summary_row) {
+                $summary_row_count = $summary_row['count'];
+                $summary_row_help_link = $summary_row['help_link'];
+                if($summary_row_count):
+                ?>
+                    <p><?php echo $summary_row['description']."($summary_row_count)";?> - <?php _e('Please refer')?> <a href="<?php echo $summary_row_help_link; ?>" target="_blank"><?php _e('this article');?></a> <?php _e('for troubleshoot.');?></p> 
+          <?php 
+                endif;
+          
+            }
+        ?>
+        </div>  
+        <?php    
 	if($offset==0)
 	{
 	?>

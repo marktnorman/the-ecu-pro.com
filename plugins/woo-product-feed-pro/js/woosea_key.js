@@ -1,5 +1,4 @@
 jQuery(document).ready(function($) {
-
 	jQuery("#deactivate_license").on('click', function(){
 	//jQuery("#deactivate_license").click(function(){
 		$('.notice').replaceWith("<div class='notice notice-info is-dismissible'><p>Your license has been deactivated.</p></div>");
@@ -27,7 +26,7 @@ jQuery(document).ready(function($) {
 		var license_key = $('#license-key').val();
 
 		jQuery.ajax({
-    			url: 'https://www.adtribes.io/check/license.php?key=' + license_key + '&email=' + license_email + '&domain=' + root_domain + '&version=10.3.1',
+    			url: 'https://www.adtribes.io/check/license.php?key=' + license_key + '&email=' + license_email + '&domain=' + root_domain + '&version=10.3.2',
 			jsonp: 'callback',
     			dataType: 'jsonp',
 			type: 'GET',

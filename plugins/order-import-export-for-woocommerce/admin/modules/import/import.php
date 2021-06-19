@@ -54,7 +54,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
 		/* default step list */
 		$this->steps=array(
 			'post_type'=>array(
-				'title'=>__('Select post type'),
+				'title'=>__('Select a post type'),
 				'description'=>__('Import the respective post type from a CSV. As a first step you need to choose the post type to start the import.'),
 			),
 			'method_import'=>array(
@@ -112,7 +112,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
 				1=>__('Yes'),
 				0=>__('No')
 			),
-            'value' =>1,
+                        'value' =>1,
 			'field_name'=>'enable_import_log',
 			'field_group'=>'advanced_field',			
 			'help_text'=>__('Save import log as text file and make it available in the history section.'),
@@ -123,7 +123,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
 			'label'=>__("Default Import method"),
 			'type'=>'select',
 			'sele_vals'=>$import_methods,
-            'value' =>'quick',
+                        'value' =>'quick',
 			'field_name'=>'default_import_method',
 			'field_group'=>'advanced_field',			
 			'help_text'=>__('Select the default method of import.'),
@@ -131,7 +131,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
 		$fields['default_import_batch']=array(
 			'label'=>__("Default Import batch count"),
 			'type'=>'number',
-            'value' =>100, /* If altering then please also change batch count field help text section */
+                        'value' =>10, /* If altering then please also change batch count field help text section */
 			'field_name'=>'default_import_batch',
 			'help_text'=>__('Provide the default count for the records to be imported in a batch.'),
 			'validation_rule'=>array('type'=>'absint'),
@@ -151,7 +151,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
 				'type'=>'text',
 				'value'=>$this->default_batch_count,
 				'field_name'=>'batch_count',
-				'help_text'=>sprintf(__('The number of records that the server will process for every iteration within the configured timeout interval. If the import fails you can lower this number accordingly and try again. Defaulted to %d records.'), 100),
+				'help_text'=>sprintf(__('The number of records that the server will process for every iteration within the configured timeout interval. If the import fails you can lower this number accordingly and try again. Defaulted to %d records.'), 10),
 				'validation_rule'=>array('type'=>'absint'),
 			)
 		);
@@ -185,7 +185,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
 		$file_from_field_arr=array(
 			'label'=>__("Choose file for Import"),
 			'type'=>'select',
-			'tr_class'=>'wt-iew-import-method-options wt-iew-import-method-options-quick wt-iew-import-method-options-new',
+			'tr_class'=>'wt-iew-import-method-options wt-iew-import-method-options-quick wt-iew-import-method-options-new wt-iew-import-method-options-template',
 			'sele_vals'=>$file_from_arr,
 			'field_name'=>'file_from',
 			'default_value'=>'local',
@@ -253,7 +253,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
 				WT_IEW_PLUGIN_ID_BASIC,
 				__('Import'),
 				__('Import'),
-				apply_filters('wt_import_export_allowed_capability', 'manage_woocommerce'),
+				apply_filters('wt_import_export_allowed_capability', 'import'),
 				$this->module_id,
 				array($this, 'admin_settings_page')
 			)
@@ -354,6 +354,13 @@ class Wt_Import_Export_For_Woo_Basic_Import
 
 		wp_enqueue_style(WT_IEW_PLUGIN_ID_BASIC.'-jquery-ui', WT_O_IEW_PLUGIN_URL.'admin/css/jquery-ui.css', array(), WT_O_IEW_VERSION, 'all');
 		
+                /* check the history module is available */
+                $history_module_obj=Wt_Import_Export_For_Woo_Basic::load_modules('history');
+                if(!is_null($history_module_obj))
+                {
+                    wp_enqueue_script(Wt_Import_Export_For_Woo_Basic::get_module_id('history'),WT_O_IEW_PLUGIN_URL.'admin/modules/history/assets/js/main.js', array('jquery'), WT_O_IEW_VERSION, false);
+                }
+                
 		$file_extensions=array_keys($this->allowed_import_file_type_mime);
 		$file_extensions=array_map(function($vl){
 			return '.'.$vl;
@@ -1032,6 +1039,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
 		if($is_last_offset)
 		{
 			$msg='<span class="wt_iew_info_box_title">'.__('Finished').'</span>';
+                        $msg.='<span class="wt_iew_popup_close" style="line-height:10px;width:auto" onclick="wt_iew_basic_import.hide_import_info_box();">X</span>';
 		}else
 		{
 			$msg='<span class="wt_iew_info_box_title">'.sprintf(__('Importing...(%d processed)'), $data['offset_count']).'</span>';
@@ -1039,14 +1047,11 @@ class Wt_Import_Export_For_Woo_Basic_Import
 		$msg.='<br />'.__('Total success: ').$data['total_success'].'<br />'.__('Total failed: ').$data['total_failed'];
 		if($is_last_offset)
 		{
-			$msg.='<span class="wt_iew_info_box_finished_text">';
+			$msg.='<span class="wt_iew_info_box_finished_text" style="display:block">';
 			if(Wt_Import_Export_For_Woo_Admin_Basic::module_exists('history'))
 			{
-				$history_module_id=Wt_Import_Export_For_Woo_Basic::get_module_id('history');
-				$history_page_url=admin_url('admin.php?page='.$history_module_id);
-				$msg.='<br />'.sprintf(__('View detailed log from %s History %s section'), '<a href="'.$history_page_url.'" target="_blank">', '</a>');
+				$msg.='<a class="button button-secondary wt_iew_view_log_btn" style="margin-top:10px;" data-history-id="'. $data['history_id'] .'" onclick="wt_iew_basic_import.hide_import_info_box();">'.__('View Details').'</a></span>';
 			}
-			$msg.='<br /><a class="button button-secondary" style="margin-top:5px;" onclick="wt_iew_basic_import.hide_import_info_box();">'.__('Close').'</a></span>';
 		}
 		return $msg;
 	}
@@ -1260,7 +1265,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
 						$date_obj=DateTime::createFromFormat($data_format, $output_val);
 						if($date_obj)
 						{
-							$output_val=$date->format('Y-m-d H:i:s');
+							$output_val=$date_obj->format('Y-m-d H:i:s');
 						}
 					}else
 					{

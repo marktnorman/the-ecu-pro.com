@@ -6,9 +6,9 @@ Plugin URI: https://wordpress.org/plugins/order-import-export-for-woocommerce/
 Description: Export and Import Order detail including line items, From and To your WooCommerce Store.
 Author: WebToffee
 Author URI: https://www.webtoffee.com/product/woocommerce-order-coupon-subscription-export-import/
-Version: 2.0.1
+Version: 2.0.6
 Text Domain: order-import-export-for-woocommerce
-WC tested up to: 5.2.2
+WC tested up to: 5.3.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -37,12 +37,15 @@ define ( 'WT_O_IEW_PLUGIN_DESCRIPTION','Import and Export Order/Coupon From and 
 if ( ! defined( 'WT_IEW_DEBUG_BASIC' ) ) {
     define ( 'WT_IEW_DEBUG_BASIC', false );
 }
+if ( !defined( 'WT_IEW_DEBUG_BASIC_TROUBLESHOOT' ) ) {
+	define( 'WT_IEW_DEBUG_BASIC_TROUBLESHOOT', 'https://www.webtoffee.com/finding-php-error-logs/' );
+}
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WT_O_IEW_VERSION', '2.0.1' );
+define( 'WT_O_IEW_VERSION', '2.0.6' );
 
 /**
  * The code that runs during plugin activation.
@@ -150,7 +153,7 @@ function wt_oiew_plugin_action_links_basic_order( $links ) {
 
 	$plugin_links = array(
 		'<a href="' . admin_url( 'admin.php?page=wt_import_export_for_woo_basic' ) . '">' . __( 'Settings' ) . '</a>',
-		'<a href="https://www.webtoffee.com/product/woocommerce-order-coupon-subscription-export-import/" target="_blank">' . __( 'Documentation' ) . '</a>',
+		'<a href="https://www.webtoffee.com/order-coupon-subscription-export-import-plugin-woocommerce-user-guide/" target="_blank">' . __( 'Documentation' ) . '</a>',
 		'<a href="https://wordpress.org/support/plugin/order-import-export-for-woocommerce/" target="_blank">' . __( 'Support' ) . '</a>',
 		'<a href="https://www.webtoffee.com/product/woocommerce-order-coupon-subscription-export-import/" target="_blank" style="color:#3db634;">' . __( 'Premium Upgrade' ) . '</a>',
 	);
@@ -206,7 +209,7 @@ $order_legacy_menu->plugin_title	 = "Order Import Export";
 $order_legacy_menu->old_menu		 = "WooCommerce > Order Im-EX";
 $order_legacy_menu->banner_message	 = sprintf( __( "We have introduced a new main menu %sWebToffee Import Export(basic)%s for the %s plugin. Click the button below or dismiss this banner to remove the old menu from %s." ), '<b>', '</b>', $order_legacy_menu->plugin_title, $order_legacy_menu->old_menu );
 $order_legacy_menu->old_menu_params	 = array(
-	array( 'parent_slug' => 'woocommerce', 'menu_title' => 'Order Im-EX', 'capability' => 'manage_woocommerce' )
+	array( 'parent_slug' => 'woocommerce', 'menu_title' => 'Order Im-EX', 'capability' => 'import' )
 );
 
 
@@ -221,16 +224,16 @@ add_action( 'wt_order_addon_basic_help_content', 'wt_order_import_export_basic_h
 
 function wt_order_import_export_basic_help_content() {
 	if ( defined( 'WT_IEW_PLUGIN_ID_BASIC' ) ) {
-?>
-					<li>
-						<img src="<?php echo WT_O_IEW_PLUGIN_URL; ?>assets/images/sample-csv.png">
-						<h3><?php _e( 'Sample Order CSV' ); ?></h3>
-						<p><?php _e( 'Familiarize yourself with the sample CSV.' ); ?></p>
-						<a target="_blank" href="https://www.webtoffee.com/wp-content/uploads/2021/03/Order_SampleCSV.csv" class="button button-primary">
-		<?php _e( 'Get Order CSV' ); ?>        
-						</a>
-					</li>
-		<?php
+    ?>
+        <li>
+            <img src="<?php echo WT_O_IEW_PLUGIN_URL; ?>assets/images/sample-csv.png">
+            <h3><?php _e( 'Sample Order CSV' ); ?></h3>
+            <p><?php _e( 'Familiarize yourself with the sample CSV.' ); ?></p>
+            <a target="_blank" href="https://www.webtoffee.com/wp-content/uploads/2021/03/Order_SampleCSV.csv" class="button button-primary">
+            <?php _e( 'Get Order CSV' ); ?>        
+            </a>
+        </li>
+    <?php
 	}
 }
 
@@ -238,16 +241,16 @@ add_action( 'wt_coupon_addon_basic_help_content', 'wt_coupon_import_export_basic
 
 function wt_coupon_import_export_basic_help_content() {
 	if ( defined( 'WT_IEW_PLUGIN_ID_BASIC' ) ) {
-?>
-					<li>
-						<img src="<?php echo WT_O_IEW_PLUGIN_URL; ?>assets/images/sample-csv.png">
-						<h3><?php _e( 'Sample Coupon CSV' ); ?></h3>
-						<p><?php _e( 'Familiarize yourself with the sample CSV.' ); ?></p>
-						<a target="_blank" href="https://www.webtoffee.com/wp-content/uploads/2016/09/Coupon_Sample_CSV.csv" class="button button-primary">
-		<?php _e( 'Get Coupon CSV' ); ?>        
-						</a>
-					</li>
-		<?php
+    ?>
+        <li>
+            <img src="<?php echo WT_O_IEW_PLUGIN_URL; ?>assets/images/sample-csv.png">
+            <h3><?php _e( 'Sample Coupon CSV' ); ?></h3>
+            <p><?php _e( 'Familiarize yourself with the sample CSV.' ); ?></p>
+            <a target="_blank" href="https://www.webtoffee.com/wp-content/uploads/2016/09/Coupon_Sample_CSV.csv" class="button button-primary">
+            <?php _e( 'Get Coupon CSV' ); ?>        
+            </a>
+        </li>
+    <?php
 	}
 }
 

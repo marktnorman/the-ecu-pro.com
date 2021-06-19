@@ -12,6 +12,7 @@ if (!defined('ABSPATH')) {
 ?>
 <?php
 do_action('wt_iew_importer_before_head');
+$wf_admin_view_path=plugin_dir_path(WT_O_IEW_PLUGIN_FILENAME).'admin/views/';
 ?>
 <style type="text/css">
 .wt_iew_import_step{ display:none; }
@@ -20,6 +21,16 @@ do_action('wt_iew_importer_before_head');
 .wt_iew_import_main{ padding:20px 0px; }
 select[name=wt_iew_file_from]{visibility: hidden;}
 </style>
+<div class="wt_iew_view_log wt_iew_popup" style="text-align:left">
+	<div class="wt_iew_popup_hd">
+		<span style="line-height:40px;" class="dashicons dashicons-media-text"></span>
+		<span class="wt_iew_popup_hd_label"><?php _e('History Details');?></span>
+		<div class="wt_iew_popup_close">X</div>
+	</div>
+    <div class="wt_iew_log_container" style="padding:25px;">
+		
+	</div>
+</div>
 <?php
 Wt_Iew_IE_Basic_Helper::debug_panel($this->module_base);
 ?>
@@ -41,7 +52,7 @@ Wt_Iew_IE_Basic_Helper::debug_panel($this->module_base);
 <div class="wt_iew_loader_info_box"></div>
 <div class="wt_iew_overlayed_loader"></div>
 
-<div class="wt_iew_import_step_main">
+<div class="wt_iew_import_step_main" style = "width:68%">
 	<?php
 	foreach($this->steps as $stepk=>$stepv)
 	{
@@ -51,6 +62,7 @@ Wt_Iew_IE_Basic_Helper::debug_panel($this->module_base);
 	}
 	?>
 </div>
+<?php include $wf_admin_view_path."market.php"; ?>
 <script type="text/javascript">
 /* external modules can hook */
 function wt_iew_importer_validate_basic(action, action_type, is_previous_step)

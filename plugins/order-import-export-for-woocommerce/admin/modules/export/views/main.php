@@ -12,6 +12,7 @@ if (!defined('ABSPATH')) {
 ?>
 <?php
 do_action('wt_iew_exporter_before_head');
+$wf_admin_view_path=plugin_dir_path(WT_O_IEW_PLUGIN_FILENAME).'admin/views/';
 ?>
 <style type="text/css">
 .wt_iew_export_step{ display:none; }
@@ -40,7 +41,7 @@ Wt_Iew_IE_Basic_Helper::debug_panel($this->module_base);
 
 <div class="wt_iew_loader_info_box"></div>
 <div class="wt_iew_overlayed_loader"></div>
-<div class="wt_iew_export_step_main">
+<div class="wt_iew_export_step_main" style = "width:68%">
 	<?php
 	foreach($this->steps as $stepk=>$stepv)
 	{
@@ -50,7 +51,9 @@ Wt_Iew_IE_Basic_Helper::debug_panel($this->module_base);
 	}
 	?>
 </div>
-<?php /*
+<?php 
+include $wf_admin_view_path."market.php";
+/*
 <script type="text/javascript">
 /* external modules can hook 
 function wt_iew_exporter_validate(action, action_type, is_previous_step)

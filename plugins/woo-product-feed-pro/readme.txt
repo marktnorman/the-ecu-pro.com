@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: Product Feed, Google Shopping, Google Shopping Feed, WooCommerce Product Feed, WooCommerce Product Feed PRO, Bing Shopping, Bing product feed, Bing remarking, Google Merchant Feed, Google DRM Feed, Google Dynamic Remarketing Feed, Facebook feed, Google feed, Bing feed, Facebook Product Feed, Facebook pixel, Facebook Conversion API, Facebook CAPI,Facebook Dynamic remarketing, Data Feed, WooCommerce Feed, XML product feed, CSV product feed, TSV, TXT product feed, comparison shopping engines, comparison shopping websites, vergelijk.nl, vergelijk.be, vertaa.fi, beslist.nl, kieskeurig.nl, bol.com, raketten, pricerunner, pricegrabber, Buy, leGuide, Kelkoo, Twenga, Yandex, Etsy, Dealtime, Shopzilla, Billiger, Google Product Review feed
 Requires at least: 4.5
 Tested up to: 5.7
-Stable tag: 10.3.1
+Stable tag: 10.3.2
 
 == Description ==
 
@@ -333,6 +333,9 @@ Questions left or unanswered? Please do not hesitate to contact us at support@ad
 8. Set the basic configurations for your product feed
 
 === Changelog ===
+
+= 10.3.2 (2021-06-18) =
+* Added some product data attributes to the Google Shopping template: capacity, count, disclosure date, feature description, flavor, format, product line, product page url, release date, scent, size system, size type, suggested retail price, theme and video link
 
 = 10.3.1 (2021-06-16) =
 * Removed Okazii.ro from the list of supported channels
@@ -3294,6 +3297,10 @@ Questions left or unanswered? Please do not hesitate to contact us at support@ad
 * Strip HTML from the (short) description attributes
 
 == Upgrade Notice ==
+
+= 10.3.2 =
+Added some product data attributes to the Google Shopping template: capacity, count, disclosure date, feature description, flavor, format, product line, product pag
+e url, release date, scent, size system, size type, suggested retail price, theme and video link
 
 = 10.3.1 =
 Removed Okazii.ro from the list of supported channels
