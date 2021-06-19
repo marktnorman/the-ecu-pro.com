@@ -36,6 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
 				<?php do_action( 'wt_user_addon_basic_help_content' ); ?>
 				<?php do_action( 'wt_order_addon_basic_help_content' ); ?>
 				<?php do_action( 'wt_coupon_addon_basic_help_content' ); ?>
+                                <?php do_action( 'wt_product_addon_basic_help_content' ); ?>
 			</ul>
 		</div>
 	</div>

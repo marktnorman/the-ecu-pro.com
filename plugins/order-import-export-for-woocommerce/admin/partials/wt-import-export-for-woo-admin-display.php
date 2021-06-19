@@ -13,7 +13,8 @@ $wf_img_path=WT_O_IEW_PLUGIN_URL.'images/';
         <?php
         $tab_head_arr=array(
             'wt-advanced'=>__('General'),
-            'wt-help'=>__('Help Guide')
+            'wt-help'=>__('Help Guide'),
+            'wt-pro-upgrade'=>__('Pro Upgrade')
         );
         if(isset($_GET['debug']))
         {
@@ -33,6 +34,7 @@ $wf_img_path=WT_O_IEW_PLUGIN_URL.'images/';
         $setting_views_b=array(          
             'wt-help'=>'admin-settings-help.php',           
         );
+        $setting_views_b['wt-pro-upgrade']='admin-settings-marketing.php';
         if(isset($_GET['debug']))
         {
             $setting_views_b['wt-debug']='admin-settings-debug.php';

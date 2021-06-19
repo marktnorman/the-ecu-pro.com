@@ -192,12 +192,16 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
                     continue;
                 }
 
+                if ('_payment_method_title' == $column || 'payment_method_title' == $column) {
+                    $this->item_data['payment_method_title'] = $value;
+                    continue;
+                }
 
-
-                if ( 'date_created' == $column || 'post_date' == $column || '_paid_date' == $column || 'order_date' == $column) {
+                if ( 'date_created' == $column || 'post_date' == $column || '_paid_date' == $column || 'paid_date' == $column || 'order_date' == $column) {
                     $date = $this->wt_parse_date_field($value,$column);
                     $this->item_data['date_created'] = date('Y-m-d H:i:s', $date);
-                    //$this->item_data['date_paid'] = date('Y-m-d H:i:s', $date);
+                    if('_paid_date' == $column || 'paid_date' == $column)
+                    $this->item_data['date_paid'] = date('Y-m-d H:i:s', $date);
                     continue;
                 }  
 
@@ -1183,7 +1187,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
             'post_date'     => $date,
             'post_date_gmt' => $date,
             'post_type'     => $this->post_type,
-            'post_status'   => 'importing',
+            'post_status'   => 'wc-pending',
             'ping_status'   => 'closed',
             'post_author'   => 1,
             'post_title'    => sprintf( 'Order &ndash; %s', strftime( '%b %d, %Y @ %I:%M %p', strtotime($date)) ),
@@ -1202,182 +1206,6 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
             throw new Exception($post_id->get_error_message());
         }
                           
-    }
-    
-    public function wt_parse_id_field_old($data, $parsed_data) {
-        global $wpdb;  
-                
-        $id = isset($data['order_id']) && !empty($data['order_id']) ? absint($data['order_id']) : 0;         
-        $id_found_with_id = '';
-        if($id){                              
-            $id_found_with_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_status IN ( 'wc-pending', 'wc-processing', 'wc-completed', 'wc-on-hold', 'wc-failed' , 'wc-refunded', 'wc-cancelled')  AND ID = %d;", $id)); // WPCS: db call ok, cache ok.
-            if($id_found_with_id){
-               if($this->post_type == get_post_type($id_found_with_id)){
-                   $this->is_order_exist = true;
-               }
-            }            
-        } 
-                
-        if( !$this->merge ){
-                                   
-            if('skip' == $this->found_action){ // skip if found
-                
-                if($id && $id_found_with_id && $this->is_order_exist){
-                    throw new Exception(sprintf('Coupon with same ID already exists. ID: %d',$id ));
-                }elseif($id && $id_found_with_id && !$this->is_order_exist){
-                    throw new Exception(sprintf('Importing %s(ID) conflicts with an existing post. ID: %d',ucfirst($this->parent_module->module_base),$id ));
-                }
-                
-                if(class_exists('HF_Subscription')){
-                    remove_all_actions('save_post');
-                 }
-                
-                $date = !empty($parsed_data['date_created']) ? $parsed_data['date_created'] : date('Y-m-d H:i:s', time());
-                $postdata = array( // if not specifiying id (id is empty) or if not found by given id  
-                    'post_date'     => $date,
-                    'post_date_gmt' => $date,
-                    'post_type'     => $this->post_type,
-                    'post_status'   => 'importing',
-                    'ping_status'   => 'closed',
-                    'post_author'   => 1,
-                    'post_title'    => sprintf( 'Order &ndash; %s', strftime( '%b %d, %Y @ %I:%M %p', strtotime($date)) ),
-                    'post_password' => wc_generate_order_key(),
-                    'post_parent'   => !empty($parsed_data['parent_id']) ? $parsed_data['parent_id'] : 0,
-                    'post_excerpt'  => !empty($parsed_data['customer_note']) ? $parsed_data['customer_note'] : '',
-                );                  
-                if(isset($id) && !empty($id)){
-                    $postdata['import_id'] = $id;
-                }                   
-                $post_id = wp_insert_post( $postdata, true );                
-                if($post_id && !is_wp_error($post_id)){
-                    $post = get_post($post_id);                    
-                    return $post_id;
-                }else{
-                    throw new Exception($post_id->get_error_message());
-                }
-  
-                throw new Exception('fasil !merge, found_action skip');
-                
-            }elseif('import' == $this->found_action){ // import if not found
-                
-                if($id && $id_found_with_id && $this->is_order_exist){
-                    throw new Exception(sprintf('%s with same ID already exists. ID: %d',ucfirst($this->parent_module->module_base),$id ));
-                }elseif($id && $id_found_with_id && !$this->is_order_exist && $this->use_same_id ){
-                    throw new Exception(sprintf('Importing %s(ID) conflicts with an existing post. ID: %d',ucfirst($this->parent_module->module_base),$id ));
-                }
-                
-                if(class_exists('HF_Subscription')){
-                    remove_all_actions('save_post');
-                 }
-                $date = !empty($parsed_data['date_created']) ? $parsed_data['date_created'] : date('Y-m-d H:i:s', time());
-                $postdata = array( // if not specifiying id (id is empty) or if not found by given id  
-                    'post_date'     => $date,
-                    'post_date_gmt' => $date,
-                    'post_type'     => $this->post_type,
-                    'post_status'   => 'importing',
-                    'ping_status'   => 'closed',
-                    'post_author'   => 1,
-                    'post_title'    => sprintf( 'Order &ndash; %s', strftime( '%b %d, %Y @ %I:%M %p', strtotime($date)) ),
-                    'post_password' => wc_generate_order_key(),
-                    'post_parent'   => !empty($parsed_data['parent_id']) ? $parsed_data['parent_id'] : 0,
-                    'post_excerpt'  => !empty($parsed_data['customer_note']) ? $parsed_data['customer_note'] : '',
-                );               
-                if(isset($id) && !empty($id)){
-                    $postdata['import_id'] = $id;
-                }                   
-                $post_id = wp_insert_post( $postdata, true );
-                if($post_id && !is_wp_error($post_id)){
-                    return $post_id;
-                }else{
-                    throw new Exception($post_id->get_error_message());
-                }                            
-            }
-            
-            
-        }elseif($this->merge){
-            
-            if(empty($id)){
-                throw new Exception('Cannot update/insert without ID' );
-            }  
-                
-                if('skip' == $this->found_action){ // skip if not found or update 
-                
-                    if($id && $id_found_with_id && $this->is_order_exist){ //found order by id 
-                        return $id; // update
-                    }elseif($id && $id_found_with_id && !$this->is_order_exist){ // found an item by id ,but not a order
-                        throw new Exception(sprintf('Importing %s(ID) conflicts with an existing post. ID: %d',ucfirst($this->parent_module->module_base),$id ));
-                    }elseif(($id && !$id_found_with_id) || !$id){
-                        throw new Exception(sprintf('Cannot find %s with given ID %d',ucfirst($this->parent_module->module_base),$id ));      
-                    }
-                                                            
-                    if($this->skip_new){
-                        throw new Exception('Skipping new item' );
-                    }
-                    if(class_exists('HF_Subscription')){
-                       remove_all_actions('save_post');
-                    }
-                    $date = !empty($parsed_data['date_created']) ? $parsed_data['date_created'] : date('Y-m-d H:i:s', time());
-                    $postdata = array( // if not specifiying id (id is empty) or if not found by given id  
-                        'post_date'     => $date,
-                        'post_date_gmt' => $date,
-                        'post_type'     => $this->post_type,
-                        'post_status'   => 'importing',
-                        'ping_status'   => 'closed',
-                        'post_author'   => 1,
-                        'post_title'    => sprintf( 'Order &ndash; %s', strftime( '%b %d, %Y @ %I:%M %p', strtotime($date)) ),
-                        'post_password' => wc_generate_order_key(),
-                        'post_parent'   => !empty($parsed_data['parent_id']) ? $parsed_data['parent_id'] : 0,
-                        'post_excerpt'  => !empty($parsed_data['customer_note']) ? $parsed_data['customer_note'] : '',
-                    );               
-                    if(isset($id) && !empty($id)){
-                        $postdata['import_id'] = $id;
-                    }                   
-                    $post_id = wp_insert_post( $postdata, true );
-                    if($post_id && !is_wp_error($post_id)){
-                        return $post_id;
-                    }else{
-                        throw new Exception($post_id->get_error_message());
-                    } 
-
-
-                }elseif('import' == $this->found_action){  // import if not found                                     
-                    if($id && $id_found_with_id && $this->is_order_exist){  //found order by id 
-                        return $id; // update
-                    }elseif($id && $id_found_with_id && !$this->is_order_exist && $this->use_same_id ){ // found an item by id ,but not a order, but should use the same id
-                        throw new Exception(sprintf('Importing %s(ID) conflicts with an existing post. ID: %d',ucfirst($this->parent_module->module_base),$id ));
-                    }
-                                        
-                    if($this->skip_new){
-                        throw new Exception('Skipping new item' );
-                    }
-                    if(class_exists('HF_Subscription')){
-                       remove_all_actions('save_post');
-                    }
-                    $date = !empty($parsed_data['date_created']) ? $parsed_data['date_created'] : date('Y-m-d H:i:s', time());
-                    $postdata = array( // if not specifiying id (id is empty) or if not found by given id  
-                        'post_date'     => $date,
-                        'post_date_gmt' => $date,
-                        'post_type'     => $this->post_type,
-                        'post_status'   => 'importing',
-                        'ping_status'   => 'closed',
-                        'post_author'   => 1,
-                        'post_title'    => sprintf( 'Order &ndash; %s', strftime( '%b %d, %Y @ %I:%M %p', strtotime($date)) ),
-                        'post_password' => wc_generate_order_key(),
-                        'post_parent'   => !empty($parsed_data['parent_id']) ? $parsed_data['parent_id'] : 0,
-                        'post_excerpt'  => !empty($parsed_data['customer_note']) ? $parsed_data['customer_note'] : '',
-                    );  
-                    if(isset($id) && !empty($id)){
-                        $postdata['import_id'] = $id;
-                    }
-                    $post_id = wp_insert_post( $postdata, true );
-                    if($post_id && !is_wp_error($post_id)){
-                        return $post_id;
-                    }else{
-                        throw new Exception($post_id->get_error_message());
-                    }
-                }
-
-            }                           
     }
     
     
@@ -1550,15 +1378,25 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
              
             $post_id = $data['order_id'];
             
-            $status = $data['status'];
+            $status = isset($data['status']) ? $data['status'] : 'wc-pending';
+            if($this->merge){
+                $status = isset($data['status']) ? $data['status'] : '';
+            }
             
                        
             // wc_create_order();  woocommerce/includes/wc-core-function.php:83 -> $order = new WC_Order(); woocommerce/includes/class-wc-order.php:16 -> $order->save(); 
             // woocommerce/includes/class-wc-order.php:218 -> parent::save();  woocommerce/includes/abstracts/abstract_wc_order.php:168 -> $this->data_store->create( $this );  woocommerce/includes/data-store/abstract-wc-order-data-store-cpt.php:58
 
-                add_action( 'woocommerce_email', array($this, 'wt_iew_order_import_unhook_woocommerce_email') );  // disabled all order related email sending. Need to implimet a way to send status change email based on $this->status_mail flag
+            add_action( 'woocommerce_email', array($this, 'wt_iew_order_import_unhook_woocommerce_email') );  // disabled all order related email sending. Need to implimet a way to send status change email based on $this->status_mail flag
 
-                        
+            
+            remove_all_actions('woocommerce_order_status_refunded_notification');
+            remove_all_actions('woocommerce_order_partially_refunded_notification');
+            remove_action('woocommerce_order_status_refunded', array('WC_Emails', 'send_transactional_email'));
+            remove_action('woocommerce_order_partially_refunded', array('WC_Emails', 'send_transactional_email'));
+            remove_action('woocommerce_order_fully_refunded', array('WC_Emails', 'send_transactional_email'));
+
+            
             $order = wc_create_order($data);            
             if (is_wp_error($order)) {
                 return $order;
@@ -1751,7 +1589,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
                 if (is_woocommerce_prior_to_basic('2.7')) {
 
                     if ($this->merge && $this->is_order_exist) {
-                        $applied_coupons = $order->get_used_coupons();
+                        $applied_coupons = $order->get_coupon_codes();
                         if (!empty($applied_coupons)) {
                             $order->remove_order_items('coupon');
                         }
@@ -1913,6 +1751,8 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
 	
 	function wt_create_refund( $input_currency, $args = array() ) {
 		
+                    
+            
 	$default_args = array(
 		'amount'         => 0,
 		'reason'         => null,
@@ -2006,6 +1846,8 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
 		 */
 		do_action( 'woocommerce_create_refund', $refund, $args );
 
+                add_action( 'woocommerce_email', array($this, 'wt_iew_order_import_unhook_woocommerce_email') );    
+                
 		if ( $refund->save() ) {
 			if ( $args['refund_payment'] ) {
 				$result = wc_refund_payment( $order, $refund->get_amount(), $refund->get_reason() );
@@ -2094,13 +1936,43 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
             remove_action( 'woocommerce_order_status_failed_to_processing_notification', array( $email_class->emails['WC_Email_New_Order'], 'trigger' ) );
             remove_action( 'woocommerce_order_status_failed_to_completed_notification', array( $email_class->emails['WC_Email_New_Order'], 'trigger' ) );
             remove_action( 'woocommerce_order_status_failed_to_on-hold_notification', array( $email_class->emails['WC_Email_New_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_failed_to_pending_notification', array( $email_class->emails['WC_Email_New_Order'], 'trigger' ) );
 
-            // Processing order emails
+            // Processing  emails
             remove_action( 'woocommerce_order_status_pending_to_processing_notification', array( $email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' ) );
             remove_action( 'woocommerce_order_status_pending_to_on-hold_notification', array( $email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' ) );
-
-            // Completed order emails
+            remove_action( 'woocommerce_order_status_on-hold_to_processing_notification', array( $email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' ) );         
+            remove_action( 'woocommerce_order_status_failed_to_processing_notification', array( $email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' ) );         
+            remove_action( 'woocommerce_order_status_cancelled_to_processing_notification', array( $email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' ) );         
+            
+            // On-hold emails
+            remove_action( 'woocommerce_order_status_cancelled_to_on-hold_notification', array( $email_class->emails['WC_Email_New_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_cancelled_to_on-hold_notification', array( $email_class->emails['WC_Email_Customer_On_Hold_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_failed_to_on-hold_notification', array( $email_class->emails['WC_Email_Customer_On_Hold_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_pending_to_on-hold_notification', array( $email_class->emails['WC_Email_Customer_On_Hold_Order'], 'trigger' ) );                        
+            remove_action( 'woocommerce_order_status_processing_to_on-hold_notification', array( $email_class->emails['WC_Email_Customer_On_Hold_Order'], 'trigger' ) );
+                       
+            // Cancelled emails
+            remove_action( 'woocommerce_order_status_on-hold_to_cancelled_notification', array( $email_class->emails['WC_Email_Cancelled_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_processing_to_cancelled_notification', array( $email_class->emails['WC_Email_Cancelled_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_failed_to_cancelled_notification', array( $email_class->emails['WC_Email_Cancelled_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_completed_to_cancelled_notification', array( $email_class->emails['WC_Email_Cancelled_Order'], 'trigger' ) );
+            
+            
+            // Completed  emails
             remove_action( 'woocommerce_order_status_completed_notification', array( $email_class->emails['WC_Email_Customer_Completed_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_processing_to_completed_notification', array( $email_class->emails['WC_Email_Customer_Completed_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_refunded_to_completed_notification', array( $email_class->emails['WC_Email_Customer_Completed_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_cancelled_to_completed_notification', array( $email_class->emails['WC_Email_Customer_Completed_Order'], 'trigger' ) );
+            
+            // Refund mails
+            remove_action( 'woocommerce_order_status_completed_to_refunded_notification', array( $email_class->emails['WC_Email_Customer_Refunded_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_processing_to_refunded_notification', array( $email_class->emails['WC_Email_Customer_Refunded_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_refunded', array( $email_class->emails['WC_Email_Customer_Refunded_Order'], 'trigger' ) );
+            
+            // Failed emails
+            remove_action( 'woocommerce_order_status_on-hold_to_failed_notification', array( $email_class->emails['WC_Email_Failed_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_pending_to_failed_notification', array( $email_class->emails['WC_Email_Failed_Order'], 'trigger' ) );
         
     }
     

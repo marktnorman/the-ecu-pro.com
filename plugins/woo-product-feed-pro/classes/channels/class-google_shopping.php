@@ -470,8 +470,76 @@ class WooSEA_google_shopping {
 					"feed_name" => "g:seller_name",
 					"format" => "optional",
 				),
-
-
+				"Count" => array(
+					"name" => "count",
+					"feed_name" => "g:count",
+					"format" => "optional",
+				),
+				"Disclosure date" => array(
+					"name" => "disclosure_date",
+					"feed_name" => "g:disclosure_date",
+					"format" => "optional",
+				),
+				"Feature description" => array(
+					"name" => "feature_description",
+					"feed_name" => "g:feature_description",
+					"format" => "optional",
+				),
+				"Flavor" => array(
+					"name" => "flavor",
+					"feed_name" => "g:flavor",
+					"format" => "optional",
+				),
+				"Scent" => array(
+					"name" => "scent",
+					"feed_name" => "g:scent",
+					"format" => "optional",
+				),
+				"Format" => array(
+					"name" => "format",
+					"feed_name" => "g:format",
+					"format" => "optional",
+				),
+				"Product line" => array(
+					"name" => "product_line",
+					"feed_name" => "g:product_line",
+					"format" => "optional",
+				),
+				"Product name" => array(
+					"name" => "product_name",
+					"feed_name" => "g:product_name",
+					"format" => "optional",
+				),
+				"Product page url" => array(
+					"name" => "product_page_url",
+					"feed_name" => "g:product_page_url",
+					"format" => "optional",
+				),
+				"Size system" => array(
+					"name" => "size_system",
+					"feed_name" => "g:size_system",
+					"format" => "optional",
+				),
+				"Size type" => array(
+					"name" => "size_type",
+					"feed_name" => "g:size_type",
+					"format" => "optional",
+				),
+				"Suggested retail price" => array(
+					"name" => "suggested_retail_price",
+					"feed_name" => "g:suggested_retail_price",
+					"format" => "optional",
+				),
+				"Theme" => array(
+					"name" => "theme",
+					"feed_name" => "g:theme",
+					"format" => "optional",
+				),
+				"Video link" => array(
+					"name" => "video_link",
+					"feed_name" => "g:video_link",
+					"format" => "optional",
+				),
 			),
 		);
 		return $google_attributes;

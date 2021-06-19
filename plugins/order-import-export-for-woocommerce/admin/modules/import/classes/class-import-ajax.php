@@ -99,9 +99,13 @@ class Wt_Import_Export_For_Woo_Basic_Import_Ajax
 	public function delete_import_file($out)
 	{
 		$file_url=(isset($_POST['file_url']) ? esc_url_raw($_POST['file_url']) : '');
+                $mapping_profile=(isset($_POST['mapping_profile']) ? ($_POST['mapping_profile']) : '');
 		$out['file_url']=$file_url;
-		if($file_url!="" && $this->import_obj->delete_import_file($file_url))
+		if($file_url!="" )
 		{
+                    if(!$mapping_profile){
+                      $this->import_obj->delete_import_file($file_url);
+                    }
 			$out['status']=1;
 			$out['msg']='';
 		}
@@ -140,6 +144,7 @@ class Wt_Import_Export_For_Woo_Basic_Import_Ajax
 				{
 					$file_name='local_file_'.time().'_'.sanitize_file_name($_FILES['wt_iew_import_file']['name']); //sanitize the file name, add a timestamp prefix to avoid conflict
 					$file_path=$this->import_obj->get_file_path($file_name);
+                                        // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 					if(@move_uploaded_file($_FILES['wt_iew_import_file']['tmp_name'], $file_path))
 					{
 						$out['msg']='';
@@ -150,7 +155,8 @@ class Wt_Import_Export_For_Woo_Basic_Import_Ajax
 						*	Check old file exists, and delete it
 						*/
 						$file_url=(isset($_POST['file_url']) ? esc_url_raw($_POST['file_url']) : '');
-						if($file_url!="")
+                                                $map_profile_id=(isset($_POST['map_profile_id']) ? ($_POST['map_profile_id']) : '');
+						if($file_url!="" && !$map_profile_id)
 						{
 							$this->import_obj->delete_import_file($file_url);
 						}

@@ -114,7 +114,7 @@ class Wt_Import_Export_For_Woo_Admin_Basic {
 				'all_fields_mandatory'=>__('All fields are mandatory'),
 				'settings_error'=>__('Unable to update Settings.'),
 				'value_empty'=>__('Value is empty.'),
-				'error'=>__('Error.'),
+				'error'=>sprintf(__('An unknown error has occurred! Refer to our %stroubleshooting guide%s for assistance.'), '<a href="'.WT_IEW_DEBUG_BASIC_TROUBLESHOOT.'" target="_blank">', '</a>'),
 				'success'=>__('Success.'),
 				'loading'=>__('Loading...'),
 				'sure'=>__('Are you sure?'),
@@ -140,7 +140,7 @@ class Wt_Import_Export_For_Woo_Admin_Basic {
 				'menu',
 				__('General Settings'),
 				__('General Settings'),
-				apply_filters('wt_import_export_allowed_capability', 'manage_woocommerce'),
+				apply_filters('wt_import_export_allowed_capability', 'import'),
 				WT_IEW_PLUGIN_ID_BASIC,
 				array($this,'admin_settings_page'),
 				'dashicons-controls-repeat',
@@ -163,7 +163,7 @@ class Wt_Import_Export_For_Woo_Admin_Basic {
 			$parent_menu_key,
 			__('General Settings'),
 			__('General Settings'), 
-			apply_filters('wt_import_export_allowed_capability', 'manage_woocommerce'),
+			apply_filters('wt_import_export_allowed_capability', 'import'),
 			WT_IEW_PLUGIN_ID_BASIC,
 			array($this, 'admin_settings_page')
 		);

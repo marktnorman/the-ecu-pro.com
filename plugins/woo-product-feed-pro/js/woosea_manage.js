@@ -1,5 +1,6 @@
 jQuery(function($) {
-//jQuery(document).ready(function($) {
+
+	//jQuery(document).ready(function($) {
 	var project_hash = null;
 	var project_status = null;
 	var get_value = null;

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Product Feed PRO for WooCommerce
- * Version:     10.3.1
+ * Version:     10.3.2
  * Plugin URI:  https://www.adtribes.io/support/?utm_source=wpadmin&utm_medium=plugin&utm_campaign=woosea_product_feed_pro
  * Description: Configure and maintain your WooCommerce product feeds for Google Shopping, Facebook, Remarketing, Bing, Yandex, Comparison shopping websites and over a 100 channels more.
  * Author:      AdTribes.io
@@ -48,7 +48,7 @@ if (!defined('ABSPATH')) {
  * Plugin versionnumber, please do not override.
  * Define some constants
  */
-define( 'WOOCOMMERCESEA_PLUGIN_VERSION', '10.3.1' );
+define( 'WOOCOMMERCESEA_PLUGIN_VERSION', '10.3.2' );
 define( 'WOOCOMMERCESEA_PLUGIN_NAME', 'woocommerce-product-feed-pro' );
 define( 'WOOCOMMERCESEA_PLUGIN_NAME_SHORT', 'woo-product-feed-pro' );
 
@@ -101,7 +101,8 @@ function woosea_scripts($hook) {
 	wp_enqueue_script('jquery-ui-datepicker');
 
 	// Only register and enqueue JS scripts from within the plugin itself
-     	if (preg_match("/product-feed-pro/i",$hook)){
+	if (preg_match("/product-feed-pro/i",$hook)){
+
 	        // JS files for ChartJS
         	wp_register_script( 'woosea_chart-bundle-js', plugin_dir_url( __FILE__ ) . 'js/Chart.bundle.js', WOOCOMMERCESEA_PLUGIN_VERSION, true  );
         	wp_enqueue_script( 'woosea_chart-bundle-js' );
@@ -143,10 +144,21 @@ function woosea_scripts($hook) {
 		// wp_enqueue_script( 'woosea_addcart-js' );
 	}
 	// JS for manage projects page
-	wp_register_script( 'woosea_manage-js', plugin_dir_url( __FILE__ ) . 'js/woosea_manage.js', '',WOOCOMMERCESEA_PLUGIN_VERSION, true  );
+	wp_register_script( 'woosea_manage-js', plugin_dir_url( __FILE__ ) . 'js/woosea_manage.js?yo=12', '',WOOCOMMERCESEA_PLUGIN_VERSION, true  );
 	wp_enqueue_script( 'woosea_manage-js' );
 }
 add_action( 'admin_enqueue_scripts' , 'woosea_scripts' );
+
+/**
+ * Enqueue front end scripts
+ */
+function woosea_fe_scripts($hook) {
+	// JS for managing addToCart event
+   	wp_enqueue_script( 'ajax-script', get_template_directory_uri() . 'js/my-ajax-script.js', array('jquery') );
+	wp_register_script( 'woosea_addcart-js', plugin_dir_url( __FILE__ ) . 'js/woosea_add_cart.js', '',WOOCOMMERCESEA_PLUGIN_VERSION, true  );
+	wp_enqueue_script( 'woosea_addcart-js' );
+}
+//add_action('wp_enqueue_scripts', 'woosea_fe_scripts');
 
 /**
  * Get product variation ID based on dropdown selects product page

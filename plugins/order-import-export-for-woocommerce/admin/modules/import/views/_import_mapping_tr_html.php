@@ -5,9 +5,6 @@ if (!defined('ABSPATH')) {
 ?>
 <tr id="columns_<?php echo $key;?>">
 	<td>
-		<div class="wt_iew_sort_handle" title="<?php echo $draggable_tooltip;?>">
-			<img src="<?php echo WT_O_IEW_PLUGIN_URL.'assets/images/drag_icon.png'; ?>"/>
-		</div>
 		<input type="checkbox" name="columns_key[]" class="columns_key wt_iew_mapping_checkbox_sub" value="<?php echo $key;?>" <?php echo ($checked==1 ? 'checked' : ''); ?>>
 	</td>
 	<td>
