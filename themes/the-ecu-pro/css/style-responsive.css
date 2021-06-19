@@ -334,7 +334,7 @@
         margin: 0px 10px 20px auto !important;
         display: inline-block;
         max-width: 40px;
-        vertical-align: unset;
+        vertical-align: middle;
     }
 
     .steps-outer-container ul li.one::after, .steps-outer-container ul li.two::after {
