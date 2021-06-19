@@ -683,6 +683,11 @@
 
             $(target).css('width', window_width + 'px');
             $(target).css('max-width', 'unset');
+
+            if ($(window).width() < 997 && $('.single-product').length > 0) {
+                $(target).css('left', '-' + left + 'px');
+            }
+
         }
 
         if ($('.video-informational-popup-trigger').length > 0) {
