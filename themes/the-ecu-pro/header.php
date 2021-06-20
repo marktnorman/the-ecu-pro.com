@@ -87,7 +87,7 @@
                            title="The ECU Pro - Professional ECU repair and exchange services" rel="home">
                             <img
                                     class="img-responsive standard-logo d-block"
-                                    src="https://the-ecu-pro.com/wp-content/uploads/2019/11/TheECUPro-Logo-B-Highly-Compressed.png"
+                                    src="https://the-ecu-pro.com/wp-content/uploads/2021/06/TheECUPro-Logo-B-Highly-Compressed.png"
                                     data-spai="1" alt="The ECU Pro" loading="lazy" data-spai-upd="150"></a>
                     </h1>
                 </div>
@@ -184,7 +184,7 @@
                         <a href="https://the-ecu-pro.com/"
                            title="The ECU Pro - Professional ECU repair and exchange services">
                             <img class="img-responsive standard-logo retina-logo"
-                                 src="/wp-content/uploads/2019/11/TheECUPro-Logo-B-Highly-Compressed.png"
+                                 src="/wp-content/uploads/2021/06/TheECUPro-Logo-B-Highly-Compressed.png"
                                  data-spai="1" alt="The ECU Pro" loading="lazy" data-spai-upd="0"> </a>
                     </div>
                 </div>
