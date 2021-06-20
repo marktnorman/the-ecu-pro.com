@@ -1439,19 +1439,25 @@ add_action('template_redirect', 'redirect_host_correction');
  */
 function redirect_host_correction()
 {
+    $referred_host = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+
     // If we're on the same site do nothing
-    if ($_SERVER['HTTP_HOST'] == $_SERVER['HTTP_REFERER']) {
-        exit;
+    if ($_SERVER['HTTP_HOST'] == $referred_host || $referred_host == 'NULL') {
+        return;
     }
 
-    $live_allowed_host = 'the-ecu-pro.com';
+    $live_allowed_host     = 'the-ecu-pro.com';
     $referred_allowed_host = 'development.the-ecu-pro.com';
     $referred_host         = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
-    $sub_str = substr($referred_host, 0 - strlen($live_allowed_host));
+    $sub_str               = substr($referred_host, 0 - strlen($live_allowed_host));
 
     // If the referred host is development redirect to live
     if (($sub_str == $live_allowed_host) && ($referred_host != $referred_allowed_host)) {
-        $updated_location = str_replace($referred_host, $live_allowed_host, $_SERVER['HTTP_REFERER'] . $_SERVER['REQUEST_URI']);
+        $updated_location = str_replace(
+            $referred_host,
+            $live_allowed_host,
+            $_SERVER['HTTP_REFERER'] . $_SERVER['REQUEST_URI']
+        );
 
         wp_redirect($updated_location);
         exit;
