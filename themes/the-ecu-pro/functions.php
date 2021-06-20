@@ -1439,8 +1439,6 @@ add_action('template_redirect', 'redirect_host_correction');
  */
 function redirect_host_correction()
 {
-    $_SERVER['HTTP_REFERER'] = 'https://development.the-ecu-pro.com/product/bmw-and-mini-frm-repair-plug-and-play/';
-
     // If we're on the same site do nothing
     if ($_SERVER['HTTP_HOST'] == $_SERVER['HTTP_REFERER']) {
         exit;
@@ -1449,12 +1447,12 @@ function redirect_host_correction()
     $live_allowed_host = 'the-ecu-pro.com';
     $referred_allowed_host = 'development.the-ecu-pro.com';
     $referred_host         = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
-    $referred_host_path         = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
-    $requested_current_host = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://'.$_SERVER[HTTP_HOST].'";
+    $sub_str = substr($referred_host, 0 - strlen($live_allowed_host));
 
     // If the referred host is development redirect to live
-    if ((substr($referred_host, 0 - strlen($live_allowed_host)) != $live_allowed_host) && ($referred_host == $referred_allowed_host)) {
-        $updated_location = str_replace($referred_host, $live_allowed_host, $_SERVER['HTTP_REFERER']);
+    if (($sub_str == $live_allowed_host) && ($referred_host != $referred_allowed_host)) {
+        $updated_location = str_replace($referred_host, $live_allowed_host, $_SERVER['HTTP_REFERER'] . $_SERVER['REQUEST_URI']);
+
         wp_redirect($updated_location);
         exit;
     }
