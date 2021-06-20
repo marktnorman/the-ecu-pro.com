@@ -83,7 +83,7 @@
                 <div class="header-left">
                     <a class="mobile-toggle"><i class="fas fa-bars"></i></a>
                     <h1 class="logo">
-                        <a href="https://development.the-ecu-pro.com/"
+                        <a href="https://the-ecu-pro.com/"
                            title="The ECU Pro - Professional ECU repair and exchange services" rel="home">
                             <img
                                     class="img-responsive standard-logo d-block"
@@ -137,7 +137,7 @@
                                 <div class="widget_shopping_cart_content">
 
                                     <div class="total-count"><span>0 ITEMS</span><a class="pull-right"
-                                                                                    href="https://development.the-ecu-pro.com/cart/">VIEW
+                                                                                    href="https://the-ecu-pro.com/cart/">VIEW
                                             CART</a></div>
                                     <div class="scroll-wrapper cart_list product_list_widget scrollbar-inner"
                                          style="position: relative;">
@@ -181,7 +181,7 @@
             <div id="main-menu" class="container  hide-sticky-content">
                 <div class="menu-left">
                     <div class="logo">
-                        <a href="https://development.the-ecu-pro.com/"
+                        <a href="https://the-ecu-pro.com/"
                            title="The ECU Pro - Professional ECU repair and exchange services">
                             <img class="img-responsive standard-logo retina-logo"
                                  src="/wp-content/uploads/2019/11/TheECUPro-Logo-B-Highly-Compressed.png"
@@ -239,7 +239,7 @@
                             <div class="widget_shopping_cart_content">
 
                                 <div class="total-count"><span>0 ITEMS</span><a class="pull-right"
-                                                                                href="https://development.the-ecu-pro.com/cart/">VIEW
+                                                                                href="https://the-ecu-pro.com/cart/">VIEW
                                         CART</a></div>
                                 <div class="scroll-wrapper cart_list product_list_widget scrollbar-inner"
                                      style="position: relative;">

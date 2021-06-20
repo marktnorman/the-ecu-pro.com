@@ -1417,11 +1417,11 @@ add_filter('pre_get_posts', 'remove_variations_pre_get_posts_query');
  */
 function remove_variations_pre_get_posts_query($query)
 {
-    if ( ! is_admin() && $query->is_main_query() ) {
+    if (!is_admin() && $query->is_main_query()) {
         // Not a query for an admin page.
         // It's the main query for a front end page of your site.
 
-        if ( is_archive() ) {
+        if (is_archive()) {
             $meta_query   = $query->get('meta_query');
             $meta_query[] = array(
                 'key'     => 'attribute_pa_variation',
@@ -1430,5 +1430,30 @@ function remove_variations_pre_get_posts_query($query)
 
             $query->set('meta_query', $meta_query);
         }
+    }
+}
+
+add_action('template_redirect', 'redirect_host_correction');
+/**
+ * Lets redirect if a user was taking to dev site from live
+ */
+function redirect_host_correction()
+{
+    // If we're on the same site do nothing
+    if ($_SERVER['HTTP_HOST'] == $_SERVER['HTTP_REFERER']) {
+        exit;
+    }
+
+    $live_allowed_host = 'the-ecu-pro.com';
+    $referred_allowed_host = 'development.the-ecu-pro.com';
+    $referred_host         = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+    $referred_host_path         = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
+    $requested_current_host = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://'.$_SERVER[HTTP_HOST].'";
+
+    // If the referred host is development redirect to live
+    if ((substr($referred_host, 0 - strlen($live_allowed_host)) != $live_allowed_host) && ($referred_host == $referred_allowed_host)) {
+        $updated_location = str_replace($referred_host, $live_allowed_host, $_SERVER['HTTP_REFERER']);
+        wp_redirect($updated_location);
+        exit;
     }
 }

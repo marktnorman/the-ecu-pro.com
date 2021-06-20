@@ -139,7 +139,7 @@
                                 <ul id="menu-footer-my-account" class="menu">
                                     <li id="menu-item-19146"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19146">
-                                        <a href="https://development.the-ecu-pro.com/my-account/">Dashboard</a></li>
+                                        <a href="https://the-ecu-pro.com/my-account/">Dashboard</a></li>
                                     <li id="menu-item-19148"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19148">
                                         <a href="https://www.the-ecu-pro.com/my-account/orders/">Orders</a></li>
@@ -153,7 +153,7 @@
                                             Details</a></li>
                                     <li id="menu-item-19145"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19145">
-                                        <a href="https://development.the-ecu-pro.com/cart/">Cart</a></li>
+                                        <a href="https://the-ecu-pro.com/cart/">Cart</a></li>
                                 </ul>
                             </div>
                         </aside>
@@ -180,19 +180,19 @@
                                 <ul id="menu-footer-policy" class="menu">
                                     <li id="menu-item-19154"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-19154">
-                                        <a href="https://development.the-ecu-pro.com/privacy-policy/">Privacy Policy</a>
+                                        <a href="https://the-ecu-pro.com/privacy-policy/">Privacy Policy</a>
                                     </li>
                                     <li id="menu-item-19152"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19152">
-                                        <a href="https://development.the-ecu-pro.com/terms-and-conditions/">Terms of
+                                        <a href="https://the-ecu-pro.com/terms-and-conditions/">Terms of
                                             Service</a></li>
                                     <li id="menu-item-19153"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19153">
-                                        <a href="https://development.the-ecu-pro.com/return-policy/">Return Policy</a>
+                                        <a href="https://the-ecu-pro.com/return-policy/">Return Policy</a>
                                     </li>
                                     <li id="menu-item-19155"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19155">
-                                        <a href="https://development.the-ecu-pro.com/disclaimer/">Disclaimer</a></li>
+                                        <a href="https://the-ecu-pro.com/disclaimer/">Disclaimer</a></li>
                                 </ul>
                             </div>
                         </aside>
