@@ -1439,6 +1439,8 @@ add_action('template_redirect', 'redirect_host_correction');
  */
 function redirect_host_correction()
 {
+    $_SERVER['HTTP_REFERER'] = 'https://development.the-ecu-pro.com/product/bmw-and-mini-frm-repair-plug-and-play/';
+
     // If we're on the same site do nothing
     if ($_SERVER['HTTP_HOST'] == $_SERVER['HTTP_REFERER']) {
         exit;
