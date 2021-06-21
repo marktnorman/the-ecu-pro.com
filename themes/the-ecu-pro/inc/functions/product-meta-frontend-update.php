@@ -96,10 +96,10 @@ function update_product_description_meta_yoast($pieces, $context): array
         var_dump($product->get_short_description());
         echo "</pre>";
         echo "<pre>";
-        var_dump('pieces ' . $pieces);
+        var_dump($pieces);
         echo "</pre>";
         echo "<pre>";
-        var_dump('context ' . $context);
+        var_dump($context);
         echo "</pre>";
     }
 
