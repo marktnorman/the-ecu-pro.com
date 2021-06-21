@@ -89,10 +89,11 @@ function update_product_description_meta_yoast($pieces, $context): array
     global $post;
 
     $product = wc_get_product($post->ID);
+    // $product->get_short_description()
 
     $pieces['product'] = array(
         'url'         => get_permalink($post->ID),
-        'description' => $product->get_short_description()
+        'description' => 'This is the supercvustom desc'
     );
 
     return $pieces;
