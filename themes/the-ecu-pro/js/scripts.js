@@ -263,7 +263,7 @@
                     nonce: ecu_ajax_object.nonce
                 },
                 success: function (result, status, xhr) {
-                    console.log(result);
+                    //console.log(result);
                 },
                 error: function (jqXHR, exception) {
                     console.log("Failed");
@@ -308,10 +308,6 @@
         $('.variations_form select').change(function (e) {
             let val = $(e.target).val();
             let text = $(e.target).find("option:selected").text();
-
-            console.log(val);
-            console.log(text);
-
             $('.entry-summary h4.product-single-secondary-title').text(text);
 
             $('.entry-summary h4.product-single-secondary-title').removeClass('hide');
@@ -361,8 +357,6 @@
                     'action': 'clear_cart'
                 },
                 success: function (response) {
-                    console.log(response);
-
                     //Validation done and success continue
                     $('button.single_add_to_cart_button').trigger('click');
 
@@ -415,27 +409,6 @@
 
         $(document).on('click', '.cta-buttons-product .continue-button.payment-trigger', function (e) {
             e.preventDefault();
-
-            // let user_data = {
-            //     action: 'user_auth_checkout',
-            //     form_data: $.trim($("input[name='billing_email']").val())
-            // };
-            //
-            // // Lets try log the user in if he exists
-            // $.ajax({
-            //     url: ecu_ajax_object.ajax_url,
-            //     type: "POST",
-            //     data: user_data,
-            //     success: function (response) {
-            //         console.log(response);
-            //
-            //
-            //     },
-            //     error: function (request, status, error) {
-            //         console.log(request.responseText);
-            //         console.log(error);
-            //     },
-            // });
 
             $('.woocommerce #payment #place_order').trigger('click');
 
@@ -578,10 +551,14 @@
 
             setTimeout(
                 function () {
+
                     let primary_image_title = $('.woocommerce-product-gallery__image:first img').attr('data-o_title');
-                    console.log(primary_image_title);
                     $('.woocommerce-product-gallery__image:first img').attr('title', primary_image_title);
-                    console.log($('.woocommerce-product-gallery__image:first img').attr('title'));
+
+
+                    let obj = JSON.parse($('.yoast-schema-graph--footer').html());
+                    console.log(obj);
+
                 }, 2000);
 
         }
@@ -691,7 +668,6 @@
         }
 
         if ($('.video-informational-popup-trigger').length > 0) {
-            console.log('Video CTA clicked');
             $('.video-informational-popup-trigger').click(function () {
                 $('#video-popup-container-overlay').fadeIn(300);
             });

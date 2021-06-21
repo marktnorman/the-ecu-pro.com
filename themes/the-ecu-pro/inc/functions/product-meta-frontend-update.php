@@ -70,33 +70,22 @@ function change_attachment_image_attributes($attr, $attachment)
     return $attr;
 }
 
-add_filter( 'wpseo_json_ld_output', '__return_false' );
-
-//add_filter('wpseo_schema_graph_pieces', 'update_product_description_meta_yoast', 11, 2);
+add_filter('woocommerce_structured_data_product', 'update_product_description_meta_yoast', 9, 1);
 
 /**
- * Updates the description schema graph for Yoast
+ * @param $data
  *
- * @param array  $pieces  The current graph pieces.
- * @param string $context The current context.
- *
- * @return array The remaining graph pieces.
+ * @return array
  */
-function update_product_description_meta_yoast($pieces, $context): array
+function update_product_description_meta_yoast($data)
 {
     if (!is_product()) {
-        return $pieces;
+        return $data;
     }
 
-    global $post;
+    global $product;
 
-    $product = wc_get_product($post->ID);
-    // $product->get_short_description()
+    $data['description'] = 'This is our custom desc!';
 
-    $pieces['product'] = array(
-        'url'         => get_permalink($post->ID),
-        'description' => 'This is the supercvustom desc'
-    );
-
-    return $pieces;
+    return $data;
 }
