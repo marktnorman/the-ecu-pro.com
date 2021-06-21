@@ -70,7 +70,7 @@ function change_attachment_image_attributes($attr, $attachment)
     return $attr;
 }
 
-//add_filter('wpseo_schema_graph_pieces', 'update_product_description_meta_yoast', 11, 2);
+add_filter('wpseo_schema_graph_pieces', 'update_product_description_meta_yoast', 11, 2);
 
 /**
  * Updates the description schema graph for Yoast
@@ -90,18 +90,38 @@ function update_product_description_meta_yoast($pieces, $context): array
 
     $product = wc_get_product($post->ID);
 
+//    if (isset($_GET['developer'])) {
+//        echo "<pre>";
+//        var_dump($pieces);
+//        echo "</pre>";
+//        echo "<pre>";
+//        var_dump($context);
+//        echo "</pre>";
+//    }
+
+    return $pieces;
+}
+
+add_filter('wpseo_json_ld_output', 'update_product_description_meta_yoast_ld_output', 10, 2);
+
+function update_product_description_meta_yoast_ld_output($data, $context)
+{
+    if (!is_product()) {
+        return $data;
+    }
+
+    global $post;
+
+    $product = wc_get_product($post->ID);
+
     if (isset($_GET['developer'])) {
         echo "<pre>";
-        var_dump($pieces);
+        var_dump($data);
         echo "</pre>";
         echo "<pre>";
         var_dump($context);
         echo "</pre>";
     }
 
-    $pieces[0] = array(
-        'description'   => $product->get_short_description(),
-    );
-
-    return $pieces;
+    return $data;
 }
