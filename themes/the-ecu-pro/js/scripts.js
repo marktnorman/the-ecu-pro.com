@@ -551,14 +551,8 @@
 
             setTimeout(
                 function () {
-
                     let primary_image_title = $('.woocommerce-product-gallery__image:first img').attr('data-o_title');
                     $('.woocommerce-product-gallery__image:first img').attr('title', primary_image_title);
-
-
-                    let obj = JSON.parse($('.yoast-schema-graph--footer').html());
-                    console.log(obj);
-
                 }, 2000);
 
         }
