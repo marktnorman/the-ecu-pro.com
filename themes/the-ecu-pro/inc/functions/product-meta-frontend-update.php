@@ -90,36 +90,28 @@ function update_product_description_meta_yoast($pieces, $context): array
 
     $product = wc_get_product($post->ID);
 
-//    if (isset($_GET['developer'])) {
-//        echo "<pre>";
-//        var_dump($pieces);
-//        echo "</pre>";
-//        echo "<pre>";
-//        var_dump($context);
-//        echo "</pre>";
-//    }
+    if (isset($_GET['developer'])) {
+
+        add_filter('yoast_seo_development_mode', '__return_true');
+
+        echo "<pre>";
+        var_dump($pieces);
+        echo "</pre>";
+        echo "<pre>";
+        var_dump($context);
+        echo "</pre>";
+    }
 
     return $pieces;
 }
 
-add_filter('wpseo_json_ld_output', 'update_product_description_meta_yoast_ld_output', 10, 2);
+add_filter('wpseo_schema_product', 'output_product_description_meta_yoast');
 
-function update_product_description_meta_yoast_ld_output($data, $context)
+function output_product_description_meta_yoast($data)
 {
-    if (!is_product()) {
-        return $data;
-    }
-
-    global $post;
-
-    $product = wc_get_product($post->ID);
-
     if (isset($_GET['developer'])) {
         echo "<pre>";
         var_dump($data);
-        echo "</pre>";
-        echo "<pre>";
-        var_dump($context);
         echo "</pre>";
     }
 
