@@ -70,7 +70,7 @@ function change_attachment_image_attributes($attr, $attachment)
     return $attr;
 }
 
-add_filter('wpseo_schema_graph_pieces', 'update_product_description_meta_yoast', 11, 2);
+//add_filter('wpseo_schema_graph_pieces', 'update_product_description_meta_yoast', 11, 2);
 
 /**
  * Updates the description schema graph for Yoast
