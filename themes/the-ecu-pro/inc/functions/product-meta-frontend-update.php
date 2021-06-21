@@ -70,7 +70,7 @@ function change_attachment_image_attributes($attr, $attachment)
     return $attr;
 }
 
-//add_filter('wpseo_schema_graph_pieces', 'update_product_description_meta_yoast', 11, 2);
+add_filter('wpseo_schema_graph_pieces', 'update_product_description_meta_yoast', 11, 2);
 
 /**
  * Updates the description schema graph for Yoast
@@ -86,6 +86,23 @@ function update_product_description_meta_yoast($pieces, $context): array
         return $pieces;
     }
 
+    global $post, $product_description;
+
+    $product = wc_get_product($post->ID);
+
+    if (isset($_GET['developer'])) {
+        echo "<pre>";
+        var_dump($product_description);
+        var_dump($product->get_short_description());
+        echo "</pre>";
+        echo "<pre>";
+        var_dump('pieces ' . $pieces);
+        echo "</pre>";
+        echo "<pre>";
+        var_dump('context ' . $context);
+        echo "</pre>";
+    }
+
 //    if (empty($pieces['image']) && function_exists('genesis_get_image')) {
 //        $image = genesis_get_image(array('format' => 'url'));
 //        if (!empty($image)) {
@@ -98,63 +115,5 @@ function update_product_description_meta_yoast($pieces, $context): array
 //    }
 //    return $graph_piece;
 
-    if (isset($_GET['developer'])) {
-        echo "<pre>";
-        var_dump($pieces);
-        echo "</pre>";
-        echo "<pre>";
-        var_dump($context);
-        echo "</pre>";
-    }
-
     return $pieces;
-}
-
-add_filter('schema_output', 'schema_wp_update_product_description');
-/**
- * Extend / Override Schema Output
- *
- * @since 1.0
- */
-function schema_wp_update_product_description($schema)
-{
-
-    global $post, $product_description;
-
-    $product = wc_get_product($post->ID);
-
-    if (isset($_GET['developer'])) {
-        echo "<pre>";
-        var_dump($product_description);
-        var_dump($product->get_short_description());
-        echo "</pre>";
-    }
-
-    if (empty($schema)) {
-        return;
-    }
-
-    // Debug
-    // echo '<pre>'; print_r($schema); echo '</pre>';
-
-    if ($schema['@type'] != 'Product') {
-        return $schema;
-    }
-
-    $product = wc_get_product($post->ID);
-
-    if (isset($_GET['developer'])) {
-        echo "<pre>";
-        var_dump($product_description);
-        var_dump($product->get_short_description());
-        echo "</pre>";
-    }
-
-//    $product_description_option = get_field("product_associated_description", $product->get_id());
-//    $product_description_option = !empty($product_description_option) ? $product_description_option : 'option-1';
-
-    // Modify / Override values
-    $schema['description'] = 'New custom description set';
-
-    return $schema;
 }
