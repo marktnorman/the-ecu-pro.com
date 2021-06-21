@@ -70,6 +70,8 @@ function change_attachment_image_attributes($attr, $attachment)
     return $attr;
 }
 
+add_filter( 'wpseo_json_ld_output', '__return_false' );
+
 //add_filter('wpseo_schema_graph_pieces', 'update_product_description_meta_yoast', 11, 2);
 
 /**
