@@ -86,17 +86,17 @@ function update_product_description_meta_yoast($pieces, $context): array
         return $pieces;
     }
 
-    if (empty($pieces['image']) && function_exists('genesis_get_image')) {
-        $image = genesis_get_image(array('format' => 'url'));
-        if (!empty($image)) {
-            $graph_piece['image'] = array(
-                '@id'   => $image . '#primaryimage',
-                '@type' => 'ImageObject',
-                'url'   => $image,
-            );
-        }
-    }
-    return $graph_piece;
+//    if (empty($pieces['image']) && function_exists('genesis_get_image')) {
+//        $image = genesis_get_image(array('format' => 'url'));
+//        if (!empty($image)) {
+//            $graph_piece['image'] = array(
+//                '@id'   => $image . '#primaryimage',
+//                '@type' => 'ImageObject',
+//                'url'   => $image,
+//            );
+//        }
+//    }
+//    return $graph_piece;
 
     if (isset($_GET['developer'])) {
         echo "<pre>";
