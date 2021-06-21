@@ -70,26 +70,25 @@ function change_attachment_image_attributes($attr, $attachment)
     return $attr;
 }
 
-add_filter('wpseo_schema_graph_pieces', 'remove_breadcrumbs_from_schema', 11, 2);
+add_filter( 'wpseo_schema_article', 'update_product_description_meta_yoast' );
 
 /**
- * Updates the description schema graph for Yoast
+ * Changes @type of Article Schema data.
  *
- * @param array  $pieces  The current graph pieces.
- * @param string $context The current context.
+ * @param array $data Schema.org Article data array.
  *
- * @return array The remaining graph pieces.
+ * @return array Schema.org Article data array.
  */
-function remove_breadcrumbs_from_schema($pieces, $context): array
+function update_product_description_meta_yoast( array $data ): array
 {
+
     if (isset($_GET['developer'])) {
         echo "<pre>";
-        var_dump($pieces);
-        echo "</pre>";
-        echo "<pre>";
-        var_dump($context);
+        var_dump($data);
         echo "</pre>";
     }
 
-    return $pieces;
+    //$data['description'] = 'SocialMediaPosting';
+
+    return $data;
 }
