@@ -86,15 +86,11 @@ function update_product_description_meta_yoast($pieces, $context): array
         return $pieces;
     }
 
-    global $post, $product_description;
+    global $post;
 
     $product = wc_get_product($post->ID);
 
     if (isset($_GET['developer'])) {
-        echo "<pre>";
-        var_dump($product_description);
-        var_dump($product->get_short_description());
-        echo "</pre>";
         echo "<pre>";
         var_dump($pieces);
         echo "</pre>";
@@ -103,17 +99,9 @@ function update_product_description_meta_yoast($pieces, $context): array
         echo "</pre>";
     }
 
-//    if (empty($pieces['image']) && function_exists('genesis_get_image')) {
-//        $image = genesis_get_image(array('format' => 'url'));
-//        if (!empty($image)) {
-//            $graph_piece['image'] = array(
-//                '@id'   => $image . '#primaryimage',
-//                '@type' => 'ImageObject',
-//                'url'   => $image,
-//            );
-//        }
-//    }
-//    return $graph_piece;
+    $pieces[0] = array(
+        'description'   => $product->get_short_description(),
+    );
 
     return $pieces;
 }

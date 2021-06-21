@@ -512,7 +512,7 @@ remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
  */
 function descriptionDataCallback()
 {
-    global $post, $product, $product_description;
+    global $post, $product;
 
     // Get product description option
     $product_description_option = get_field("product_associated_description", $product->get_id());
