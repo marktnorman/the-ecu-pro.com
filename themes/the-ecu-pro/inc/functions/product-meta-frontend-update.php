@@ -70,25 +70,26 @@ function change_attachment_image_attributes($attr, $attachment)
     return $attr;
 }
 
-add_filter( 'wpseo_schema_article', 'update_product_description_meta_yoast' );
+add_filter('wpseo_schema_graph_pieces', 'update_product_description_meta_yoast', 11, 2);
 
 /**
- * Changes @type of Article Schema data.
+ * Updates the description schema graph for Yoast
  *
- * @param array $data Schema.org Article data array.
+ * @param array  $pieces  The current graph pieces.
+ * @param string $context The current context.
  *
- * @return array Schema.org Article data array.
+ * @return array The remaining graph pieces.
  */
-function update_product_description_meta_yoast( array $data ): array
+function update_product_description_meta_yoast($pieces, $context): array
 {
-
     if (isset($_GET['developer'])) {
         echo "<pre>";
-        var_dump($data);
+        var_dump($pieces);
+        echo "</pre>";
+        echo "<pre>";
+        var_dump($context);
         echo "</pre>";
     }
 
-    //$data['description'] = 'SocialMediaPosting';
-
-    return $data;
+    return $pieces;
 }
