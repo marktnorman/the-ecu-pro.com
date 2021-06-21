@@ -144,7 +144,7 @@ function update_product_description_meta_yoast($data)
     // Find and replace information CTA to call to action for video popup
     $product_short_description = str_replace('[i]', '', $product_short_description);
 
-    $data['description'] = $product_short_description;
+    $data['description'] = strip_tags($product_short_description);
 
     return $data;
 }
