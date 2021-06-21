@@ -844,7 +844,7 @@ function WarrantyCallback()
     </div>
 <?php }
 
-add_filter('woocommerce_product_tabs', 'additional_product_tabs', 1, 99);
+add_filter('woocommerce_product_tabs', 'additional_product_tabs');
 /**
  * Add 2 custom product data tabs
  */
