@@ -145,7 +145,7 @@ get_header();
                                                                     class="tag"><?php echo 'Testing Service'; ?></span>
                                                             <h3><?php echo $recommended_product_object->post_title; ?></h3>
                                                             <span class="price">$99</span>
-                                                            <a href="<?php echo $recommended_product_object->guid; ?>">View
+                                                            <a href="<?php echo get_permalink( $recommended_product_object->ID ); ?>">View
                                                                 service</a>
 
                                                         </div>
