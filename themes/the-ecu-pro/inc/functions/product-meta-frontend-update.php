@@ -82,6 +82,22 @@ add_filter('wpseo_schema_graph_pieces', 'update_product_description_meta_yoast',
  */
 function update_product_description_meta_yoast($pieces, $context): array
 {
+    if (!is_product()) {
+        return $pieces;
+    }
+
+    if (empty($pieces['image']) && function_exists('genesis_get_image')) {
+        $image = genesis_get_image(array('format' => 'url'));
+        if (!empty($image)) {
+            $graph_piece['image'] = array(
+                '@id'   => $image . '#primaryimage',
+                '@type' => 'ImageObject',
+                'url'   => $image,
+            );
+        }
+    }
+    return $graph_piece;
+
     if (isset($_GET['developer'])) {
         echo "<pre>";
         var_dump($pieces);
@@ -92,4 +108,44 @@ function update_product_description_meta_yoast($pieces, $context): array
     }
 
     return $pieces;
+}
+
+add_filter('schema_output', 'schema_wp_update_product_description');
+/**
+ * Extend / Override Schema Output
+ *
+ * @since 1.0
+ */
+function schema_wp_update_product_description($schema)
+{
+
+    global $post, $product_description;
+
+    if (empty($schema)) {
+        return;
+    }
+
+    // Debug
+    // echo '<pre>'; print_r($schema); echo '</pre>';
+
+    if ($schema['@type'] != 'Product') {
+        return $schema;
+    }
+
+    $product = wc_get_product($post->ID);
+
+    if (isset($_GET['developer'])) {
+        echo "<pre>";
+        var_dump($product_description);
+        var_dump($product->get_short_description());
+        echo "</pre>";
+    }
+
+//    $product_description_option = get_field("product_associated_description", $product->get_id());
+//    $product_description_option = !empty($product_description_option) ? $product_description_option : 'option-1';
+
+    // Modify / Override values
+    $schema['description'] = 'New custom description set';
+
+    return $schema;
 }

@@ -512,7 +512,7 @@ remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
  */
 function descriptionDataCallback()
 {
-    global $post, $product;
+    global $post, $product, $product_description;
 
     // Get product description option
     $product_description_option = get_field("product_associated_description", $product->get_id());
@@ -844,7 +844,7 @@ function WarrantyCallback()
     </div>
 <?php }
 
-add_filter('woocommerce_product_tabs', 'additional_product_tabs');
+add_filter('woocommerce_product_tabs', 'additional_product_tabs', 1, 99);
 /**
  * Add 2 custom product data tabs
  */
