@@ -90,30 +90,10 @@ function update_product_description_meta_yoast($pieces, $context): array
 
     $product = wc_get_product($post->ID);
 
-    if (isset($_GET['developer'])) {
-
-        add_filter('yoast_seo_development_mode', '__return_true');
-
-        echo "<pre>";
-        var_dump($pieces);
-        echo "</pre>";
-        echo "<pre>";
-        var_dump($context);
-        echo "</pre>";
-    }
+    $pieces['product'] = array(
+        'url'         => get_permalink($post->ID),
+        'description' => $product->get_short_description()
+    );
 
     return $pieces;
-}
-
-add_filter('wpseo_schema_product', 'output_product_description_meta_yoast');
-
-function output_product_description_meta_yoast($data)
-{
-    if (isset($_GET['developer'])) {
-        echo "<pre>";
-        var_dump($data);
-        echo "</pre>";
-    }
-
-    return $data;
 }
