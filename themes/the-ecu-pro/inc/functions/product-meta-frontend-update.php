@@ -84,8 +84,8 @@ function update_product_description_meta_yoast($data)
         return $data;
     }
 
-    global $woocommerce, $product;
-    $variation_product = new WC_Product_Variation($product->id());
+    global $woocommerce, $product, $post;
+    $variation_product = new WC_Product_Variation($post->ID);
 
     // generate our description from short and bottom
     $full_copy = strip_tags(generate_product_short_description());
