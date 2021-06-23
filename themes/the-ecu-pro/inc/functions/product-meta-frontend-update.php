@@ -84,15 +84,27 @@ function update_product_description_meta_yoast($data)
         return $data;
     }
 
+    global $product;
+
     // generate our description from short and bottom
     $full_copy = strip_tags(generate_product_short_description());
     $full_copy .= strip_tags(generate_product_bottom_description());
+    $full_copy .= str_replace('[i]', '', $full_copy);
 
     // Update the description
     $data['description'] = $full_copy;
 
     // Update URL to variation
+    $data['@id'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $data['url'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+    if (isset($_GET['developing'])) {
+        // Update price to variation price
+        //$data['offers']['price'] = $product->get_price();
+        echo "<pre>";
+        var_dump($data);
+        echo "</pre>";
+    }
 
     return $data;
 }
