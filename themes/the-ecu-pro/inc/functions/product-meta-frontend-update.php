@@ -100,7 +100,7 @@ function update_product_description_meta_yoast($data)
     $data['url'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
     // Update price to variation price
-    $data['offers'][0]['price'] = $variation_product->get_price();
+    $data['offers']['price'] = $variation_product->get_price();
 
     return $data;
 }
