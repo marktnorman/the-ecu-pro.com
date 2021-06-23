@@ -87,9 +87,19 @@ function update_product_description_meta_yoast($data)
     global $product;
 
     // generate our description from short and bottom
-    $full_copy = strip_tags(generate_product_short_description());
-    $full_copy .= strip_tags(generate_product_bottom_description());
-    $full_copy .= str_replace('[i]', '', $full_copy);
+    $short_copy = strip_tags(generate_product_short_description());
+    $short_copy = str_replace('[i]', '', $short_copy);
+
+    $bottom_copy = strip_tags(generate_product_bottom_description());
+    $bottom_copy = str_replace('[i]', '', $bottom_copy);
+
+    $full_copy = $short_copy . $bottom_copy;
+
+    if (isset($_GET['developing'])) {
+        var_dump(strip_tags(generate_product_short_description()));
+        var_dump(strip_tags(generate_product_bottom_description()));
+        var_dump($full_copy);
+    }
 
     // Update the description
     $data['description'] = $full_copy;
