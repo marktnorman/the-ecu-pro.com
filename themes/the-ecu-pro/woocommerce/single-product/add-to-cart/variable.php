@@ -101,7 +101,7 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
                                 foreach ($product->get_available_variations() as $variation) {
                                     // Set for each variation ID the corresponding price in the data array (to be used in jQuery)
                                     $variations_data[$variation['variation_id']] = $variation['regular_price'];
-                                    $variation_html_output .= '<span style="display: none !important;">'.$variation.'</span>';
+                                    $variation_html_output .= '<span style="display: none !important;">'.print_r($variation).'</span>';
                                 }
 
                                 ?>
@@ -109,7 +109,6 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
                                     <span style="display: none !important;"><?php print_r($variations_data); ?></span>
                                     <?php print_r($variation_html_output); ?>
                                     <span class="variation-selected-price" style="display: none !important;"></span>
-                                    <span style="display: none !important;"><?php echo $product; ?></span>
                                     <span style="display: none !important;"><?php var_dump($options); ?></span>
                                     <td class="label"><label for="<?php echo esc_attr(
                                             sanitize_title($attribute_name)
