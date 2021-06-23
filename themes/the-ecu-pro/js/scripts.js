@@ -559,16 +559,6 @@
                     let primary_image_title = $('.woocommerce-product-gallery__image:first img').attr('data-o_title');
                     $('.woocommerce-product-gallery__image:first img').attr('title', primary_image_title);
                 }, 2000);
-
-            setTimeout(
-                function () {
-                    let unformatted_price = $(".woocommerce-variation-price .woocommerce-Price-amount bdi").text();
-                    let price = unformatted_price.substr(unformatted_price.indexOf("$") + 1);
-                    $('.variation-selected-price').text(price);
-
-                    updateUrlParameter('attribute_pa_variation_price', price);
-                }, 100);
-
         }
 
         // Prevent user from just clicking on the checkout tab
