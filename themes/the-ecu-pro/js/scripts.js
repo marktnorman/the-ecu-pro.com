@@ -313,12 +313,6 @@
             $('.entry-summary h4.product-single-secondary-title').addClass('show');
 
             updateUrlParameter('attribute_pa_variation', val);
-
-            let unformatted_price = $(".woocommerce-variation-price .woocommerce-Price-amount bdi").text();
-            let price = unformatted_price.substr(unformatted_price.indexOf("$") + 1);
-            $('.variation-selected-price').text(price);
-
-            updateUrlParameter('attribute_pa_variation_price', price);
         });
 
         $(document).on('click', '.cta-buttons-product .continue-button.initial', function (e) {

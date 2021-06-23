@@ -101,6 +101,27 @@ function update_product_description_meta_yoast($data)
 //        var_dump($full_copy);
 //    }
 
+    $attribute_name = 'pa_variation';
+
+    $selected = isset(
+        $_REQUEST['attribute_' . sanitize_title(
+            $attribute_name
+        )]
+    ) ? wc_clean(
+        $_REQUEST['attribute_' . sanitize_title($attribute_name)]
+    ) : $product->get_variation_default_attribute($attribute_name);
+
+    $selected_variation_price = '';
+
+    // Loop through variations data
+    foreach ($product->get_available_variations() as $variation) {
+        // Set for each variation ID the corresponding price in the data array (to be used in jQuery)
+        $variations_data[$variation['variation_id']] = $variation['regular_price'];
+        if ($variation['attributes']['attribute_pa_variation'] == $selected) {
+            $selected_variation_price = $variation['display_price'];
+        }
+    }
+
     // Update the description
     $data['description'] = $full_copy;
 
@@ -108,14 +129,8 @@ function update_product_description_meta_yoast($data)
     $data['@id'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $data['url'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-    if (isset($_GET['attribute_pa_variation_price'])) {
-        $price = $_GET['attribute_pa_variation_price'];
-    } else {
-        $price = '';
-    }
-
     // Update price to variation price
-    $data['offers'][0]['price'] = (float)$price;
+    $data['offers'][0]['price'] = number_format((float) $selected_variation_price, 2, '.', '');
 
     return $data;
 }
