@@ -319,6 +319,8 @@
             let title = $(".woocommerce div.product .product_title").text();
             let price = title.substr(title.indexOf("$") + 1);
             $('.variation-selected-price').text(price);
+
+            updateUrlParameter('attribute_pa_variation_price', price);
         });
 
         $(document).on('click', '.cta-buttons-product .continue-button.initial', function (e) {
