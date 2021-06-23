@@ -567,7 +567,7 @@
                     $('.variation-selected-price').text(price);
 
                     updateUrlParameter('attribute_pa_variation_price', price);
-                }, 1000);
+                }, 100);
 
         }
 
