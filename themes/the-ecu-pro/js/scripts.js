@@ -303,8 +303,6 @@
             window.history.replaceState({}, "", baseUrl + params);
         }
 
-        //$('.variations_form').on('change', 'select', function (e) {
-
         $('.variations_form select').change(function (e) {
             let val = $(e.target).val();
             let text = $(e.target).find("option:selected").text();
@@ -315,6 +313,12 @@
             $('.entry-summary h4.product-single-secondary-title').addClass('show');
 
             updateUrlParameter('attribute_pa_variation', val);
+
+            let unformatted_price = $(".woocommerce-variation-price .woocommerce-Price-amount bdi").text();
+            let price = unformatted_price.substr(unformatted_price.indexOf("$") + 1);
+            $('.variation-selected-price').text(price);
+
+            updateUrlParameter('attribute_pa_variation_price', price);
         });
 
         $(document).on('click', '.cta-buttons-product .continue-button.initial', function (e) {
@@ -556,11 +560,14 @@
                     $('.woocommerce-product-gallery__image:first img').attr('title', primary_image_title);
                 }, 2000);
 
-            let unformatted_price = $(".woocommerce-variation-price .woocommerce-Price-amount bdi").text();
-            let price = unformatted_price.substr(unformatted_price.indexOf("$") + 1);
-            $('.variation-selected-price').text(price);
+            setTimeout(
+                function () {
+                    let unformatted_price = $(".woocommerce-variation-price .woocommerce-Price-amount bdi").text();
+                    let price = unformatted_price.substr(unformatted_price.indexOf("$") + 1);
+                    $('.variation-selected-price').text(price);
 
-            updateUrlParameter('attribute_pa_variation_price', price);
+                    updateUrlParameter('attribute_pa_variation_price', price);
+                }, 1000);
 
         }
 
