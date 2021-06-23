@@ -316,8 +316,8 @@
 
             updateUrlParameter('attribute_pa_variation', val);
 
-            let title = $(".woocommerce div.product .product_title").text();
-            let price = title.substr(title.indexOf("$") + 1);
+            let unformatted_price = $(".woocommerce-variation-price .woocommerce-Price-amount bdi").text();
+            let price = unformatted_price.substr(unformatted_price.indexOf("$") + 1);
             $('.variation-selected-price').text(price);
 
             updateUrlParameter('attribute_pa_variation_price', price);
