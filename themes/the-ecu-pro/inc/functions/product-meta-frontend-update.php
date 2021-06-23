@@ -84,8 +84,7 @@ function update_product_description_meta_yoast($data)
         return $data;
     }
 
-    global $woocommerce, $product;
-    //$variation_product = new WC_Product_Variation($post->ID);
+    global $product;
 
     // generate our description from short and bottom
     $full_copy = strip_tags(generate_product_short_description());
@@ -99,16 +98,8 @@ function update_product_description_meta_yoast($data)
     $data['@id'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $data['url'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-    if (isset($_GET['developing'])) {
-//        $product_id = $product->get_id();
-//        var_dump((float)$product->get_price());
-//        $product = wc_get_product( $product_id );
-//        $variations = $product->get_available_variations();
-        //var_dump($variations);
-    }
-
     // Update price to variation price
-    $data['offers']['price'] = number_format((float) $product->get_price(), 2, '.', '');
+    $data['offers'][0]['price'] = number_format((float) $product->get_price(), 2, '.', '');
 
     return $data;
 }
