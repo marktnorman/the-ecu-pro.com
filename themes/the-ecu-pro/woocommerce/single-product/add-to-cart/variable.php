@@ -107,7 +107,7 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
                                 ?>
                                 <tr>
                                     <span style="display: none !important;"><?php print_r($variations_data); ?></span>
-                                    <?php print_r($variation_html_output); ?>
+                                    <span style="display: none !important;"><?php echo "<pre>"; print_r($variation_html_output); echo "</pre>";?></span>
                                     <span class="variation-selected-price" style="display: none !important;"></span>
                                     <span style="display: none !important;"><?php var_dump($options); ?></span>
                                     <td class="label"><label for="<?php echo esc_attr(
