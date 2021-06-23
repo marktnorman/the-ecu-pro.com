@@ -95,19 +95,20 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
                                 ) : $product->get_variation_default_attribute($attribute_name);
 
                                 $variations_data = []; // Initializing
-                                $variation_html_output = '';
+                                $selected_variation_price = '';
 
                                 // Loop through variations data
                                 foreach ($product->get_available_variations() as $variation) {
                                     // Set for each variation ID the corresponding price in the data array (to be used in jQuery)
                                     $variations_data[$variation['variation_id']] = $variation['regular_price'];
-                                    $variation_html_output .= '<span style="display: none !important;">'.print_r($variation).'</span>';
+                                    if ($variation['attributes']['attribute_pa_variation'] == $selected) {
+                                        $selected_variation_price = $variation['display_price'];
+                                    }
                                 }
 
                                 ?>
                                 <tr>
-                                    <span style="display: none !important;"><?php print_r($variations_data); ?></span>
-                                    <span style="display: none !important;"><?php echo "<pre>"; print_r($variation_html_output); echo "</pre>";?></span>
+                                    <span class="variation-selected-php-price" style="display: none !important;"><?php echo $selected_variation_price; ?></span>
                                     <span class="variation-selected-price" style="display: none !important;"></span>
                                     <span style="display: none !important;"><?php var_dump($options); ?></span>
                                     <td class="label"><label for="<?php echo esc_attr(
