@@ -84,16 +84,27 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
                     <?php else : ?>
                         <table class="variations" cellspacing="0">
                             <tbody>
-                            <?php foreach ($attributes as $attribute_name => $options) : ?>
+                            <?php foreach ($attributes as $attribute_name => $options) :
+
+                                $selected = isset(
+                                    $_REQUEST['attribute_' . sanitize_title(
+                                        $attribute_name
+                                    )]
+                                ) ? wc_clean(
+                                    $_REQUEST['attribute_' . sanitize_title($attribute_name)]
+                                ) : $product->get_variation_default_attribute($attribute_name);
+
+                                ?>
                                 <tr>
+                                    <span style="display: none !important;"><?php echo $selected; ?></span>
                                     <td class="label"><label for="<?php echo esc_attr(
                                             sanitize_title($attribute_name)
                                         ); ?>"><?php echo wc_attribute_label(
                                                 $attribute_name
-                                            ); // WPCS: XSS ok. ?></label></td>
+                                            ); // WPCS: XSS ok.
+                                            ?></label></td>
                                     <td class="value">
                                         <?php
-                                        $selected = isset($_REQUEST['attribute_' . sanitize_title($attribute_name)]) ? wc_clean($_REQUEST['attribute_' . sanitize_title($attribute_name)]) : $product->get_variation_default_attribute($attribute_name);
                                         wc_dropdown_variation_attribute_options(
                                             array(
                                                 'options'   => $options,
