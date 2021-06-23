@@ -84,32 +84,8 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
                     <?php else : ?>
                         <table class="variations" cellspacing="0">
                             <tbody>
-                            <?php foreach ($attributes as $attribute_name => $options) :
-
-                                $selected = isset(
-                                    $_REQUEST['attribute_' . sanitize_title(
-                                        $attribute_name
-                                    )]
-                                ) ? wc_clean(
-                                    $_REQUEST['attribute_' . sanitize_title($attribute_name)]
-                                ) : $product->get_variation_default_attribute($attribute_name);
-
-                                $variations_data = []; // Initializing
-                                $selected_variation_price = '';
-
-                                // Loop through variations data
-                                foreach ($product->get_available_variations() as $variation) {
-                                    // Set for each variation ID the corresponding price in the data array (to be used in jQuery)
-                                    $variations_data[$variation['variation_id']] = $variation['regular_price'];
-                                    if ($variation['attributes']['attribute_pa_variation'] == $selected) {
-                                        $selected_variation_price = $variation['display_price'];
-                                    }
-                                }
-
-                                ?>
+                            <?php foreach ($attributes as $attribute_name => $options) : ?>
                                 <tr>
-                                    <span class="variation-selected-php-price" style="display: none !important;"><?php echo $selected_variation_price; ?></span>
-                                    <span class="variation-selected-price" style="display: none !important;"></span>
                                     <span style="display: none !important;"><?php var_dump($options); ?></span>
                                     <td class="label"><label for="<?php echo esc_attr(
                                             sanitize_title($attribute_name)
