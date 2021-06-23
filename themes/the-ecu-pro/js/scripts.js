@@ -308,12 +308,17 @@
         $('.variations_form select').change(function (e) {
             let val = $(e.target).val();
             let text = $(e.target).find("option:selected").text();
+
             $('.entry-summary h4.product-single-secondary-title').text(text);
 
             $('.entry-summary h4.product-single-secondary-title').removeClass('hide');
             $('.entry-summary h4.product-single-secondary-title').addClass('show');
 
             updateUrlParameter('attribute_pa_variation', val);
+
+            let title = $(".woocommerce div.product .product_title").text();
+            let price = title.substr(title.indexOf("$") + 1);
+            $('.variation-selected-price').text(price);
         });
 
         $(document).on('click', '.cta-buttons-product .continue-button.initial', function (e) {

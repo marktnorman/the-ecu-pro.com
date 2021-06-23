@@ -97,7 +97,7 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
                                 ?>
                                 <tr>
                                     <span style="display: none !important;"><?php echo $selected; ?></span>
-                                    <span class="variation-selected-price" style="display: none !important;"><?php echo $product->get_price(); ?></span>
+                                    <span class="variation-selected-price" style="display: none !important;"></span>
                                     <td class="label"><label for="<?php echo esc_attr(
                                             sanitize_title($attribute_name)
                                         ); ?>"><?php echo wc_attribute_label(
