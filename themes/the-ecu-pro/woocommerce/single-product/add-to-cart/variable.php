@@ -94,13 +94,23 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
                                     $_REQUEST['attribute_' . sanitize_title($attribute_name)]
                                 ) : $product->get_variation_default_attribute($attribute_name);
 
+                                $variations_data = []; // Initializing
+                                $variation_html_output = '';
+
+                                // Loop through variations data
+                                foreach ($product->get_available_variations() as $variation) {
+                                    // Set for each variation ID the corresponding price in the data array (to be used in jQuery)
+                                    $variations_data[$variation['variation_id']] = $variation['regular_price'];
+                                    $variation_html_output .= '<span style="display: none !important;">'.$variation.'</span>';
+                                }
+
                                 ?>
                                 <tr>
-                                    <span style="display: none !important;"><?php echo $selected; ?></span>
+                                    <span style="display: none !important;"><?php echo $variations_data; ?></span>
+                                    <?php echo $variation_html_output; ?>
                                     <span class="variation-selected-price" style="display: none !important;"></span>
                                     <span style="display: none !important;"><?php echo $product; ?></span>
-                                    <span style="display: none !important;"><?php echo $options; ?></span>
-                                    <span style="display: none !important;"><?php echo $attribute_name; ?></span>
+                                    <span style="display: none !important;"><?php var_dump($options); ?></span>
                                     <td class="label"><label for="<?php echo esc_attr(
                                             sanitize_title($attribute_name)
                                         ); ?>"><?php echo wc_attribute_label(
