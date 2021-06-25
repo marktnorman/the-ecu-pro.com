@@ -1233,7 +1233,7 @@ function remove_variations_pre_get_posts_query($query)
     }
 }
 
-add_action('template_redirect', 'redirect_host_correction');
+//add_action('template_redirect', 'redirect_host_correction');
 /**
  * Lets redirect if a user was taking to dev site from live
  */
