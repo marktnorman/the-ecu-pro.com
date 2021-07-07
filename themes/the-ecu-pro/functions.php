@@ -1233,6 +1233,33 @@ function remove_variations_pre_get_posts_query($query)
     }
 }
 
+add_action('init', 'work_order_form_redirection');
+function work_order_form_redirection()
+{
+    if (isset($_GET['work-order-initiation']) && isset($_GET['order-id'])) {
+
+        $order = wc_get_order($_GET['order-id']);
+
+        if (!empty($order)) {
+            $items = $order->get_items();
+            $productType = '';
+
+            foreach ($items as $item) {
+                $product_id  = $item->get_product_id();
+                $productType = get_field("product_type", $product_id);
+            }
+
+            if ($productType == 'FRMs') {
+                wp_redirect('https://the-ecu-pro.com/frm-repair-request/');
+                exit;
+            } else {
+                wp_redirect('https://the-ecu-pro.com/new-ecu-order/');
+                exit;
+            }
+        }
+    }
+}
+
 //add_action('template_redirect', 'redirect_host_correction');
 /**
  * Lets redirect if a user was taking to dev site from live
