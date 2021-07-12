@@ -661,7 +661,7 @@
 
         if ($('.video-informational-popup-trigger').length > 0) {
             $('.video-informational-popup-trigger').click(function () {
-                if( $('#video-popup-container iframe').attr('src').length === null ) {
+                if( $('#video-popup-container iframe').attr('src').length <= 0 ) {
                     $('#video-popup-container iframe').attr('src', source);
                 }
 
