@@ -48,7 +48,7 @@ function generate_product_bottom_description()
 
     $how_it_works_product_video_url = !empty($how_it_works_product_video_url) ? $how_it_works_product_video_url : 'https://www.youtube.com/embed/JESCRzDYdqE';
 
-    $formatted_video_output = '<a href="#" class="video-informational-popup-trigger">[i]</a>';
+    $formatted_video_output = '<a href="#" data-source-attr="'.$how_it_works_product_video_url.'" class="video-informational-popup-trigger">[i]</a>';
     $product_video_url      = !empty($how_it_works_product_video_url) ? $formatted_video_output : '';
 
     $attribute_taxonomies   = wc_get_attribute_taxonomies();

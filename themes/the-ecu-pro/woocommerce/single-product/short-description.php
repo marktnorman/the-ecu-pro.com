@@ -42,7 +42,7 @@ $description_attribute = $product->get_attribute('description');
 
 // Get video URL
 $product_video_url = get_field("video_embed_url", $product->get_id());
-$formatted_video_output = '<a href="#" class="video-informational-popup-trigger">[i]</a>';
+$formatted_video_output = '<a href="#" data-source-attr="'.$product_video_url.'" class="video-informational-popup-trigger">[i]</a>';
 $product_video_url = !empty($product_video_url) ? $formatted_video_output : '';
 
 $attribute_taxonomies = wc_get_attribute_taxonomies();
