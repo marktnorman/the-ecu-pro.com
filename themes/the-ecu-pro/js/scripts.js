@@ -661,13 +661,13 @@
 
         if ($('.video-informational-popup-trigger').length > 0) {
             $('.video-informational-popup-trigger').click(function () {
+                $('#video-popup-container-overlay').fadeIn(300);
+
                 if( $('#video-popup-container iframe').attr('src').length <= 0 ) {
                     $('#video-popup-container iframe').attr('src', source);
                 }
 
                 let source = $('#video-popup-container iframe').attr('src');
-
-                $('#video-popup-container-overlay').fadeIn(300);
             });
 
             $('#close').click(function () {
