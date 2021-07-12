@@ -224,7 +224,7 @@ function child_theme_admin_styles()
 add_action('wp_enqueue_scripts', 'theecupro_enqueue_assets');
 function theecupro_enqueue_assets()
 {
-    $version = '10.1.9';
+    $version = '10.7.4';
 
     // CARRY ON
     wp_enqueue_style('theecupro-default-style', get_stylesheet_uri());
@@ -319,8 +319,9 @@ function include_dependencies()
     require_once get_stylesheet_directory() . '/inc/functions/get-checkout-total-value.php';
     require_once get_stylesheet_directory() . '/inc/functions/auto-user-auth.php';
     require_once get_stylesheet_directory() . '/inc/functions/product-generation.php';
-    //require_once get_stylesheet_directory() . '/inc/functions/prevent-received-redirection.php';
-    //require_once get_stylesheet_directory() . '/inc/functions/checkout-product-tab.php';
+    require_once get_stylesheet_directory() . '/inc/functions/product-meta-frontend-update.php';
+    require_once get_stylesheet_directory() . '/inc/functions/generate-short-description.php';
+    require_once get_stylesheet_directory() . '/inc/functions/generate-bottom-description.php';
 }
 
 /**
@@ -508,126 +509,12 @@ remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
 
 /**
  * descriptionDataCallback
+ *
+ * @throws Exception
  */
 function descriptionDataCallback()
 {
-    global $post, $product;
-
-    // Get product description option
-    $product_description_option = get_field("product_associated_description", $product->get_id());
-    $product_description_option = !empty($product_description_option) ? $product_description_option : 'option-1';
-
-    // Get product vehicle date
-    $product_vehicle_date = get_field("vehicle_date", $product->get_id());
-    $product_vehicle_date = !empty($product_vehicle_date) ? $product_vehicle_date : 'No date set';
-
-    // Get product ECU
-    $product_ecu = get_field("ecu", $product->get_id());
-    $product_ecu = !empty($product_ecu) ? $product_ecu : 'No ECU set';
-
-    // Get product security system
-    $product_security_system = get_field("security_system", $product->get_id());
-    $product_security_system = !empty($product_security_system) ? $product_security_system : 'No security system set';
-
-    //Get our description taxonomy terms
-    $description_attribute = $product->get_attribute('description');
-
-    //Get our ecu faults taxonomy terms
-    $ecu_faults_attribute = $product->get_attribute('ecu-faults');
-
-    // Get video URL
-    $product_video_url      = get_field("video_embed_url", $product->get_id());
-    $formatted_video_output = '<a href="#" class="video-informational-popup-trigger">[i]</a>';
-    $product_video_url      = !empty($product_video_url) ? $formatted_video_output : '';
-
-    $attribute_taxonomies   = wc_get_attribute_taxonomies();
-    $taxonomy_ecu_faults    = array();
-    $ecu_fault_items_output = '';
-    $taxonomy_description   = array();
-
-    if ($attribute_taxonomies) {
-        foreach ($attribute_taxonomies as $tax) {
-            if ($tax->attribute_name === 'ecu-faults') {
-                if (taxonomy_exists(wc_attribute_taxonomy_name($tax->attribute_name))) {
-                    $taxonomy_ecu_faults[$tax->attribute_name] = get_terms(
-                        wc_attribute_taxonomy_name($tax->attribute_name),
-                        'orderby=name&hide_empty=0'
-                    );
-                }
-            }
-
-            if ($tax->attribute_name === 'description') {
-                if (taxonomy_exists(wc_attribute_taxonomy_name($tax->attribute_name))) {
-                    $taxonomy_description[$tax->attribute_name] = get_terms(
-                        wc_attribute_taxonomy_name($tax->attribute_name),
-                        'orderby=name&hide_empty=0'
-                    );
-                }
-            }
-        }
-    }
-
-    foreach ($taxonomy_ecu_faults as $taxonomy_ecu_fault_terms) {
-        foreach ($taxonomy_ecu_fault_terms as $taxonomy_ecu_fault_term) {
-            if ($taxonomy_ecu_fault_term->name === $product_ecu) {
-
-                $ecu_fault_items_output = '<ul>';
-
-                $rows = get_field(
-                    'ecu_fault',
-                    $taxonomy_ecu_fault_term->taxonomy . '_' . $taxonomy_ecu_fault_term->term_id
-                );
-                foreach ($rows as $key => $ecu_fault_item) {
-                    $ecu_fault_items_output .= '<li>';
-                    $ecu_fault_items_output .= $ecu_fault_item['ecu_fault_item'];
-                    $ecu_fault_items_output .= '</li>';
-                }
-
-                $ecu_fault_items_output .= '</ul>';
-
-            }
-        }
-    }
-
-    foreach ($taxonomy_description as $taxonomy_description_terms) {
-        foreach ($taxonomy_description_terms as $taxonomy_description_term) {
-            if ($taxonomy_description_term->slug === $product_description_option) {
-                $product_description = get_field(
-                    "bottom_description",
-                    $taxonomy_description_term->taxonomy . '_' . $taxonomy_description_term->term_id
-                );
-            }
-        }
-    }
-
-    $product_description = !empty($product_description) ? $product_description : apply_filters(
-        'woocommerce_full_description',
-        $post->post_content
-    );
-
-    $product_ecu_faults = !empty($ecu_fault_items_output) ? $ecu_fault_items_output : 'No faults';
-
-    // Find and replace vehicle date with the set value
-    $product_description = str_replace(
-        '[vehicle-date]',
-        $product_vehicle_date,
-        $product_description
-    );
-
-    // Find and replace ECU with the set value
-    $product_description = str_replace('[ECU]', $product_ecu, $product_description);
-
-    // Find and replace ecu faults with the set value
-    $product_description = str_replace(
-        '[ecu-faults]',
-        $product_ecu_faults,
-        $product_description
-    );
-
-    // Find and replace information CTA to call to action for video popup
-    $product_description = str_replace('[i]', $product_video_url, $product_description);
-
-    echo $product_description;
+    echo generate_product_bottom_description();
 }
 
 function technicalDataCallback()
@@ -897,7 +784,7 @@ function advanced_search_query($query)
     return $query;
 }
 
-add_action('pre_get_posts', 'advanced_search_query', 1000);
+//add_action('pre_get_posts', 'advanced_search_query', 1000);
 
 // Replace add to cart button by a linked button to the product in Shop and archives pages
 add_filter('woocommerce_loop_add_to_cart_link', 'replace_loop_add_to_cart_button', 10, 2);
@@ -1323,72 +1210,83 @@ function insert_term($term, $taxonomy, $args = array())
     }
 }
 
-add_filter('wp_get_attachment_image_attributes', 'change_attachment_image_attributes', 20, 2);
+add_filter('pre_get_posts', 'remove_variations_pre_get_posts_query');
 
 /**
- * @param $attr
- * @param $attachment
- *
- * @return mixed
+ * @param $query
  */
-function change_attachment_image_attributes($attr, $attachment)
+function remove_variations_pre_get_posts_query($query)
 {
+    if (!is_admin() && $query->is_main_query()) {
+        // Not a query for an admin page.
+        // It's the main query for a front end page of your site.
 
-    // Get post parent
-    $parent = get_post_field('post_parent', $attachment);
+        if (is_archive()) {
+            $meta_query   = $query->get('meta_query');
+            $meta_query[] = array(
+                'key'     => 'attribute_pa_variation',
+                'compare' => 'NOT EXISTS',
+            );
 
-    // Get post type to check if it's product
-    $type = get_post_field('post_type', $parent);
-    if ($type != 'product') {
-        return $attr;
-    }
-
-    $product_ID = get_post_field('ID', $parent);
-
-    $product_image1_id = get_post_thumbnail_id($product_ID);
-
-    if ($product_image1_id == $attachment->ID) {
-        $product_image1_alt         = get_post_meta($product_ID, 'product_image1_alt_text', true);
-        $product_image1_title       = get_post_meta($product_ID, 'product_image1_title', true);
-        $product_image1_caption     = get_post_meta($product_ID, 'product_image1_caption', true);
-        $product_image1_description = get_post_meta($product_ID, 'product_image1_description', true);
-
-        $attr['alt']         = $product_image1_alt;
-        $attr['title']       = $product_image1_title;
-        $attr['caption']     = $product_image1_caption;
-        $attr['description'] = $product_image1_description;
-
-        return $attr;
-    }
-
-    global $product;
-    if (!isset($product)) {
-        return $attr;
-    }
-
-    $attachment_ids = $product->get_gallery_image_ids();
-
-    if (!empty($attachment_ids)) {
-        $counter = 2;
-        foreach ($attachment_ids as $attachment_id) {
-            if ($attachment_id == $attachment->ID) {
-                $product_image_alt         = get_post_meta($product_ID, 'product_image' . $counter . '_alt_text', true);
-                $product_image_title       = get_post_meta($product_ID, 'product_image' . $counter . '_title', true);
-                $product_image_caption     = get_post_meta($product_ID, 'product_image' . $counter . '_caption', true);
-                $product_image_description = get_post_meta(
-                    $product_ID,
-                    'product_image' . $counter . '_description',
-                    true
-                );
-
-                $attr['alt']         = $product_image_alt;
-                $attr['title']       = $product_image_title;
-                $attr['caption']     = $product_image_caption;
-                $attr['description'] = $product_image_description;
-            }
-            $counter++;
+            $query->set('meta_query', $meta_query);
         }
     }
+}
 
-    return $attr;
+add_action('init', 'work_order_form_redirection');
+function work_order_form_redirection()
+{
+    if (isset($_GET['work-order-initiation']) && isset($_GET['order-id'])) {
+
+        $order = wc_get_order($_GET['order-id']);
+
+        if (!empty($order)) {
+            $items = $order->get_items();
+            $productType = '';
+
+            foreach ($items as $item) {
+                $product_id  = $item->get_product_id();
+                $productType = get_field("product_type", $product_id);
+            }
+
+            if ($productType == 'FRMs') {
+                wp_redirect('https://the-ecu-pro.com/frm-repair-request/');
+                exit;
+            } else {
+                wp_redirect('https://the-ecu-pro.com/new-ecu-order/');
+                exit;
+            }
+        }
+    }
+}
+
+//add_action('template_redirect', 'redirect_host_correction');
+/**
+ * Lets redirect if a user was taking to dev site from live
+ */
+function redirect_host_correction()
+{
+    $referred_host = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+
+    // If we're on the same site do nothing
+    if ($_SERVER['HTTP_HOST'] == $referred_host || $referred_host == 'NULL') {
+        return;
+    }
+
+    $live_allowed_host     = 'the-ecu-pro.com';
+    $referred_allowed_host = 'development.the-ecu-pro.com';
+    $referred_host         = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+    $sub_str               = substr($referred_host, 0 - strlen($live_allowed_host));
+
+    // If the referred host is development redirect to live
+    if (($sub_str == $live_allowed_host) && ($referred_host != $referred_allowed_host)) {
+        $updated_location = str_replace(
+            $referred_host,
+            $live_allowed_host,
+            $_SERVER['HTTP_REFERER'] . $_SERVER['REQUEST_URI']
+        );
+
+        wp_redirect($updated_location);
+        exit;
+    }
 }

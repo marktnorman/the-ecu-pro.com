@@ -70,7 +70,7 @@ class Wt_Import_Export_For_Woo_Basic_History
 			WT_IEW_PLUGIN_ID_BASIC,
 			__('History'),
 			__('History'),
-			apply_filters('wt_import_export_allowed_capability', 'manage_woocommerce'),
+			apply_filters('wt_import_export_allowed_capability', 'import'),
 			$this->module_id,
 			array($this, 'admin_settings_page')
 		);
@@ -79,7 +79,7 @@ class Wt_Import_Export_For_Woo_Basic_History
 			WT_IEW_PLUGIN_ID_BASIC,
 			__('Logs'),
 			__('Logs'),
-			apply_filters('wt_import_export_allowed_capability', 'manage_woocommerce'),
+			apply_filters('wt_import_export_allowed_capability', 'import'),
 			$this->module_id.'_log',
 			array($this, 'admin_log_page')
 		);
@@ -162,7 +162,10 @@ class Wt_Import_Export_For_Woo_Basic_History
 							include plugin_dir_path(__FILE__).'views/_log_table.php';
 							$out['html']=ob_get_clean();
 						}
-					}
+					}else{
+                                            $out['status']=1;                                            
+                                            $out['html']= sprintf( __( 'Please check the Save import log is enabled under <a target = "_blank" href="%s">settings</a>' ), admin_url('admin.php?page=wt_import_export_for_woo_basic'));
+                                        }
 				}
 			}
 		}else /* raw log viewing */

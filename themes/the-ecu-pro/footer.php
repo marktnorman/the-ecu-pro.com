@@ -3,104 +3,81 @@
 </div><!-- end main-content-wrap -->
 </div><!-- end main-content -->
 
-<?php if (is_product()) { ?>
-    <div class="how-it-works-outer-container homepage-section-outer">
-        <h2 class="homepage-section-title">How it works</h2>
-        <div class="col-lg-12">
-            <div class="col-lg-6 first">
-                <p>Electrical parts are tested prior to purchase and if returned, all units
-                    will be inspected for burnt components, physical damage and water
-                    damage.
-                    Returns will be processed in the order received and may have a greater
-                    handling time than order processing. The warranty shall be void if
-                    an item is returned with any signs of (a).</p>
-                <div class="accordion">
-                    <div class="wrap-1">
-                        <input type="radio" id="tab-1" name="tabs">
-                        <label for="tab-1">
-                            <div class="accordian-title">Shipping within the US</div>
-                            <div class="cross"></div>
-                        </label>
-                        <div class="content">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing
-                            elit. Mollitia autem quasi inventore unde nobis voluptatibus
-                            illum
-                            quae rerum laudantium minima, excepturi quis maiores. Eaque
-                            quae,
-                            nam delectus explicabo, deserunt ipsum!
-                        </div>
-                    </div>
-                    <div class="wrap-2">
-                        <input type="radio" id="tab-2" name="tabs">
-                        <label for="tab-2">
-                            <div class="accordian-title">International Shipping</div>
-                            <div class="cross"></div>
-                        </label>
-                        <div class="content">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing
-                            elit. Mollitia autem quasi inventore unde nobis voluptatibus
-                            illum
-                            quae rerum laudantium minima, excepturi quis maiores. Eaque
-                            quae,
-                            nam delectus explicabo, deserunt ipsum!
-                        </div>
-                    </div>
-                    <div class="wrap-3">
-                        <input type="radio" id="tab-3" name="tabs">
-                        <label for="tab-3">
-                            <div class="accordian-title">Returns</div>
-                            <div class="cross"></div>
-                        </label>
-                        <div class="content">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing
-                            elit. Mollitia autem quasi inventore unde nobis voluptatibus
-                            illum
-                            quae rerum laudantium minima, excepturi quis maiores. Eaque
-                            quae,
-                            nam delectus explicabo, deserunt ipsum!
-                        </div>
-                    </div>
-                    <div class="wrap-4">
-                        <input type="radio" id="tab-4" name="tabs">
-                        <label for="tab-4">
-                            <div class="accordian-title">Warranty</div>
-                            <div class="cross"></div>
-                        </label>
-                        <div class="content">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing
-                            elit. Mollitia autem quasi inventore unde nobis voluptatibus
-                            illum
-                            quae rerum laudantium minima, excepturi quis maiores. Eaque
-                            quae,
-                            nam delectus explicabo, deserunt ipsum!
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 second">
-                <div class="youtube-video-container">
-                    <?php
-                    global $post;
+<?php if (is_product()) {
 
-                    if (!empty(get_post_meta($post->ID, 'video_embed_url', true))) {
-                        $video_url = get_post_meta($post->ID, 'video_embed_url', true);
-                    } else {
-                        $video_url = 'https://www.youtube.com/embed/JESCRzDYdqE';
-                    }
-                    ?>
-                    <iframe width="560" height="315"
-                            src="<?php echo $video_url; ?>" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
+    global $product;
+    $id           = $product->get_id();
+    $product_type = get_post_meta($id, 'product_type', true);
+    $term_object  = get_term_by('name', $product_type, 'pa_product-type-data');
+
+    $product_video_url = get_field(
+        'video_embed_url',
+        $id
+    );
+    $product_video_url = !empty($product_video_url) ? $product_video_url : 'https://www.youtube.com/embed/JESCRzDYdqE';
+
+    if (have_rows('how_ti_works_product_data', $term_object)):
+
+        while (have_rows('how_ti_works_product_data', $term_object)) : the_row();
+
+            $how_it_works_product_title = get_sub_field(
+                'how_it_works_product_title'
+            );
+            $how_it_works_product_title = !empty($how_it_works_product_title) ? $how_it_works_product_title : '';
+
+            $how_it_works_product_copy = get_sub_field(
+                'how_it_works_product_copy'
+            );
+            $how_it_works_product_copy = !empty($how_it_works_product_copy) ? $how_it_works_product_copy : '';
+
+            $accordian_product_items = get_sub_field('how_it_works_accordian_data');
+            $accordian_product_html  = '';
+            $counter                 = 1;
+            foreach ($accordian_product_items as $accordian_product_item) {
+
+                $accordian_title = $accordian_product_item['product_accordian_title'];
+                $accordian_copy  = $accordian_product_item['product_accordian_body'];
+
+                $accordian_product_html .= '<div class="wrap-' . $counter . '">';
+                $accordian_product_html .= '<input type="radio" id="tab-' . $counter . '" name="tabs">';
+                $accordian_product_html .= '<label for="tab-' . $counter . '">';
+                $accordian_product_html .= '<div class="accordian-title">' . $accordian_title . '</div>';
+                $accordian_product_html .= '<div class="cross"></div>';
+                $accordian_product_html .= '</label>';
+                $accordian_product_html .= '<div class="content">' . $accordian_copy . '</div>';
+                $accordian_product_html .= '</div>';
+
+                $counter++;
+            } ?>
+
+            <div class="how-it-works-outer-container homepage-section-outer">
+                <h2 class="homepage-section-title"><?php echo $how_it_works_product_title; ?></h2>
+                <div class="col-lg-12">
+                    <div class="col-lg-6 first">
+                        <?php echo $how_it_works_product_copy; ?>
+                        <div class="accordion">
+                            <?php echo $accordian_product_html; ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 second">
+                        <div class="youtube-video-container">
+                            <iframe width="560" height="315"
+                                    src="<?php echo $product_video_url; ?>"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        <?php
+        endwhile;
+    endif; ?>
 <?php } ?>
 
 <?php if (is_front_page()) { ?>
 
-    <div class="pre-footer-container">
+    <div class="pre-footer-container" style="display: none;">
         <div class="col-lg-12">
             <ul>
                 <li class="phone-container">
@@ -162,7 +139,7 @@
                                 <ul id="menu-footer-my-account" class="menu">
                                     <li id="menu-item-19146"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19146">
-                                        <a href="https://development.the-ecu-pro.com/my-account/">Dashboard</a></li>
+                                        <a href="https://the-ecu-pro.com/my-account/">Dashboard</a></li>
                                     <li id="menu-item-19148"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19148">
                                         <a href="https://www.the-ecu-pro.com/my-account/orders/">Orders</a></li>
@@ -176,7 +153,7 @@
                                             Details</a></li>
                                     <li id="menu-item-19145"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19145">
-                                        <a href="https://development.the-ecu-pro.com/cart/">Cart</a></li>
+                                        <a href="https://the-ecu-pro.com/cart/">Cart</a></li>
                                 </ul>
                             </div>
                         </aside>
@@ -203,19 +180,19 @@
                                 <ul id="menu-footer-policy" class="menu">
                                     <li id="menu-item-19154"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-19154">
-                                        <a href="https://development.the-ecu-pro.com/privacy-policy/">Privacy Policy</a>
+                                        <a href="https://the-ecu-pro.com/privacy-policy/">Privacy Policy</a>
                                     </li>
                                     <li id="menu-item-19152"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19152">
-                                        <a href="https://development.the-ecu-pro.com/terms-and-conditions/">Terms of
+                                        <a href="https://the-ecu-pro.com/terms-and-conditions/">Terms of
                                             Service</a></li>
                                     <li id="menu-item-19153"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19153">
-                                        <a href="https://development.the-ecu-pro.com/return-policy/">Return Policy</a>
+                                        <a href="https://the-ecu-pro.com/return-policy/">Return Policy</a>
                                     </li>
                                     <li id="menu-item-19155"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19155">
-                                        <a href="https://development.the-ecu-pro.com/disclaimer/">Disclaimer</a></li>
+                                        <a href="https://the-ecu-pro.com/disclaimer/">Disclaimer</a></li>
                                 </ul>
                             </div>
                         </aside>
@@ -262,17 +239,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </aside>
-                        <aside id="follow-us-widget-3" class="widget follow-us">
-                            <div class="share-links disable-br">
-                                <a href="https://facebook.com" target="_blank" data-toggle="tooltip"
-                                   data-placement="bottom" title="" class="share-facebook"
-                                   data-original-title="Facebook">Facebook</a>
-                                <a href="https://instagram.com" target="_blank" data-toggle="tooltip"
-                                   data-placement="bottom" title="" class="share-instagram"
-                                   data-original-title="Instagram">Instagram</a>
-                            </div>
-
                         </aside>
                     </div>
                     <div class="col-lg-3">
@@ -343,7 +309,7 @@
                                             class="ecu-filter-button btn btn-danger red">SHOW REPAIR SERVICES
                                     </button>
                                 </div>
-                                <a class="bottom-cta" href="/ecu-repair-request">Can't find your vehicle?</a>
+                                <a class="bottom-cta" href="/contact-us">Can't find your vehicle?</a>
                             </div>
                         </div>
                         <aside id="text-9" class="widget widget_text">

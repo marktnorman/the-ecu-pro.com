@@ -11,7 +11,7 @@ var wt_iew_basic_history=(function( $ ) {
 		},
 		reg_view_log:function()
 		{
-			jQuery('.wt_iew_view_log_btn').click(function(){				
+			jQuery(document).on('click', ".wt_iew_view_log_btn", function(){					
 				wt_iew_basic_history.show_log_popup();
 				var history_id=$(this).attr('data-history-id');
 				if(history_id>0)

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title> The ECU Pro - Professional DME/ECU Repairs for BMW, MINI and MERC </title>
+
+    <link rel="shortcut icon"
+          href="https://the-ecu-pro.com/wp-content/uploads/2019/11/TheECUPro-Logo-B-Highly-Compressed.png"/>
+    <script type="text/javascript">igniteup_ajaxurl = "https://development.the-ecu-pro.com/wp-admin/admin-ajax.php";</script>
+    <link rel='stylesheet'
+          href='https://development.the-ecu-pro.com/wp-content/plugins/igniteup/includes/css/bootstrap.min.css'
+          type='text/css' media='all'/>
+    <link rel='stylesheet'
+          href='https://development.the-ecu-pro.com/wp-content/plugins/igniteup/includes/css/font-awesome.min.css'
+          type='text/css' media='all'/>
+    <link rel='stylesheet'
+          href='https://development.the-ecu-pro.com/wp-content/plugins/igniteup/includes/css/animate.css'
+          type='text/css' media='all'/>
+    <link rel='stylesheet'
+          href='https://development.the-ecu-pro.com/wp-content/plugins/igniteup/includes/css/font-montserrat.css'
+          type='text/css' media='all'/>
+    <link rel='stylesheet'
+          href='https://development.the-ecu-pro.com/wp-content/plugins/igniteup/includes/css/icons/styles.css'
+          type='text/css' media='all'/>
+    <link rel='stylesheet'
+          href='https://development.the-ecu-pro.com/wp-content/plugins/igniteup/includes/templates/launcher/css/main.css'
+          type='text/css' media='all'/>
+    <style>
+        #wp-admin-bar-igniteup_enabled {
+            background-color: #C70000 !important;
+        }
+
+        #wp-admin-bar-igniteup_enabled:hover a {
+            background: #A20A0A !important;
+            color: #FFFFFF !important;
+        }
+
+        body::before {
+            background: none !important;
+        }
+
+        h1 {
+            font-size: 65px;
+            margin-bottom: 20px;
+        }
+
+        .subscribe {
+            display: none !important;
+        }
+
+        html body::after {
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+        }            </style>
+
+    <style>
+        .main-container a {
+            color: #fff !important;
+            transition: all ease 400ms;
+        }
+
+        a:hover {
+            color: !important;
+        }
+
+        body::after {
+            content: '';
+            background: url('https://development.the-ecu-pro.com/wp-content/uploads/2021/06/hero-bg.png') !important;
+            opacity: 0.5;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+            position: fixed;
+            z-index: -1;
+            background-size: cover;
+        }
+
+        body {
+            background: #000 !important;
+            font-family: sans-serif !important;
+        }
+
+    </style>
+</head>
+
+<body style="background: #224180; color:#fff;">
+<div class="container-fluid main-container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="text-uppercase text-center">
+                We'll be right back! </h1>
+            <div class="text-center text-uppercase sub-text">
+                ECU Pro is getting a make over...
+            </div>
+            <p class="text-center description">
+                This website is currently unavailable due to maintenance. Please visit again later. </p>
+            <div class="subscribe">
+                <div class="input-group">
+                    <input type="email" class="form-control text-box" id="cs_email" placeholder="Enter your email...">
+                    <span class="input-group-btn">
+							<button class="btn btn-default subscribe-btn" type="button"
+                                    style="color: #fff; background: #DB4F4B;">
+								Subscribe							</button>
+						</span>
+                </div>
+            </div>
+            <div class="thankyou hidden" style="margin-top: -90px;">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <div class="text-center"><strong>Thank you!</strong> You are subscribed.</div>
+                </div>
+            </div>
+            <div class="error-msg hidden" style="margin-top: 0px;">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <div class="text-center" id='error-msg-text'></div>
+                </div>
+            </div>
+            <div class="social">
+                <ul>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="hidden text-center" id="powered-by">
+                        Powered by <a href="https://wordpress.org/plugins/igniteup/" target="_blank">IgniteUp</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src='https://development.the-ecu-pro.com/wp-content/plugins/igniteup/includes/js/jquery.min.js'
+        type="text/javascript"></script>
+<script src='https://development.the-ecu-pro.com/wp-content/plugins/igniteup/includes/templates/launcher/js/jquery.countdown.js'
+        type="text/javascript"></script>
+<script type="text/javascript">
+    var count_completed = false;
+    $countdown = " ";
+    jQuery("#secs").countdown($countdown, function (event) {
+        jQuery(this).text(event.strftime('%S'));
+        checkSeconds(jQuery(this).text());
+
+
+    });
+    jQuery("#mins")
+        .countdown($countdown, function (event) {
+            jQuery(this).text(
+                event.strftime('%M')
+            );
+            checkMins(jQuery(this).text());
+        });
+    jQuery("#hrs")
+        .countdown($countdown, function (event) {
+            jQuery(this).text(
+                event.strftime('%H')
+            );
+            checkHours(jQuery(this).text());
+        });
+    jQuery("#days")
+        .countdown($countdown, function (event) {
+            jQuery(this).text(
+                event.strftime('%D')
+            );
+            checkDays(jQuery(this).text());
+        });
+
+    function checkSeconds(sec) {
+        if (sec === '01') {
+            jQuery("#sec-s").addClass('hidden');
+        } else {
+            jQuery("#sec-s").removeClass('hidden');
+        }
+    }
+
+    function checkMins(min) {
+        if (min === '01') {
+            jQuery("#min-s").addClass('hidden');
+        } else {
+            jQuery("#min-s").removeClass('hidden');
+        }
+    }
+
+    function checkHours(hrs) {
+        if (hrs === '01') {
+            jQuery("#hrs-s").addClass('hidden');
+        } else {
+            jQuery("#hrs-s").removeClass('hidden');
+        }
+    }
+
+    function checkDays(days) {
+        if (days === '01') {
+            jQuery("#day-s").addClass('hidden');
+        } else {
+            jQuery("#day-s").removeClass('hidden');
+        }
+    }
+
+    jQuery(document).ready(function () {
+    });
+
+    jQuery('.subscribe-btn').on('click', function () {
+        subscribe();
+    });
+    jQuery('#cs_email').on('keypress', function (e) {
+        if (e.which == 13) {
+            subscribe();
+        }
+    });
+
+    function subscribe() {
+        jQuery('.subscribe-btn, #cs_email').attr('disabled', true);
+        jQuery.ajax({
+            url: 'https://development.the-ecu-pro.com/wp-admin/admin-ajax.php',
+            data: {
+                action: 'subscribe_email',
+                cs_email: jQuery("#cs_email").val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data['error']) {
+                    jQuery('.error-msg #error-msg-text').html(data['message']);
+                    jQuery('.error-msg').removeClass('hidden');
+                    jQuery('.error-msg').addClass('animated fadeIn');
+
+                    function hideMsg() {
+                        jQuery('.error-msg').addClass('fadeOut');
+                    }
+
+                    setTimeout(hideMsg, 4000);
+
+                    function showMsg() {
+                        jQuery('.error-msg').addClass('hidden');
+                        jQuery('.error-msg').removeClass('animated fadeIn fadeOut');
+                    }
+
+                    setTimeout(showMsg, 4500);
+                    jQuery('.subscribe-btn, #cs_email').attr('disabled', false);
+                } else {
+                    jQuery('.subscribe').addClass('animated fadeOutDown');
+                    jQuery('.thankyou').removeClass('hidden');
+                    jQuery('.thankyou').addClass('animated fadeIn');
+                }
+            }
+        });
+    }
+
+    jQuery(function ($) {
+        $('#rocketimg').animate({
+            'margin-top': "0px"
+        });
+        $('#rocketimg').hover(function () {
+            $(this).animate({
+                'margin-top': "-=50"
+            });
+        }, function () {
+            if (count_completed) {
+                $(this).animate({
+                    'margin-top': "30px"
+                });
+            } else {
+                $(this).animate({
+                    'margin-top': "150px"
+                });
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

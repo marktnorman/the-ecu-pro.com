@@ -28,7 +28,7 @@ if (!defined('ABSPATH')) {
 			</td>
 		</tr>
 		<tr><div id="user-required-field-message" class="updated" style="margin-left:0px;display: none;background: #dceff4;"><p><?php _e('Ensure the import file has the user\'s email ID for a successful import. Use default column name <b>user_email</b> or map the column accordingly if you are using a custom column name.'); ?></p></div></tr>
-		<tr class="wt-iew-import-method-options wt-iew-import-method-options-template" style="display:none;">
+		<tr class="wt-iew-import-method-options wt-iew-import-method-options-template wt-iew-import-template-sele-tr" style="display:none;">
     		<th><label><?php _e('Import template');?></label></th>
     		<td>
     			<select class="wt-iew-import-template-sele">

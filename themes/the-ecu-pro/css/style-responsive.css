@@ -135,14 +135,6 @@
         right: 0;
     }
 
-    div.accordian-title::after {
-        width: 32%;
-    }
-
-    .wrap-3 div.accordian-title::after, .wrap-4 div.accordian-title::after {
-        width: 63%;
-    }
-
     #footer .col-lg-3 {
         padding: 0 10px;
     }
@@ -209,6 +201,47 @@
 
 @media screen and (max-width: 994px) {
 
+    .single-product .how-it-works-outer-container {
+        margin-top: 60px;
+        padding: 0 20px;
+    }
+
+    .footer-main {
+        padding-top: 10px;
+    }
+
+    .filter-button {
+        top: -37px;
+        background: url(../assets/images/mobile-slideup-button-trigger.png) no-repeat;
+        background-size: 100%;
+        display: inline-block !important;
+        width: 70px;
+        height: 30px;
+        content: "";
+        text-indent: -9999px;
+        border: 0;
+        z-index: 9997;
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+
+    .filter-button:hover {
+        cursor: pointer;
+    }
+
+    .our-service-outer-container {
+        padding: 50px 20px 40px 20px;
+    }
+
+    h2.homepage-section-title::after,
+    div.accordian-title::after {
+        display: none !important;
+    }
+
     .woocommerce div.product .woocommerce-tabs ul.tabs li a {
         width: 100%;
         background: url(/wp-content/uploads/2021/05/angle-down.png) no-repeat center right;
@@ -235,10 +268,6 @@
     #content div.product div.images, .woocommerce #content div.product div.summary, .woocommerce div.product div.images, .woocommerce div.product div.summary, .woocommerce-page #content div.product div.images, .woocommerce-page #content div.product div.summary, .woocommerce-page div.product div.images, .woocommerce-page div.product div.summary {
         float: none;
         width: 100%;
-    }
-
-    h2.homepage-section-title::after {
-        width: 100px;
     }
 
     .porto-icon-phone-1:before {
@@ -341,6 +370,7 @@
         margin: 0px 10px 20px auto !important;
         display: inline-block;
         max-width: 40px;
+        vertical-align: middle;
     }
 
     .steps-outer-container ul li.one::after, .steps-outer-container ul li.two::after {
@@ -351,16 +381,22 @@
     }
 
     .steps-outer-container ul li p {
-        max-width: 200px;
         display: inline-block;
         font-size: 14px;
         line-height: 20px;
+        width: 200px;
     }
 
     .steps-outer-container, .homepage-section-outer {
         max-width: 100%;
-        padding-right: 20px;
-        padding-left: 20px;
+    }
+
+    .steps-outer-container ul li.one img {
+        margin: 0px 20px 20px 0 !important;
+    }
+
+    .steps-outer-container ul li.two img {
+        margin: 20px 20px 20px 0 !important;
     }
 
     #footer .col-lg-3 {
@@ -389,6 +425,35 @@
 
 @media only screen and (max-width: 790px) {
 
+    .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl, .col-xl-auto {
+        padding-right: 20px !important;
+        padding-left: 20px !important;
+    }
+
+    .woocommerce div.product .woocommerce-tabs .panel .col-md-12 {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .homepage-section-outer .col-lg-12,
+    .homepage-section-outer .col-lg-6 {
+        padding: 0 !important;
+    }
+
+    #video-popup-container {
+        max-width: 100% !important;
+        width: 100% !important;
+        left: 0 !important;
+    }
+
+    #video-popup-container #close {
+        right: 10px !important;
+    }
+
+    .entry-summary .tabs .tab-2 div.outer-container.first {
+        padding: 20px 20px 70px 20px !important;
+    }
+
     .woocommerce div.product .woocommerce-tabs ul.tabs {
         margin: 0 auto 20px auto;
     }
@@ -410,17 +475,6 @@
         max-width: 100%;
     }
 
-    h2.homepage-section-title::after {
-        content: '';
-        width: 100px;
-        height: 2px;
-        background: #224180;
-        position: absolute;
-        top: 25px;
-        margin-left: 1rem;
-        right: 0;
-    }
-
     .rec-service-outer-container h2.homepage-section-title {
         max-width: 400px;
     }
@@ -435,24 +489,6 @@
 
     .post-type-archive .left-sidebar {
         display: none;
-    }
-
-    .wrap-1 div.accordian-title::after,
-    .wrap-2 div.accordian-title::after {
-        width: 65px !important;
-    }
-
-    div.accordian-title::after {
-        width: 165px !important;
-        right: 20px;
-    }
-
-    .wrap-3 div.accordian-title::after {
-        width: 74%;
-    }
-
-    .wrap-4 div.accordian-title::after {
-        width: 70%;
     }
 
     .how-it-works-outer-container .cross {
@@ -473,8 +509,9 @@
     }
 
     .woocommerce div.product .cta-buttons-product {
-        padding: 0 20px;
+        padding: 0 10px;
         max-width: 100%;
+        margin-bottom: 10px;
     }
 
     .woocommerce div.product .cta-buttons-product a.call-me-back-button {
@@ -493,15 +530,19 @@
 
     .woocommerce div.product .cta-buttons-product a.continue-button {
         color: #fff !important;
-        padding: 10px 20px;
+        padding: 10px 0px;
         border-radius: 7px;
         font-weight: bold;
         text-transform: uppercase;
         display: inline-block;
         text-align: center;
         background-image: url(../assets/images/lock.png);
-        background-position-x: 25px !important;
-        width: 100%;
+        background-position-x: 11px !important;
+        width: 64%;
+        background-size: 10px;
+        background-position-y: 12px;
+        font-size: 12px;
+        box-sizing: border-box;
     }
 
     #order_review {
@@ -544,12 +585,12 @@
         padding: 0;
     }
 
-    #mini-cart ul.cart_list li a{
+    #mini-cart ul.cart_list li a {
         line-height: 22px;
         font-size: 12px;
     }
 
-    #mini-cart ul.cart_list li a.remove_from_cart_button{
+    #mini-cart ul.cart_list li a.remove_from_cart_button {
         position: absolute;
         right: 10px;
         top: 0;
@@ -565,7 +606,7 @@
         color: #000;
     }
 
-    #mini-cart ul.cart_list li a img{
+    #mini-cart ul.cart_list li a img {
         max-width: 100px;
         float: right;
     }
@@ -605,12 +646,11 @@
         color: #ffffff;
     }
 
-    #home-background-image{
+    #home-background-image {
         position: relative;
         height: 100vh !important;
         min-height: 540px;
         overflow: hidden;
-        background: url(/wp-content/uploads/2021/05/hero-bg-mobile.png) no-repeat center center;
     }
 
     .ecu-wrapper a.bottom-cta {
@@ -623,7 +663,7 @@
         border-color: #d2322d !important;
     }
 
-    .home #ecu-mmy-filter-home-wrapper.ecu-mmy-filter-home {
+    .page-template #ecu-mmy-filter-home-wrapper.ecu-mmy-filter-home {
         right: unset !important;
         top: unset !important;
         bottom: -389px;
@@ -671,11 +711,6 @@
         width: 100%;
     }
 
-    div.accordian-title::after {
-        width: 50% !important;
-        right: 20px;
-    }
-
     .pre-footer-container {
         height: 700px;
         padding-top: 0px;
@@ -700,6 +735,7 @@
         margin-right: 0;
         max-width: 100%;
         width: 100%;
+        margin-top: 0 !important;
     }
 
     #footer .col-lg-3 {
@@ -734,15 +770,17 @@
         vertical-align: top;
         width: 100%;
         margin-bottom: 20px;
+        padding: 0 !important;
     }
 
     .more-info-outer-container .col-8 {
         max-width: 100%;
         display: inline-block;
         width: 100%;
+        padding: 0 !important;
     }
 
-    .more-info-outer-container .col-4 img{
+    .more-info-outer-container .col-4 img {
         max-width: 100%;
         width: 100%;
     }
@@ -783,10 +821,6 @@
 }
 
 @media (max-width: 575px) {
-
-    div.accordian-title::after {
-        width: 25% !important;
-    }
 
     #custom-sticky-footer {
         display: flex !important;

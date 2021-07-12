@@ -479,15 +479,14 @@ class Wt_Import_Export_For_Woo_Basic_Order {
         if ($base == $this->module_base)
         {
             /* altering help text of default fields */
-			            /* altering help text of default fields */
-			$fields['limit']['label']=__('Total number of orders to export'); 
-			$fields['limit']['help_text']=__('Exports specified number of orders. e.g. Entering 500 with a skip count of 10 will export orders from 11th to 510th position.');
-			$fields['offset']['label']=__('Skip first <i>n</i> orders');
-			$fields['offset']['help_text']=__('Skips specified number of orders from the beginning. e.g. Enter 10 to skip first 10 orders from export.');
+            $fields['limit']['label']=__('Total number of orders to export'); 
+            $fields['limit']['help_text']=__('Exports specified number of orders. e.g. Entering 500 with a skip count of 10 will export orders from 11th to 510th position.');
+            $fields['offset']['label']=__('Skip first <i>n</i> orders');
+            $fields['offset']['help_text']=__('Skips specified number of orders from the beginning. e.g. Enter 10 to skip first 10 orders from export.');
 
             $fields['order_status'] = array(
-                'label' => __('Order Statuses'),
-                'placeholder' => __('All Order'),
+                'label' => __('Order status'),
+                'placeholder' => __('Any status'),
                 'field_name' => 'order_status',
                 'sele_vals' => self::get_order_statuses(),
                 'help_text' => __(' Filter orders by their status type. You can specify more than one type for export.'),
@@ -506,11 +505,11 @@ class Wt_Import_Export_For_Woo_Basic_Order {
                 'validation_rule' => array('type'=>'text_arr')
             );
             $fields['email'] = array(
-                'label' => __('Email'),
-                'placeholder' => __('Search for a Customer&hellip;'),
+                'label' => __('Customer'),
+                'placeholder' => __('Search for a customer&hellip;'),
                 'field_name' => 'email',
                 'sele_vals' => array(),
-                'help_text' => __('Input the customer email to export orders pertaining to only these customers.'),
+                'help_text' => __('Input the customer name or email to export orders pertaining to only these customers.'),
                 'type' => 'multi_select',
                 'css_class' => 'wc-customer-search',
                 'validation_rule' => array('type'=>'text_arr')
@@ -526,8 +525,8 @@ class Wt_Import_Export_For_Woo_Basic_Order {
             );
 
             $fields['date_from'] = array(
-                'label' => __('Date From'),
-                'placeholder' => __('Date'),
+                'label' => __('Date from'),
+                'placeholder' => __('Date from'),
                 'field_name' => 'date_from',
                 'sele_vals' => '',
                 'help_text' => __('Date on which the order was placed. Export orders placed on and after the specified date.'),
@@ -538,8 +537,8 @@ class Wt_Import_Export_For_Woo_Basic_Order {
             );
 
             $fields['date_to'] = array(
-                'label' => __('Date To'),
-                'placeholder' => __('Date'),
+                'label' => __('Date to'),
+                'placeholder' => __('Date to'),
                 'field_name' => 'date_to',
                 'sele_vals' => '',
                 'help_text' => __('Date on which the order was placed. Export orders placed upto the specified date.'),

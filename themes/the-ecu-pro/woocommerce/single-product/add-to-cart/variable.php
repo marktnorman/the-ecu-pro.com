@@ -28,9 +28,14 @@ $variations_attr = function_exists('wc_esc_json') ? wc_esc_json($variations_json
     true
 );
 
-// Get product vehicle date
-$product_video_url = get_field("video_embed_url", $product->get_id());
-$product_video_url = !empty($product_video_url) ? $product_video_url : '';
+$product_type = get_post_meta($product->get_id(), 'product_type', true);
+$term_object  = get_term_by('name', $product_type, 'pa_product-type-data');
+
+$product_video_url = get_field(
+    'video_embed_url',
+    $product->get_id()
+);
+$product_video_url = !empty($product_video_url) ? $product_video_url : 'https://www.youtube.com/embed/JESCRzDYdqE';
 
 do_action('woocommerce_before_add_to_cart_form'); ?>
 
@@ -79,13 +84,24 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
                     <?php else : ?>
                         <table class="variations" cellspacing="0">
                             <tbody>
-                            <?php foreach ($attributes as $attribute_name => $options) : ?>
+                            <?php foreach ($attributes as $attribute_name => $options) :
+
+                                $selected = isset(
+                                    $_REQUEST['attribute_' . sanitize_title(
+                                        $attribute_name
+                                    )]
+                                ) ? wc_clean(
+                                    $_REQUEST['attribute_' . sanitize_title($attribute_name)]
+                                ) : $product->get_variation_default_attribute($attribute_name);
+
+                                ?>
                                 <tr>
                                     <td class="label"><label for="<?php echo esc_attr(
                                             sanitize_title($attribute_name)
                                         ); ?>"><?php echo wc_attribute_label(
                                                 $attribute_name
-                                            ); // WPCS: XSS ok. ?></label></td>
+                                            ); // WPCS: XSS ok.
+                                            ?></label></td>
                                     <td class="value">
                                         <?php
                                         wc_dropdown_variation_attribute_options(
@@ -93,6 +109,7 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
                                                 'options'   => $options,
                                                 'attribute' => $attribute_name,
                                                 'product'   => $product,
+                                                'selected'  => $selected
                                             )
                                         );
                                         ?>
@@ -149,16 +166,35 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
         </div>
 
         <div class="cta-buttons-product">
+            <?php
+
+            if (wp_is_mobile()) {
+                $date = new DateTime("now", new DateTimeZone('America/New_York'));
+
+                $currentTime = $date->format('H:i:s');
+                $currentTime = strtotime($currentTime);
+                $closingTime = strtotime('17:00:00');
+
+                if ($currentTime >= $closingTime) { ?>
+                    <a class="contact-button message-product-button" href="#">Message</a>
+                <?php } else { ?>
+                    <a class="contact-button" href="tel:+18887232080">Call us</a>
+                <?php }
+            }
+            ?>
             <a class="continue-button initial" href="#">Continue to checkout</a>
         </div>
 
     </div>
+    <div id="below-tabs-container"></div>
     </form>
 
     <div id="video-popup-container-overlay">
         <div id="video-popup-container">
             <div id="close">x</div>
-            <iframe width="560" height="315" src="<?php echo $product_video_url; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+            <iframe width="560" height="315" src="<?php echo $product_video_url; ?>" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen=""></iframe>
         </div>
     </div>
 

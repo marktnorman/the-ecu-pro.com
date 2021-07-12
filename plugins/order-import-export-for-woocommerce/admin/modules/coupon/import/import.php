@@ -203,7 +203,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Import {
                     continue;
                 }
                 if ('individual_use' == $column ) {
-                    $item_data['individual_use'] = $value;
+                    $item_data['individual_use'] = wc_string_to_bool($value);
                     continue;
                 }                         
                 if ('product_ids' == $column || 'product_SKUs' == $column) {
@@ -231,7 +231,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Import {
                     continue;
                 }            
                 if ('exclude_sale_items' == $column ) {
-                    $item_data['exclude_sale_items'] = ($value);                
+                    $item_data['exclude_sale_items'] = wc_string_to_bool($value);                
                     continue;
                 }
                 if ('product_categories' == $column ) {
@@ -783,6 +783,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Import {
     }
 
     public function process_item($data) {
+
         try {
             do_action('wt_woocommerce_coupon_import_before_process_item', $data);
             $data = apply_filters('wt_woocommerce_coupon_import_process_item', $data);  
@@ -798,7 +799,19 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Import {
             
             Wt_Import_Export_For_Woo_Basic_Logwriter::write_log($this->parent_module->module_base, 'import', "Found coupon object. ID:".$object->get_id());            
 
+            $boolean_keys = apply_filters('wt_ier_coupon_boolean_keys', array('exclude_sale_items', 'individual_use'));
+            
             foreach ($data as $key => $value) {
+                
+                if(in_array($key, $boolean_keys)){
+                    $fn ='set_'.$key;
+                    if(method_exists($object,'set_'.$key)){
+                        $object->$fn($value);
+//                        unset($data[$key]);
+                    }
+                    continue;
+                }
+                
                 if(!empty($value)){
                     $fn ='set_'.$key;
                     if(method_exists($object,'set_'.$key)){
@@ -812,8 +825,10 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Import {
             
             $update_post = array(
                 'ID' => $post_id,
-                'post_status' => $data['status'],
             );
+            if(isset($data['status'])){
+                $update_post['post_status'] = $data['status'];
+            }
             wp_update_post($update_post);
             
             if($this->delete_existing){

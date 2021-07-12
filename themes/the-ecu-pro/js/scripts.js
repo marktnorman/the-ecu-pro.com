@@ -263,7 +263,7 @@
                     nonce: ecu_ajax_object.nonce
                 },
                 success: function (result, status, xhr) {
-                    console.log(result);
+                    //console.log(result);
                 },
                 error: function (jqXHR, exception) {
                     console.log("Failed");
@@ -303,14 +303,9 @@
             window.history.replaceState({}, "", baseUrl + params);
         }
 
-        //$('.variations_form').on('change', 'select', function (e) {
-
         $('.variations_form select').change(function (e) {
             let val = $(e.target).val();
             let text = $(e.target).find("option:selected").text();
-
-            console.log(val);
-            console.log(text);
 
             $('.entry-summary h4.product-single-secondary-title').text(text);
 
@@ -361,8 +356,6 @@
                     'action': 'clear_cart'
                 },
                 success: function (response) {
-                    console.log(response);
-
                     //Validation done and success continue
                     $('button.single_add_to_cart_button').trigger('click');
 
@@ -416,27 +409,6 @@
         $(document).on('click', '.cta-buttons-product .continue-button.payment-trigger', function (e) {
             e.preventDefault();
 
-            // let user_data = {
-            //     action: 'user_auth_checkout',
-            //     form_data: $.trim($("input[name='billing_email']").val())
-            // };
-            //
-            // // Lets try log the user in if he exists
-            // $.ajax({
-            //     url: ecu_ajax_object.ajax_url,
-            //     type: "POST",
-            //     data: user_data,
-            //     success: function (response) {
-            //         console.log(response);
-            //
-            //
-            //     },
-            //     error: function (request, status, error) {
-            //         console.log(request.responseText);
-            //         console.log(error);
-            //     },
-            // });
-
             $('.woocommerce #payment #place_order').trigger('click');
 
         });
@@ -457,7 +429,7 @@
             $('.cta-buttons-product .continue-button.added').click(function (e) {
                 e.preventDefault();
 
-                let form_identifier = "form#woocommerce-checkout";
+                let form_identifier = "form.wpcf7-form";
 
                 $(form_identifier).validate({
                     rules: {
@@ -579,11 +551,8 @@
             setTimeout(
                 function () {
                     let primary_image_title = $('.woocommerce-product-gallery__image:first img').attr('data-o_title');
-                    console.log(primary_image_title);
                     $('.woocommerce-product-gallery__image:first img').attr('title', primary_image_title);
-                    console.log($('.woocommerce-product-gallery__image:first img').attr('title'));
                 }, 2000);
-
         }
 
         // Prevent user from just clicking on the checkout tab
@@ -669,29 +638,35 @@
 
             if ($('.single-product').length > 0) {
                 $('form.woocommerce-form-login').insertBefore($('.messages-container'));
-
-                $('.video-informational-popup-trigger').click(function () {
-                    $('#video-popup-container-overlay').fadeIn(300);
-                });
-                $('#close').click(function () {
-                    $('#video-popup-container-overlay').fadeOut(300);
-                });
             }
+        }
 
-            if ($('.home').length > 0) {
+        if ($('div.our-service-outer-container').length > 0) {
+            // Our service homepage container
+            let $window = $(window);
+            let window_width = $window.width();
+            let target = 'div.our-service-outer-container';
 
-                // Our service homepage container
-                let $window = $(window);
-                let window_width = $window.width();
-                let target = 'div.our-service-outer-container';
+            let of = $(target).offset(),
+                left = of.left;
 
-                let of = $(target).offset(),
-                    left = of.left;
+            $(target).css('width', window_width + 'px');
+            $(target).css('max-width', 'unset');
 
-                $(target).css('width', window_width + 'px');
+            if ($(window).width() < 997) {
                 $(target).css('left', '-' + left + 'px');
-                $(target).css('max-width', 'unset');
             }
+
+        }
+
+        if ($('.video-informational-popup-trigger').length > 0) {
+            $('.video-informational-popup-trigger').click(function () {
+                $('#video-popup-container-overlay').fadeIn(300);
+            });
+
+            $('#close').click(function () {
+                $('#video-popup-container-overlay').fadeOut(300);
+            });
         }
 
         if ($(window).width() < 997) {
@@ -717,7 +692,7 @@
                     $('ul.cta-container').css('display', 'none');
 
                     $('html, body').animate({
-                        scrollTop: $('#tabs-main-container').offset().top
+                        scrollTop: $('#below-tabs-container').offset().top - $(window).height()
                     }, 2000);
                 }
             });

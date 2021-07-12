@@ -48,7 +48,7 @@ class Wt_Import_Export_For_Woo_Basic_Export
 		(
 			'post_type'=>array(
 				'title'=>__('Select a post type'),
-				'description'=>__('Export and download the respective post type into a CSV. This file can also be used to import data related to the specific post type back into your WooCommerce shop. As a first step you need to choose the post type to start the export.'),
+				'description'=>__('Export and download the respective post type into a CSV. This file can also be used to import data related to the specific post type back into your WordPress/WooCommerce site. As a first step you need to choose the post type to start the export.'),
 			),
 			'method_export'=>array(
 				'title'=>__('Select an export method'),
@@ -82,7 +82,7 @@ class Wt_Import_Export_For_Woo_Basic_Export
 		$this->export_methods=array(
 			'quick'=>array('title'=>__('Quick export'), 'description'=> __('Exports all the basic fields.')),
 			'template'=>array('title'=>__('Pre-saved template'), 'description'=> __('Exports data as per the specifications(filters,selective column,mapping etc) from the previously saved file.')),
-			'new'=>array('title'=>__('Advanced export'), 'description'=> __('Exports data after a detailed process of data filtering/column selection/advanced options that may be required for your export. You can also save this file for future use.')),
+			'new'=>array('title'=>__('Advanced export'), 'description'=> __('Exports data after a detailed process of data filtering/column selection/advanced options that may be required for your export. You can also save this selection for future use.')),
 		);
 
 		/* advanced plugin settings */
@@ -118,7 +118,7 @@ class Wt_Import_Export_For_Woo_Basic_Export
 			'label'=>__("Default Export method"),
 			'type'=>'select',
 			'sele_vals'=>$export_methods,
-            'value' =>'quick',
+                        'value' =>'quick',
 			'field_name'=>'default_export_method',
 			'field_group'=>'advanced_field',
 			'help_text'=>__('Select the default method of export.'),
@@ -126,7 +126,7 @@ class Wt_Import_Export_For_Woo_Basic_Export
 		$fields['default_export_batch']=array(
 			'label'=>__("Default Export batch count"),
 			'type'=>'number',
-            'value' =>100,
+                        'value' =>30,
 			'field_name'=>'default_export_batch',
 			'help_text'=>__('Provide the default count for the records to be exported in a batch.'),
 			'validation_rule'=>array('type'=>'absint'),
@@ -144,7 +144,7 @@ class Wt_Import_Export_For_Woo_Basic_Export
 				'menu',
 				__('Export'),
 				__('WebToffee Import Export (Basic)'),
-				apply_filters('wt_import_export_allowed_capability', 'manage_woocommerce'),
+				apply_filters('wt_import_export_allowed_capability', 'import'),
 				$this->module_id,
 				array($this,'admin_settings_page'),
 				'dashicons-controls-repeat',
@@ -155,7 +155,7 @@ class Wt_Import_Export_For_Woo_Basic_Export
 				$this->module_id,
 				__('Export'),
 				__('Export'), 
-				apply_filters('wt_import_export_allowed_capability', 'manage_woocommerce'),
+				apply_filters('wt_import_export_allowed_capability', 'import'),
 				$this->module_id,
 				array($this, 'admin_settings_page')
 			),
@@ -226,31 +226,34 @@ class Wt_Import_Export_For_Woo_Basic_Export
 		exit();
 	}
 
-	public function get_filter_screen_fields($filter_form_data)
-	{
-		$filter_screen_fields=array(			
-			'limit'=>array(
-				'label'=>__("Limit"),
-				'value'=>'',
-				'type' => 'number',
-				'field_name'=>'limit',
-				'placeholder'=>'Unlimited',
-				'help_text'=>__('The actual number of records you want to export. e.g. A limit of 500 with an offset 10 will export records from 11th to 510th position.'),
-				//'validation_rule'=>array('type'=>'int'),
-			),
-			'offset'=>array(
-				'label'=>__("Offset"),
-				'value'=>0,
-				'field_name'=>'offset',
-				'help_text'=>__('Specify the number of records that should be skipped from the beginning. e.g. An offset of 10 skips the first 10 records.'),
-				'validation_rule'=>array('type'=>'int'),
-			),
-		);
-		$filter_screen_fields=apply_filters('wt_iew_exporter_alter_filter_fields_basic', $filter_screen_fields, $this->to_export, $filter_form_data);
-		return $filter_screen_fields;
-	}
+	public function get_filter_screen_fields($filter_form_data) {
+            $filter_screen_fields = array(
+                'limit' => array(
+                    'label' => __("Limit"),
+                    'value' => '',
+                    'type' => 'number',
+                    'field_name' => 'limit',
+                    'placeholder' => 'Unlimited',
+                    'help_text' => __('The actual number of records you want to export. e.g. A limit of 500 with an offset 10 will export records from 11th to 510th position.'),
+                    'attr' => array('step' => 1, 'min' => 0),
+                    'validation_rule' => array('type' => 'absint')
+                ),
+                'offset' => array(
+                    'label' => __("Offset"),
+                    'value' => '',
+                    'field_name' => 'offset',
+                    'placeholder' => __('0'),
+                    'help_text' => __('Specify the number of records that should be skipped from the beginning. e.g. An offset of 10 skips the first 10 records.'),
+                    'type' => 'number',
+                    'attr' => array('step' => 1, 'min' => 0),
+                    'validation_rule' => array('type' => 'absint')
+                ),
+            );
+            $filter_screen_fields = apply_filters('wt_iew_exporter_alter_filter_fields_basic', $filter_screen_fields, $this->to_export, $filter_form_data);
+            return $filter_screen_fields;
+        }
 
-	public function get_advanced_screen_fields($advanced_form_data)
+        public function get_advanced_screen_fields($advanced_form_data)
 	{
 		$file_into_arr=array('local'=>__('Local'));
 
@@ -273,7 +276,7 @@ class Wt_Import_Export_For_Woo_Basic_Export
 				'type'=>'text',
 				'value'=>$this->default_batch_count,
 				'field_name'=>'batch_count',
-				'help_text'=>sprintf(__('The number of records that the server will process for every iteration within the configured timeout interval. If the export fails due to timeout you can lower this number accordingly and try again. Defaulted to %d records.'), 100),
+				'help_text'=>sprintf(__('The number of records that the server will process for every iteration within the configured timeout interval. If the export fails due to timeout you can lower this number accordingly and try again. Defaulted to %d records.'), 30),
 				'validation_rule'=>array('type'=>'absint'),
 			)
 		);
@@ -661,7 +664,7 @@ class Wt_Import_Export_For_Woo_Basic_Export
 				$out['file_url']=html_entity_decode($this->get_file_url($file_name));
 				$out['finished']=1; //finished
 
-								$msg = __('Export file processing completed');
+				$msg = __('Export file processing completed');
                                 $msg.='<span class="wt_iew_popup_close" style="line-height:10px;width:auto" onclick="wt_iew_basic_export.hide_export_info_box();">X</span>';
                                 
                                 $msg.='<span class="wt_iew_info_box_finished_text" style="font-size: 10px; display:block">';
@@ -670,7 +673,6 @@ class Wt_Import_Export_For_Woo_Basic_Export
                                         $history_module_id= Wt_Import_Export_For_Woo_Basic::get_module_id('history');
                                         $history_page_url=admin_url('admin.php?page='.$history_module_id);
                                         $msg.=__('You can manage exports from History section.');
-//                                        $msg.=sprintf(__('You can manage exports from %s History %s section.'), '<a href="'.$history_page_url.'" target="_blank">', '</a>');
                                 }
                                 
                                 $msg.='<a class="button button-secondary" style="margin-top:10px;" onclick="wt_iew_basic_export.hide_export_info_box();" target="_blank" href="'.$out['file_url'].'" >'.__('Download file').'</a></span>';
