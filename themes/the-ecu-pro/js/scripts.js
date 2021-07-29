@@ -661,11 +661,19 @@
 
         if ($('.video-informational-popup-trigger').length > 0) {
             $('.video-informational-popup-trigger').click(function () {
+
+                let source = $(this).attr('data-source-attr');
+
                 $('#video-popup-container-overlay').fadeIn(300);
+
+                if( $('#video-popup-container iframe').attr('src').length <= 0 ) {
+                    $('#video-popup-container iframe').attr('src', source);
+                }
             });
 
             $('#close').click(function () {
                 $('#video-popup-container-overlay').fadeOut(300);
+                $('#video-popup-container iframe').attr('src', '');
             });
         }
 
