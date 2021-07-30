@@ -1954,6 +1954,10 @@ ul.shipping-options-container li label span.woocommerce-Price-amount {
     white-space: initial;
 }
 
+.grecaptcha-badge {
+    display: none !important;
+}
+
 .woocommerce div.product form.cart .single_variation_wrap .woocommerce-variation-add-to-cart {
     display: none;
 }
