@@ -1291,3 +1291,6 @@ function redirect_host_correction()
         exit;
     }
 }
+
+// Disabling Glutenberg
+add_filter('use_block_editor_for_post', '__return_false');
