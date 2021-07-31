@@ -23,6 +23,8 @@ class Google_Pixel_Manager extends Pixel_Manager_Base
     private  $google_analytics_4_http_mp ;
     //    private $google_analytics_ua_refund_pixel;
     private  $google_analytics_4_eec_pixel ;
+    private  $cid_key_ga_ua ;
+    private  $cid_key_ga4 ;
     public function __construct( $options )
     {
         parent::__construct( $options );
@@ -57,6 +59,8 @@ class Google_Pixel_Manager extends Pixel_Manager_Base
                 // https://github.com/woocommerce/woocommerce/blob/b19500728b4b292562afb65eb3a0c0f50d5859de/includes/wc-order-functions.php#L774
                 $this->google_analytics_ua_http_mp = new Google_MP_UA( $options );
                 $this->google_analytics_4_http_mp = new Google_MP_GA4( $options );
+                $this->cid_key_ga_ua = 'google_cid_' . $this->options_obj->google->analytics->universal->property_id;
+                $this->cid_key_ga4 = 'google_cid_' . $this->options_obj->google->analytics->ga4->measurement_id;
                 //                error_log('running mp scripts');
                 //                add_action('woocommerce_order_refunded', [$this, 'google_analytics_eec_action_woocommerce_order_refunded__premium_only'], 10, 2);
                 // Save the Google cid on the order so that we can use it later when the order gets paid or completed
@@ -166,10 +170,10 @@ class Google_Pixel_Manager extends Pixel_Manager_Base
         // all handled on front-end
     }
     
-    public function inject_order_received_page( $order, $order_total, $is_new_customer )
+    public function inject_order_received_page_dedupe( $order, $order_total, $is_new_customer )
     {
         if ( $this->is_google_ads_active() ) {
-            $this->google_ads_pixel->inject_order_received_page( $order, $order_total, $is_new_customer );
+            $this->google_ads_pixel->inject_order_received_page_dedupe( $order, $order_total, $is_new_customer );
         }
         
         if ( !wga_fs()->is__premium_only() || !$this->options_obj->google->analytics->eec ) {
@@ -185,6 +189,13 @@ class Google_Pixel_Manager extends Pixel_Manager_Base
             }
         }
     
+    }
+    
+    public function inject_order_received_page_no_dedupe( $order, $order_total, $is_new_customer )
+    {
+        if ( $this->is_google_ads_active() ) {
+            $this->google_ads_pixel->inject_order_received_page_no_dedupe( $order, $order_total, $is_new_customer );
+        }
     }
     
     protected function inject_opening_script_tag()

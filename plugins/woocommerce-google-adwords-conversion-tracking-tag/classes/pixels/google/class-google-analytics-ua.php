@@ -40,6 +40,7 @@ class Google_Analytics_UA extends Google_Analytics
             'discount'       => (float)$order->get_total_discount(),
             'tax'            => (float)$order->get_total_tax(),
             'shipping'       => (float)$order->get_total_shipping(),
+            'coupon'         => implode(',', $order->get_coupon_codes()),
             'items'          => (array)$this->get_formatted_order_items($order),
         ];
 
@@ -50,7 +51,7 @@ class Google_Analytics_UA extends Google_Analytics
 
     protected function get_formatted_order_items($order, $channel = null)
     {
-        $order_items       = $order->get_items();
+        $order_items       = $this->wooptpm_get_order_items($order);
         $order_items_array = [];
 
         $list_position = 1;
@@ -78,8 +79,6 @@ class Google_Analytics_UA extends Google_Analytics
         }
 
         // apply filter to the $order_items_array array
-        $order_items_array = apply_filters_deprecated('wgact_filter', [$order_items_array], '1.10.2', '', 'This filter has been deprecated without replacement.');
-
-        return $order_items_array;
+        return apply_filters_deprecated('wgact_filter', [$order_items_array], '1.10.2', '', 'This filter has been deprecated without replacement.');
     }
 }

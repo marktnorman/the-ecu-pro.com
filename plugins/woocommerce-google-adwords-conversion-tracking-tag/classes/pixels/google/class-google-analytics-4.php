@@ -40,7 +40,7 @@ class Google_Analytics_4 extends Google_Analytics
             'discount'       => (float)$order->get_total_discount(),
             'tax'            => (float)$order->get_total_tax(),
             'shipping'       => (float)$order->get_total_shipping(),
-            //            'coupon'           => (array)$order->get_used_coupons(),
+            'coupon'         => implode(',', $order->get_coupon_codes()),
             'items'          => (array)$this->get_formatted_order_items($order),
         ];
 
@@ -51,7 +51,7 @@ class Google_Analytics_4 extends Google_Analytics
 
     protected function get_formatted_order_items($order, $channel = null)
     {
-        $order_items       = $order->get_items();
+        $order_items       = $this->wooptpm_get_order_items($order);
         $order_items_array = [];
 
         $list_position = 1;
@@ -63,20 +63,21 @@ class Google_Analytics_4 extends Google_Analytics
             $order_item_data = $this->get_order_item_data($order_item);
 
             $item_details_array = [
-                'item_id'       => $order_item_data['id'],
-                'item_name'     => $order_item_data['name'],
-                'quantity'      => $order_item_data['quantity'],
-//                'affiliation'   => $order_item_data['affiliation'],
+                'item_id'      => $order_item_data['id'],
+                'item_name'    => $order_item_data['name'],
+                'quantity'     => $order_item_data['quantity'],
+                //                'affiliation'   => $order_item_data['affiliation'],
                 //                'coupon' => '',
                 //                'discount' => 0,
-                'item_brand'    => $order_item_data['brand'],
-                'item_category' => $order_item_data['category'],
-                'item_variant'  => $order_item_data['variant'],
+                'item_brand'   => $order_item_data['brand'],
+                'item_variant' => $order_item_data['variant'],
                 //                'tax' => 0,
-                'price'         => $order_item_data['price'],
+                'price'        => $order_item_data['price'],
                 //                    'list_name' => ,
-                'currency'      => get_woocommerce_currency(),
+                'currency'     => get_woocommerce_currency(),
             ];
+
+            $item_details_array = $this->add_categories_to_ga4_product_items($item_details_array, $order_item_data['category_array']);
 
             array_push($order_items_array, $item_details_array);
         }

@@ -18,15 +18,23 @@ varExists('jQuery').then(function () {
             // view_item_list event
             jQuery(document).on('wooptpmViewItemList', function (event, product) {
 
+                if(
+                    wooptpmDataLayer.general.variationsOutput &&
+                    product.isVariable &&
+                    wooptpmDataLayer.pixels.google.ads.dynamic_remarketing.send_events_with_parent_ids === false
+                ) return;
+
+                // try to prevent that WC sends cached hits to Google
+                if(!product) return;
+
                 // console.log('firing google view_item_list event');
                 // console.log(product);
 
                 gtag('event', 'view_item_list', {
-                    "send_to": wooptpmDataLayer.pixels.google.ads.conversionIds,
-                    "items"  : [{
-                        "id"                      : product.dyn_r_ids[wooptpmDataLayer.pixels.google.ads.dynamic_remarketing.id_type],
-                        "google_business_vertical": wooptpmDataLayer.pixels.google.ads.google_business_vertical,
-
+                    send_to: wooptpmDataLayer.pixels.google.ads.conversionIds,
+                    items  : [{
+                        id                      : product.dyn_r_ids[wooptpmDataLayer.pixels.google.ads.dynamic_remarketing.id_type],
+                        google_business_vertical: wooptpmDataLayer.pixels.google.ads.google_business_vertical,
                     }]
                 });
             });
@@ -99,6 +107,13 @@ varExists('jQuery').then(function () {
                     let products = [];
 
                     for (const [key, product] of Object.entries(wooptpmDataLayer.products)) {
+
+                        if(
+                            wooptpmDataLayer.general.variationsOutput &&
+                            product.isVariable &&
+                            wooptpmDataLayer.pixels.google.ads.dynamic_remarketing.send_events_with_parent_ids === false
+                        ) return;
+
                         products.push({
                             "id"                      : product.dyn_r_ids[wooptpmDataLayer.pixels.google.ads.dynamic_remarketing.id_type],
                             "google_business_vertical": wooptpmDataLayer.pixels.google.ads.google_business_vertical

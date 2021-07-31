@@ -9,7 +9,7 @@
  * Description:     Framework for weLaunch Plugins (this is a fork of Redux Plugin)
  * Author:          weLaunch.io
  * Author URI:      https://welaunch.io
- * Version:         1.0.7
+ * Version:         1.0.9
  * Text Domain:     welaunch-framework
  * License:         GPLv3 or later
  * License URI:     http://www.gnu.org/licenses/gpl-3.0.txt
@@ -89,43 +89,47 @@ if ( ! function_exists( 'get_plugins' ) ) {
     require_once ABSPATH . 'wp-admin/includes/plugin.php';
 }
 
-$weLaunchUpdater = array();
-$weLaunchAllPlugins = get_plugins();
-foreach($weLaunchAllPlugins as $weLaunchAllPluginSlug => $weLaunchAllPluginInfo) {
+if(class_exists('Puc_v4_Factory')) {
 
-	$weLaunchAllPluginSlug =  explode('/', $weLaunchAllPluginSlug)[0];
-	$welaunchPlugin = array_search($weLaunchAllPluginSlug, $weLaunchPlugins, true);
-	if($welaunchPlugin !== false) {
+	$weLaunchUpdater = array();
+	$weLaunchAllPlugins = get_plugins();
+	foreach($weLaunchAllPlugins as $weLaunchAllPluginSlug => $weLaunchAllPluginInfo) {
 
-		$welaunchPlugin = $weLaunchPlugins[$welaunchPlugin];
-        $weLaunchFilePath = trailingslashit(WP_PLUGIN_DIR) . $welaunchPlugin . '/' . $welaunchPlugin . '.php';
+		$weLaunchAllPluginSlug =  explode('/', $weLaunchAllPluginSlug)[0];
+		$welaunchPlugin = array_search($weLaunchAllPluginSlug, $weLaunchPlugins, true);
+		if($welaunchPlugin !== false) {
 
-        $license = '';
+			$welaunchPlugin = $weLaunchPlugins[$welaunchPlugin];
+	        $weLaunchFilePath = trailingslashit(WP_PLUGIN_DIR) . $welaunchPlugin . '/' . $welaunchPlugin . '.php';
 
-	    if ( isset($weLaunchLicenses[$welaunchPlugin]) && !empty($weLaunchLicenses[$welaunchPlugin]) ) {
-	        $license = $weLaunchLicenses[$welaunchPlugin];
-	    }
-	
-	    if ( substr($welaunchPlugin, 0, 11) === 'woocommerce' && isset($weLaunchLicenses['woocommerce-plugin-bundle']) && !empty($weLaunchLicenses['woocommerce-plugin-bundle']) ) {
-	        $license = $weLaunchLicenses['woocommerce-plugin-bundle'];
-	    }
+	        $license = '';
 
-	    if ( isset($weLaunchLicenses['agency-bundle']) && !empty($weLaunchLicenses['agency-bundle']) ) {
-	    	$license = $weLaunchLicenses['agency-bundle'];
-    	}
-
-	    if(empty($license) && $welaunchPlugin !== "welaunch-framework") {
-	    	continue;
-	    }
+		    if ( isset($weLaunchLicenses[$welaunchPlugin]) && !empty($weLaunchLicenses[$welaunchPlugin]) ) {
+		        $license = $weLaunchLicenses[$welaunchPlugin];
+		    }
 		
-		$domain = parse_url( get_site_url() )['host'];
+		    if ( substr($welaunchPlugin, 0, 11) === 'woocommerce' && isset($weLaunchLicenses['woocommerce-plugin-bundle']) && !empty($weLaunchLicenses['woocommerce-plugin-bundle']) ) {
+		        $license = $weLaunchLicenses['woocommerce-plugin-bundle'];
+		    }
 
-        $weLaunchUpdater[] = Puc_v4_Factory::buildUpdateChecker(
-            'https://www.welaunch.io/updates/account/?plugin=' . $welaunchPlugin . '&license=' . $license . '&domain=' . $domain,
-            $weLaunchFilePath,
-            $welaunchPlugin
-        );
-    }
+		    if ( isset($weLaunchLicenses['agency-bundle']) && !empty($weLaunchLicenses['agency-bundle']) ) {
+		    	$license = $weLaunchLicenses['agency-bundle'];
+	    	}
+
+		    if(empty($license) && $welaunchPlugin !== "welaunch-framework") {
+		    	continue;
+		    }
+			
+			$domain = parse_url( get_site_url() )['host'];
+
+
+	        $weLaunchUpdater[] = Puc_v4_Factory::buildUpdateChecker(
+	            'https://www.welaunch.io/updates/account/?plugin=' . $welaunchPlugin . '&license=' . $license . '&domain=' . $domain,
+	            $weLaunchFilePath,
+	            $welaunchPlugin
+	        );
+	    }
+	}
 }
 
 // Require the main plugin class.

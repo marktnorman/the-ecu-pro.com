@@ -268,7 +268,7 @@ if ( ! class_exists( 'weLaunch_Args', false ) ) {
 				/* translators: 1: weLaunch, 2: Link to plugin review */
 					__( 'Enjoyed %1$s? Please leave us a %2$s rating. We really appreciate your support!', 'welaunch-framework' ),
 					'<strong>' . __( 'weLaunch', 'welaunch-framework' ) . '</strong>',
-					'<a href="https://wordpress.org/support/plugin/welaunch-framework/reviews/?filter=5/#new-post" target="_blank">&#9733;&#9733;&#9733;&#9733;&#9733;</a>'
+					'<a href="https://codecanyon.net/downloads" target="_blank">&#9733;&#9733;&#9733;&#9733;&#9733;</a>'
 				);
 				$args['footer_credit'] = '<span id="footer-thankyou">' . $footer_text . '</span>';
 			}

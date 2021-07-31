@@ -108,6 +108,7 @@ class WooSEA_Get_Products {
 				$review['reviewer_name'] = html_entity_decode((str_replace("\r", "", $review['reviewer_name'])), ENT_QUOTES | ENT_XML1, 'UTF-8');
 				$review['reviewer_name'] = preg_replace( '/\[(.*?)\]/', ' ', $review['reviewer_name'] );
 				$review['reviewer_name'] = str_replace("&#xa0;", "", $review['reviewer_name']);
+				$review['reviewer_name'] = str_replace(":", "", $review['reviewer_name']);
 				$review['reviewer_name'] = $this->woosea_utf8_for_xml( $review['reviewer_name'] );
 
 				$review['reviewer_id'] = $review_raw->user_id;
@@ -268,7 +269,7 @@ class WooSEA_Get_Products {
 					$list[$value->name] = ucfirst($value_display);
                         	} else {
 	                                $product_attr = unserialize($value->type);
-					if(!empty($product_attr)){	
+					if((!empty($product_attr)) AND (is_array($product_attr))){	
 						foreach ($product_attr as $key_inner => $arr_value) {
 							if(is_array($arr_value)){
 								if(!array_key_exists('name', $arr_value)){
@@ -679,7 +680,7 @@ class WooSEA_Get_Products {
 	 * Get shipping cost for product
 	 */
 	public function woosea_get_shipping_cost ($class_cost_id, $project_config, $price, $tax_rates, $fullrate, $shipping_zones, $product_id, $item_group_id) {
-        	$shipping_cost = 0;
+        	$shipping_cost = "";
 		$shipping_arr = array();
 		$zone_count = 0;
 		$nr_shipping_zones = count($shipping_zones);
@@ -751,37 +752,36 @@ class WooSEA_Get_Products {
 
 							if(isset($v->instance_settings['cost'])){
 								$shipping_cost = $v->instance_settings['cost'];
-								if(!$shipping_cost){
-									$shipping_cost = 0;
-								}
+								if($shipping_cost > 0){
 
-								// Do we need to convert the shipping costs with the Aelia Currency Switcher
-                	        				if((isset($project_config['AELIA'])) AND (!empty($GLOBALS['woocommerce-aelia-currencyswitcher'])) AND (get_option ('add_aelia_support') == "yes")){
+									// Do we need to convert the shipping costs with the Aelia Currency Switcher
+	                	        				if((isset($project_config['AELIA'])) AND (!empty($GLOBALS['woocommerce-aelia-currencyswitcher'])) AND (get_option ('add_aelia_support') == "yes")){
                         	       				
-									if(!array_key_exists('base_currency', $project_config)){
-                               		        	 			$from_currency = get_woocommerce_currency();
-                               	 					} else {
-                                        					$from_currency = $project_config['base_currency'];
-                                					}
+										if(!array_key_exists('base_currency', $project_config)){
+                        	       		        	 			$from_currency = get_woocommerce_currency();
+                               		 					} else {
+                                        						$from_currency = $project_config['base_currency'];
+                                						}
 
-                                					// Get Aelia currency conversion prices
-                                					$shipping_cost = apply_filters('wc_aelia_cs_convert', $shipping_cost, $from_currency, $project_config['AELIA']);
-								}
+                                						// Get Aelia currency conversion prices
+                                						$shipping_cost = apply_filters('wc_aelia_cs_convert', $shipping_cost, $from_currency, $project_config['AELIA']);
+									}
 
-								if($taxable == "taxable"){
-									foreach ($tax_rates as $k_inner => $w){
-										if((isset($w['shipping'])) and ($w['shipping'] == "yes")){
-											$rate = (($fullrate)/100);
+									if($taxable == "taxable"){
+										foreach ($tax_rates as $k_inner => $w){
+											if((isset($w['shipping'])) and ($w['shipping'] == "yes")){
+												$rate = (($fullrate)/100);
 															
-											$shipping_cost = str_replace(",", ".", $shipping_cost);
-											$shipping_cost = $shipping_cost*$rate;
-											$shipping_cost = round($shipping_cost, 2);
-											$shipping_cost = wc_format_localized_price($shipping_cost);
+												$shipping_cost = str_replace(",", ".", $shipping_cost);
+												$shipping_cost = $shipping_cost*$rate;
+												$shipping_cost = round($shipping_cost, 2);
+												$shipping_cost = wc_format_localized_price($shipping_cost);
+											}
 										}
 									}
 								}
-							}
-				
+							}		
+
 							// WooCommerce Table Rate - Bolder Elements
 							if($method == "Table Rate"){
                                                         	if($this->woosea_is_plugin_active( 'woocommerce-table-rate-shipping/woocommerce-table-rate-shipping.php' )) {
@@ -893,6 +893,7 @@ class WooSEA_Get_Products {
                                                                         	}
                                                                 	}
 								}
+								error_log("Table rate:" . $shipping_cost);
 							}
 
 							// CLASS SHIPPING COSTS
@@ -971,6 +972,7 @@ class WooSEA_Get_Products {
                                                         			$shipping_cost = apply_filters('wc_aelia_cs_convert', $shipping_cost, $from_currency, $project_config['AELIA']);
                                                 			}
 								}
+								error_log("Class shipping cost:" . $shipping_cost);
                             				}
 
 							// CHECK IF WE NEED TO REMOVE LOCAL PICKUP
@@ -1479,7 +1481,8 @@ class WooSEA_Get_Products {
 							foreach ($products as $key => $value){
 
 								$expl = "||";
-                                          			if(strpos($value['reviews'], $expl)) {
+
+								if(array_key_exists('reviews', $value)) {
                                                 			$review_data = explode("||", $value['reviews']);
 									foreach($review_data as $rk => $rv){
 				
@@ -2168,6 +2171,33 @@ class WooSEA_Get_Products {
 			}
 		}
 
+		// Get WooCommerce categories
+		$product_categories = get_terms( 'product_cat', 'hide_empty=0' );
+		$prod_cats = array();
+		if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) {
+			foreach ( $product_categories as $category ) {
+				$prod_cats[$category->slug] = $category->name;
+			}	
+		}
+		
+		// Get Fiters on categories
+		$prod_cats_slugs = array();
+		if(isset($project_config['rules'])){
+			foreach ($project_config['rules'] as $rule){
+				if(($rule['attribute'] == "categories") AND ($rule['condition'] == "=")){
+					$slug = array_search($rule['criteria'], $prod_cats);
+					array_push($prod_cats_slugs, $slug);
+				}
+			}
+		}
+		
+		$product_cat = "";
+		if(count($prod_cats_slugs) > 0){
+			foreach ( $prod_cats_slugs as $cat_slug ){
+				$product_cat .= $cat_slug .",";
+			}
+		}	
+
 		// Construct WP query
 		$wp_query = array(
 				'posts_per_page' => $offset_step_size,
@@ -2175,8 +2205,10 @@ class WooSEA_Get_Products {
 				'post_type' => $post_type,
 				'post_status' => 'publish',
                                 'fields' => 'ids',
-                                'no_found_rows' => true,
-                );
+				'no_found_rows' => true,
+//				'product_cat' => $product_cat
+		);
+
 		$prods = new WP_Query($wp_query);
 		$shipping_zones = $this->woosea_get_shipping_zones();
 
@@ -2213,9 +2245,8 @@ class WooSEA_Get_Products {
 					if(!in_array($product_data['id'], $allowed_product_orders)){ continue; }
 				}
 			}
-
 			$product_data['title'] = $product->get_title();
-                        $product_data['title'] = $this->woosea_utf8_for_xml( $product_data['title'] );
+			$product_data['title'] = $this->woosea_utf8_for_xml( $product_data['title'] );
 			$product_data['mother_title'] = $product->get_title();
                         $product_data['mother_title'] = $this->woosea_utf8_for_xml( $product_data['mother_title'] );
 			$product_data['title_hyphen'] = $product_data['title'];
@@ -2478,6 +2509,7 @@ class WooSEA_Get_Products {
 			}
 
 			$product_data['link'] = get_permalink( $product_data['id'])."$utm_part";
+			$product_data['link_no_tracking'] = get_permalink( $product_data['id']);
 			$variable_link = htmlspecialchars(get_permalink( $product_data['id']));
 			$vlink_piece = explode("?", $variable_link);
 			$qutm_part = ltrim($utm_part, "&amp;");
@@ -2485,8 +2517,10 @@ class WooSEA_Get_Products {
 			$qutm_part = ltrim($qutm_part, "?");
 			if($qutm_part){
 				$product_data['variable_link'] = $vlink_piece[0]."?".$qutm_part;
+				$product_data['link_no_tracking'] = $vlink_piece[0];
 			} else {
 				$product_data['variable_link'] = $vlink_piece[0];
+				$product_data['link_no_tracking'] = $vlink_piece[0];
 			}
 
 			$product_data['condition'] = ucfirst( get_post_meta( $product_data['id'], '_woosea_condition', true ) );
@@ -2504,12 +2538,22 @@ class WooSEA_Get_Products {
 			*/
 			$stock_status = $product->get_stock_status();
 			$product_data['stock_status'] = $stock_status;
+
 			if ($stock_status == "outofstock"){
 				$product_data['availability'] = "out of stock";
+				if (($project_config['taxonomy'] == "google_shopping") AND ($project_config['fields'] == "google_shopping")) {
+					$product_data['availability'] = "out_of_stock";
+				}
 			} elseif ($stock_status == "onbackorder") {
 				$product_data['availability'] = "on backorder";
+				if (($project_config['taxonomy'] == "google_shopping") AND ($project_config['fields'] == "google_shopping")) {
+					$product_data['availability'] = "backorder";
+				}
 			} else {
 				$product_data['availability'] = "in stock";
+				if (($project_config['taxonomy'] == "google_shopping") AND ($project_config['fields'] == "google_shopping")) {
+					$product_data['availability'] = "in_stock";
+				}
 			}
 
 			$product_data['author'] = get_the_author();
@@ -2707,11 +2751,14 @@ class WooSEA_Get_Products {
                                         //$product_data['non_geo_wcml_price'] = $woocommerce_wpml->multi_currency->prices->get_product_price_in_currency( $product_data['id'], $project_config['WCML'] );
                                         $product_data['non_geo_wcml_price'] = wc_format_decimal(get_post_meta( $product_data['id'], '_regular_price', true),2);
                                         $product_data['non_geo_wcml_price'] = wc_format_localized_price($product_data['non_geo_wcml_price']);
-                                        $non_geo_sale = get_post_meta( $product_data['id'], '_sale_price', true );
+					$product_data['non_geo_wcml_price_net_price'] = $product_data['non_geo_wcml_price']/((100+$tax_rates[1]['rate'])/100);
+
+					$non_geo_sale = get_post_meta( $product_data['id'], '_sale_price', true );
                                         if(!empty($non_geo_sale)){
                                                 $product_data['non_geo_wcml_sale_price'] = wc_format_decimal(get_post_meta( $product_data['id'], '_sale_price', true),2);
                                                 $product_data['non_geo_wcml_sale_price'] = wc_format_localized_price($product_data['non_geo_wcml_sale_price']);
-                                        }
+						$product_data['non_geo_wcml_sale_price_net_price'] = $product_data['non_geo_wcml_sale_price']/((100-$tax_rates[1]['rate'])/100);
+					}
                                 }
 
 				// When WCML manual prices have been entered
@@ -2948,12 +2995,26 @@ class WooSEA_Get_Products {
 			}
 
 			// Add rounded price options
-			$float_price = floatval($product_data['price']);
+		      	$decimal_separator = wc_get_price_decimal_separator();
+       			$float_price = floatval($product_data['price']);
 			$float_regular_price = floatval($product_data['regular_price']);
 			$float_sale_price = floatval($product_data['sale_price']);
-			$product_data['rounded_price'] = round($float_price,0);
-			$product_data['rounded_regular_price'] = round($float_regular_price,0);
-			$product_data['rounded_sale_price'] = round($float_sale_price,0);
+	
+	              	if($decimal_separator == ","){
+                        	$product_data['rounded_price'] = str_replace(',', '.', $product_data['price']);
+                               	$product_data['rounded_price'] = round(number_format($product_data['rounded_price'], 2, '.', ''));
+                        	$product_data['rounded_regular_price'] = str_replace(',', '.', $product_data['regular_price']);
+                               	$product_data['rounded_regular_price'] = round(number_format($product_data['rounded_regular_price'], 2, '.', ''));
+                        	
+				if($product_data['sale_price'] > 0){
+					$product_data['rounded_sale_price'] = str_replace(',', '.', $product_data['sale_price']);
+                               		$product_data['rounded_sale_price'] = round(number_format($product_data['rounded_sale_price'], 2, '.', ''));
+				}
+			} else {
+				$product_data['rounded_price'] = round($float_price,0);
+				$product_data['rounded_regular_price'] = (string) round($float_regular_price,0);
+				$product_data['rounded_sale_price'] = round($float_sale_price,0);
+			}
 
 			// Calculate discount percentage
 			if($product_data['sale_price'] > 0){
@@ -3653,7 +3714,7 @@ class WooSEA_Get_Products {
                                                 $value_display = str_replace("_", " ",$value->name);
                                                 if (preg_match("/_product_attributes/i",$value->name)){
                                                         $product_attr = unserialize($value->type);
-                                                        if(!empty($product_attr)){
+                                                        if((!empty($product_attr)) AND (is_array($product_attr))){
 								foreach ($product_attr as $key => $arr_value) {
                                                                 	$new_key ="custom_attributes_" . $key;
                                                                 	$product_data[$new_key] = $arr_value['value'];
@@ -3776,6 +3837,10 @@ class WooSEA_Get_Products {
 				if(is_array($product_data)){
 					$product_data = $this->woocommerce_sea_filters( $project_config['rules'], $product_data ); 
 				}
+			}
+			
+			if(isset($product_data['title_lcw'])){
+				$product_data['title_lcw'] = ucwords($product_data['title_lcw']);
 			}
 
                         // Check if the sale price is effective        
@@ -5285,9 +5350,7 @@ class WooSEA_Get_Products {
 
                         if($pr_array['attribute'] == "categories"){
                                 $pr_array['attribute'] = "raw_categories";
-                        }
-
-                        //if(array_key_exists($pr_array['attribute'], $product_data)){
+			}
 
                         if(!array_key_exists($pr_array['attribute'], $product_data)) {
                                 $product_data[$pr_array['attribute']] = "";  // Sets an empty postmeta value in place of a missing one.
@@ -5686,10 +5749,14 @@ class WooSEA_Get_Products {
                                                                 }
                                                                 break;
 							case($pr_array['condition'] = "="):
-					                        if (($pr_array['criteria'] == "$pd_value") AND ($pr_array['than'] == "exclude")){
+								//if(($pr_array['attribute'] == "raw_categories") AND ($pr_array['than'] == "include_only")){
+								//	$allowed = 1;
+								//	error_log("Ja hier 1");
+								//} elseif (($pr_array['criteria'] == "$pd_value") AND ($pr_array['than'] == "exclude")){
+								if (($pr_array['criteria'] == "$pd_value") AND ($pr_array['than'] == "exclude")){
 									$allowed = 0;
-                                                                } elseif (($pr_array['criteria'] != "$pd_value") && ($pr_array['than'] == "include_only")){
-                                                                        $found = strpos($pd_value,$pr_array['criteria']);
+								} elseif (($pr_array['criteria'] != "$pd_value") && ($pr_array['than'] == "include_only")){
+									$found = strpos($pd_value,$pr_array['criteria']);
                                                                         if ($found !== false) {
                                                                                 //for category mapping check if its an array
                                                                                 if($pr_array['attribute'] == "raw_categories"){
@@ -5700,7 +5767,7 @@ class WooSEA_Get_Products {
                                                                                                                 $allowed = 1;
                                                                                                         }
                                                                                                 } else {
-                                                                                                        $allowed = 0;
+                                                                                               		$allowed = 0;
                                                                                                 }
                                                                                         }
                                                                                 } else {
@@ -5709,11 +5776,11 @@ class WooSEA_Get_Products {
                                                                                         }
                                                                                 }
                                                                         } else {
-                                                                                $allowed = 0;
+                                                                        	$allowed = 0;
                                                                         }
                                                                 } elseif (($pr_array['criteria'] == "$pd_value") && ($pr_array['than'] == "include_only")){
-                                                                        if($allowed <> 0){
-                                                                                $allowed = 1;
+									if($allowed <> 0){
+                                                                               	$allowed = 1;
                                                                         }
                                                                 } elseif ((preg_match('/'.$pr_array['criteria'].'/', $pd_value)) && ($pr_array['than'] == "exclude")){
 //                                                                      $allowed = 0;

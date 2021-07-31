@@ -1,10 +1,10 @@
-=== WooCommerce Conversion Tracking by woopt ===
+=== WooCommerce Pixel Manager by woopt ===
 Contributors: alekv, woopt, wolfbaer
 Tags: woocommerce, google ads, google analytics, facebook pixel, conversion tracking, dynamic retargeting, remarketing, pixel, facebook conversion api, woocommerce google, woocommerce facebook
 Requires at least: 3.7
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 7.2
-Stable tag: 1.10.10
+Stable tag: 1.11.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,7 +22,7 @@ Out of many things, probably high tracking accuracy and a simple user interface 
 
 Additionally to the standard features offered by the tracking pixels we've developed more functional layers into the plugin which help increase measurement accuracy. For instance, if the plugin detects problems in the shop setup that might lower or prevent accurate tracking, it either fixes them seamlessly, or shows warnings with guidance on how to fix the problems.
 
-Read more about the importance of tracking accuracy over [here](https://docs.woopt.com/wgact/?utm_source=wordpress.org&utm_medium=wooptpm-plugin-page&utm_campaign=woopt-pixel-manager-docs#/faq?id=why-is-tracking-accuracy-so-important).
+Read more about the importance of tracking accuracy over [here](https://docs.woopt.com/wgact/?utm_source=wordpress.org&utm_medium=wooptpm-plugin-page&utm_campaign=woopt-pixel-manager-docs&utm_content=tracking-accuracy#/faq?id=why-is-tracking-accuracy-so-important).
 
 <strong>The plugin comes with integrations for:</strong>
 
@@ -35,11 +35,13 @@ Read more about the importance of tracking accuracy over [here](https://docs.woo
 * Twitter Ads (Pro version)
 * Pinterest Ads (Pro version)
 * Snapchat Ads (Pro version)
+* TikTok Ads (Pro version)
 
 <strong>Highlights</strong>
 
-* Facebook Conversion API (CAPI) (Pro version)
 * Google Analytics Enhanced E-Commerce (Pro version)
+* Facebook Conversion API (CAPI) (Pro version)
+* Google Ads Enhanced Conversions (Pro version)
 * Precise measurement by preventing duplicate reporting effectively, excluding admins and shop managers from tracking, and not counting failed payments.
 * Collects dynamic remarketing audiences for dynamic retargeting (Google Ads, Facebook, etc.)
 * Implements the new Google Add Cart Data functionality. More info about the new feature: [add cart data to the conversion](https://support.google.com/google-ads/answer/9028254)
@@ -70,10 +72,12 @@ Have a look at the full feature list over [here](https://docs.woopt.com/wgact/#/
 * Google Analytics Universal and Google Analytics 4 Enhanced E-Commerce
 * Google Consent Mode
 * Google Dynamic Remarketing Choice for all Business Verticals
+* Google Ads Enhanced Conversions
 * Microsoft Advertising Pixel with Purchase and all Remarketing Events
 * Twitter Ads Pixel with Purchase and all Remarketing Events
 * Pinterest Ads Pixel with Purchase and all Remarketing Events
 * Snapchat Ads Pixel with Purchase and all Remarketing Events
+* TikTok Ads Pixel with Purchase and all Remarketing Events
 * Advanced Order Deduplication
 
 Have a look at the full feature list over [here](https://docs.woopt.com/wgact/#/features?id=available-features).
@@ -177,7 +181,28 @@ You can send the link to the front page of your shop too if you think it would b
 
 == Changelog ==
 
-= 1.10.10 =
+= 1.11.0 =  26.07.2021
+
+
+* Tweak: Added coupons to GA UA and GA4 purchase events
+* Tweak: Avoid an issue when trying to read WP Rocket options when no options exist yet
+* Tweak: Removed some unnecessary parameters from Google Ads purchase confirmation script
+* Tweak: Output purchase value with max two decimals
+
+* Fix: Fixed some events on cart page for variable products
+
+= 1.10.11 =  19.07.2021
+
+
+* New: Filter for order items
+* New: Implemented warning for incompatible plugins
+
+* Tweak: Refactored wooptpm.setCookie() so that it can create session cookies
+
+* Fix: Output of product prices as float
+* Fix: Added string to float conversion in wooptpm_get_order_item_price to make sure a float is returned
+
+= 1.10.10 =  7.7.2021
 
 
 * New: Automatically flush cache of caching plugins and platforms on plugin settings changes

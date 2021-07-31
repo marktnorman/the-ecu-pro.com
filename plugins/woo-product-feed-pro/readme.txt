@@ -4,8 +4,8 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: Product Feed, Google Shopping, Google Shopping Feed, WooCommerce Product Feed, WooCommerce Product Feed PRO, Bing Shopping, Bing product feed, Bing remarking, Google Merchant Feed, Google DRM Feed, Google Dynamic Remarketing Feed, Facebook feed, Google feed, Bing feed, Facebook Product Feed, Facebook pixel, Facebook Conversion API, Facebook CAPI,Facebook Dynamic remarketing, Data Feed, WooCommerce Feed, XML product feed, CSV product feed, TSV, TXT product feed, comparison shopping engines, comparison shopping websites, vergelijk.nl, vergelijk.be, vertaa.fi, beslist.nl, kieskeurig.nl, bol.com, raketten, pricerunner, pricegrabber, Buy, leGuide, Kelkoo, Twenga, Yandex, Etsy, Dealtime, Shopzilla, Billiger, Google Product Review feed
 Requires at least: 4.5
-Tested up to: 5.7
-Stable tag: 10.3.2
+Tested up to: 5.8
+Stable tag: 10.4.6
 
 == Description ==
 
@@ -333,6 +333,51 @@ Questions left or unanswered? Please do not hesitate to contact us at support@ad
 8. Set the basic configurations for your product feed
 
 === Changelog ===
+
+= 10.4.7 (2021-07-28) =
+* Checked for compatibility with WP 5.8
+
+= 10.4.6 (2021-07-22) =
+* Facebook is not yet using the new availability values yet so reverting it back for Facebook only
+
+= 10.4.5 (2021-07-21) =
+* Google changed its availability requirements (underscores in the availability values), we have adjusted the plugin on this.
+
+= 10.4.4 (2021-07-15) =
+* Fixed a product review feed bug where review names with a : in it broke the feed.
+
+= 10.4.3 (2021-07-12) =
+* Added the non tax price attribute for WCML
+
+= 10.4.2 (2021-07-09) =
+* Fixed a shipping issue where table rates where put on 0 when pickup was available too.
+
+= 10.4.1 (2021-07-08) =
+* Implemented Google's new Dynamic Remarketing event pixelcode and added the Purchase and Add To Cart events for it
+
+= 10.4.0 (2021-07-03) =
+* Fixed a PHP notice on a foreach loop when a non-array was used for it
+
+= 10.3.9 (2021-07-02) =
+* A PHP warning was thrown when a review feed was created while there were no reviews in WooCommerce
+
+= 10.3.8 (2021-07-02) =
+* Fixed a bug: When a find and replace rule was created it converted strings to lowercases, this has been fixed.
+
+= 10.3.7 (2021-07-01) =
+* Added Facebook Auto / Vehicle fields to the Facebook templating
+
+= 10.3.6 (2021-06-30) =
+* Added eventID's to the Facebook pixel and Facebook Conversion API in order to prevent duplicate events being measured
+
+= 10.3.5 (2021-06-29) =
+* Fixed a bug: using a rounding price attribute did not work properly when in WooCommerce currency options the decimal or thousand separator was left blank, it always rounded down. This has been fixed.
+
+= 10.3.4 (2021-06-28) =
+* Added the quantity_to_sell_on_facebook field to the Facebook template
+
+= 10.3.3 (2021-06-25) =
+* Added a 'Link without parameters' attribute (which holds no attribute or UTM parameters in the URL)
 
 = 10.3.2 (2021-06-18) =
 * Added some product data attributes to the Google Shopping template: capacity, count, disclosure date, feature description, flavor, format, product line, product page url, release date, scent, size system, size type, suggested retail price, theme and video link
@@ -3297,6 +3342,51 @@ Questions left or unanswered? Please do not hesitate to contact us at support@ad
 * Strip HTML from the (short) description attributes
 
 == Upgrade Notice ==
+
+= 10.4.7 =
+Checked for compatibility with WP 5.8
+
+= 10.4.6 =
+Reverting back the availability changes for Facebook only
+
+= 10.4.5 =
+Google changed its availability requirements (underscores in the availability values), we have adjusted the plugin on this.
+
+= 10.4.4 =
+Fixed a product review feed bug where review names with a : in it broke the feed.
+
+= 10.4.3 =
+Added the non tax price attribute for WCML
+
+= 10.4.2 =
+Fixed a shipping issue where table rates where put on 0 when pickup was available too.
+
+= 10.4.1 =
+Implemented Google's new Dynamic Remarketing event pixelcode and added the Purchase and Add To Cart events for it
+
+= 10.4.0 =
+Fixed a PHP notice on a foreach loop when a non-array was used for it
+
+= 10.3.9 =
+A PHP warning was thrown when a review feed was created while there were no reviews in WooCommerce
+
+= 10.3.8 =
+Fixed a bug: When a find and replace rule was created it converted strings to lowercases, this has been fixed.
+
+= 10.3.7 =
+Added Facebook Auto / Vehicle fields to the Facebook templating
+
+= 10.3.6 =
+Added eventID's to the Facebook pixel and Facebook Conversion API in order to prevent duplicate events being measured
+
+= 10.3.5 =
+Fixed a bug: using a rounding price attribute did not work properly when in WooCommerce currency options the decimal or thousand separator was left blank, it always rounded down. This has been fixed.
+
+= 10.3.4 =
+Added the quantity_to_sell_on_facebook field to the Facebook template
+
+= 10.3.3 =
+Added a 'Link without parameters' attribute (which holds no attribute or UTM parameters in the URL)
 
 = 10.3.2 =
 Added some product data attributes to the Google Shopping template: capacity, count, disclosure date, feature description, flavor, format, product line, product pag

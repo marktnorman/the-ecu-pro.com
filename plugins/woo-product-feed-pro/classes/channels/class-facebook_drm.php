@@ -79,6 +79,12 @@ class WooSEA_facebook_drm {
 					"feed_name" => "g:brand",
 					"format" => "required",
 				),
+                                "identifier exists" => array(
+                                        "name" => "identifier_exists",
+                                        "feed_name" => "g:identifier_exists",
+                                        "woo_suggest" => "calculated",
+                                        "format" => "required",
+                                ),
 				"additional_image_link" => array(
 					"name" => "additional_image_link",
 					"feed_name" => "g:additional_image_link",
@@ -277,6 +283,11 @@ class WooSEA_facebook_drm {
 					"feed_name" => "g:inventory",
 					"format" => "optional",
 				),
+                                "quantity_to_sell_on_facebook" => array(
+                                        "name" => "quantity_to_sell_on_facebook",
+                                        "feed_name" => "g:quantity_to_sell_on_facebook",
+                                        "format" => "optional",
+                                ),
 				"ingredients" => array(
 					"name" => "ingredients",
 					"feed_name" => "g:ingredients",
