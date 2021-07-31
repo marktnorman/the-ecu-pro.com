@@ -322,6 +322,7 @@ function include_dependencies()
     require_once get_stylesheet_directory() . '/inc/functions/product-meta-frontend-update.php';
     require_once get_stylesheet_directory() . '/inc/functions/generate-short-description.php';
     require_once get_stylesheet_directory() . '/inc/functions/generate-bottom-description.php';
+    require_once get_stylesheet_directory() . '/inc/functions/contact-form-submission-hook.php';
 }
 
 /**
@@ -1241,7 +1242,7 @@ function work_order_form_redirection()
         $order = wc_get_order($_GET['order-id']);
 
         if (!empty($order)) {
-            $items = $order->get_items();
+            $items       = $order->get_items();
             $productType = '';
 
             foreach ($items as $item) {
