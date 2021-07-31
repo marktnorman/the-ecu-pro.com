@@ -10,6 +10,12 @@ jQuery( document ).ready( function ( $ ) {
 			}
 		} );
 
+		$( '#' + object_id + ' textarea' ).each( function ( index ) {
+			if ( $( this ).val() ) {
+				f = true;
+			}
+		} );
+
 		// show checkboxes for order and coupon section  ?
 		if ( f || verify_checkboxes && $( '#' + object_id + " input[type='checkbox']:checked" ).length ) {
 			$( '#' + object_id ).prev().click();

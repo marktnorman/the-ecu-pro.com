@@ -436,7 +436,7 @@ class WC_Order_Export_Data_Extractor {
 			$order_items_meta_where[]     = "( " . join( " AND ", $orders_where ) . " )";
 		}
 
-		$order_items_meta_where = join( " AND ", $order_items_meta_where );
+		$order_items_meta_where = join( apply_filters('woe_product_itemmeta_operator', " AND "), $order_items_meta_where );
 		if ( $order_items_meta_where ) {
 			$order_items_meta_where = " AND " . $order_items_meta_where;
 		}
@@ -875,8 +875,7 @@ class WC_Order_Export_Data_Extractor {
 					}//if values
 				}
 			}
-
-			$order_item_metadata_where_sql = join( " AND ", $order_item_metadata_where );
+			$order_item_metadata_where_sql = join( apply_filters("woe_item_metadata_operator", " AND "), $order_item_metadata_where );
 
 			$order_items_metadata_joins_sql = implode(' ', $order_items_metadata_joins);
 
@@ -1519,6 +1518,21 @@ class WC_Order_Export_Data_Extractor {
 									}
 								}
 								if(!$matched_like) {
+									continue 3;
+								}
+							}
+							else if(in_array($operator, self::$operator_must_check_values)) {
+								if(empty($meta)) {
+									continue 3;
+								}
+								$matched = false;
+								foreach ($values as $value) {
+									if(version_compare($meta, $value, $operator)) {
+										$matched = true;
+										continue;
+									}
+								}
+								if(!$matched) {
 									continue 3;
 								}
 							}

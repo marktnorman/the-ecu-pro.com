@@ -227,7 +227,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Import {
                     continue;
                 }            
                 if ('free_shipping' == $column ) {
-                    $item_data['free_shipping'] = ($value);
+                    $item_data['free_shipping'] = wc_string_to_bool($value);
                     continue;
                 }            
                 if ('exclude_sale_items' == $column ) {
@@ -235,11 +235,11 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Import {
                     continue;
                 }
                 if ('product_categories' == $column ) {
-                    $item_data['product_categories'] = $this->wt_explode_values($value,',');
+                    $item_data['product_categories'] = $this->wt_parse_product_category_field($value);
                     continue;
                 }
                 if ('exclude_product_categories' == $column) { 
-                    $item_data['excluded_product_categories'] = $this->wt_explode_values($value,',');                
+                    $item_data['excluded_product_categories'] = $this->wt_parse_product_category_field($value);                
                     continue;
                 }                        
                 if ('minimum_amount' == $column ) {
@@ -658,6 +658,30 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Import {
     }   
     
 
+    
+    /**
+     * Parse category names to IDs.
+     *
+     * @param string $value Field value.
+     *
+     * @return array
+     */
+    public function wt_parse_product_category_field($product_categories) {
+        if (empty($product_categories)) {
+            return array();
+        }
+        $cpn_product_categories = explode(',', $product_categories);
+        $cpn_product_category_ids = array();
+        foreach ($cpn_product_categories as $cpn_product_category_name) {
+            
+            $cpn_product_category_obj = get_term_by( 'name', $cpn_product_category_name, 'product_cat' );
+            $cpn_product_category_ids[] = $cpn_product_category_obj->term_id;
+            
+        }
+        
+        return $cpn_product_category_ids;
+    }    
+    
     /**
      * Parse relative comma-delineated field and return product ID.
      *
@@ -787,7 +811,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Import {
         try {
             do_action('wt_woocommerce_coupon_import_before_process_item', $data);
             $data = apply_filters('wt_woocommerce_coupon_import_process_item', $data);  
-                        
+     
             $post_id = $data['id'];
             $object = new WC_Coupon($post_id);
  
@@ -799,7 +823,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Import {
             
             Wt_Import_Export_For_Woo_Basic_Logwriter::write_log($this->parent_module->module_base, 'import', "Found coupon object. ID:".$object->get_id());            
 
-            $boolean_keys = apply_filters('wt_ier_coupon_boolean_keys', array('exclude_sale_items', 'individual_use'));
+            $boolean_keys = apply_filters('wt_ier_coupon_boolean_keys', array('exclude_sale_items', 'individual_use', 'free_shipping'));
             
             foreach ($data as $key => $value) {
                 

@@ -214,6 +214,10 @@ class WOE_Formatter_Xls extends WOE_Formatter_Plain_Format {
 								} else {
 								$text = date( "Y-m-d", strtotime( $text ) );
 								}
+							} else {
+								if (WOE_Formatter::is_valid_time_stamp( $text )) {
+									$text = date( "Y-m-d H:i:s", $text );
+								}
 							}
 							try {
 								$text = PHPExcel_Shared_Date::PHPToExcel( new DateTime( $text ) );

@@ -286,10 +286,11 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 			
 			if( $product )
 				$key = $product->get_id();
-			else 
+			elseif( isset($item_meta['_variation_id'][0]) )
 				$key = $item_meta['_variation_id'][0] ? $item_meta['_variation_id'][0] : $item_meta['_product_id'][0];
-
-			$key = apply_filters( "woe_summary_products_adjust_key", $key, $product, $product_item, $order );
+			else
+				$key = $item_id;
+			$key = apply_filters( "woe_summary_products_adjust_key", $key, $product, $product_item, $order, $item );
 
 			//add new product 
 			if ( ! isset( $_SESSION['woe_summary_products'][ $key ] ) ) {
@@ -321,7 +322,7 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 				$new_row                                  = apply_filters( 'woe_summary_column_keys',
 					$new_row );// legacy hook
 				$new_row                                  = apply_filters( "woe_summary_products_prepare_product",
-					$new_row, $key, $product, $product_item, $order );
+					$new_row, $key, $product, $product_item, $order,$item );
 				$_SESSION['woe_summary_products'][ $key ] = $new_row;
 			}
 
@@ -354,7 +355,7 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 				$_SESSION['woe_summary_products'][ $key ]['summary_report_total_refund_amount'] += wc_round_tax_total( $total );
 			}
 
-			do_action( "woe_summary_products_add_item", $key, $product_item, $order );
+			do_action( "woe_summary_products_add_item", $key, $product_item, $order, $item );
 		}
 		do_action( "woe_summary_products_added_order", $order );
 
@@ -527,6 +528,27 @@ abstract class WOE_Formatter_Plain_Format extends WOE_Formatter {
 				}
 				$_SESSION['woe_summary_customers'][ $key ]['summary_report_total_count_items_exported'] += $exported_items; 
 			}	
+		}
+
+		if ( isset( $_SESSION['woe_summary_customers'][ $key ]['summary_report_total_sum_items_exported'] ) ) {
+			if( empty( WC_Order_Export_Engine::$extractor_options['include_products']) ) {
+				$export_only_products = false;
+			} else {
+				$export_only_products = WC_Order_Export_Engine::$extractor_options['include_products'];
+			}
+			$exported_items_total = 0;
+			foreach ( $order->get_items( 'line_item') as $item ) {
+				if ( $export_only_products AND
+					! in_array( $item['product_id'], $export_only_products ) AND // not  product
+					( ! $item['variation_id'] OR ! in_array( $item['variation_id'],
+							$export_only_products ) )  // not variation
+				) {
+					continue;
+				}				
+				//OK, item was exported 
+				$exported_items_total += wc_round_tax_total($item->get_total());
+			}
+			$_SESSION['woe_summary_customers'][ $key ]['summary_report_total_sum_items_exported'] += $exported_items_total; 	
 		}
 
 		if ( isset( $_SESSION['woe_summary_customers'][ $key ]['summary_report_total_amount'] ) ) {

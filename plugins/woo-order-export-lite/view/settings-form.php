@@ -1526,6 +1526,11 @@ function remove_time_from_date( $datetime ) {
                             <option>LIKE</option>
                             <option>NOT SET</option>
                             <option>IS SET</option>
+							<option>&gt;</option>
+							<option>&gt;=</option>
+							<option>&lt;</option>
+							<option>&lt;=</option>
+                            
                         </select>
                         <input type="text" id="text_order_itemmetadata" disabled class="like-input" style="display: none;">
                         <button id="add_item_metadata" class="button-secondary"><span

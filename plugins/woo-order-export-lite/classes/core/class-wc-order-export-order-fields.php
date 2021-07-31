@@ -199,13 +199,13 @@ class WC_Order_Export_Order_Fields {
 
 			$value = $wpdb->get_col( $wpdb->prepare(
 			"SELECT
-				itemmeta.meta_value
+				SUM(itemmeta.meta_value)
 			FROM
 				{$wpdb->prefix}woocommerce_order_items items
 			INNER JOIN
 				{$wpdb->prefix}woocommerce_order_itemmeta itemmeta
 			ON
-				items.order_item_id = itemmeta.order_item_id AND itemmeta.meta_key = 'tax_amount'
+				items.order_item_id = itemmeta.order_item_id AND (itemmeta.meta_key = 'tax_amount' OR itemmeta.meta_key = 'shipping_tax_amount')
 			WHERE
 				items.order_id = %s AND items.order_item_type = 'tax' AND items.order_item_name = %s",
 			$this->order_id,
@@ -288,7 +288,7 @@ class WC_Order_Export_Order_Fields {
 			$row[$field] = $this->user ? $this->user->$field : "";
 		} elseif ( $field == 'user_role' ) {
 			$roles         = $wp_roles->roles;
-			$row[$field] = ( isset( $this->user->roles[0] ) && isset( $roles[ $this->user->roles[0] ] ) ) ? $roles[ $this->user->roles[0] ]['name'] : ""; // take first role Name
+			$row[$field] =  !isset( $this->user->roles[0] ) ? "" :  ( isset( $roles[ $this->user->roles[0] ] ) ? $roles[ $this->user->roles[0] ]['name'] : $this->user->roles[0] ); // take first role Name
 		} elseif ( $field == 'customer_total_orders' ) {
 			$row[$field] = ( isset( $this->user->ID ) ) ? wc_get_customer_order_count( $this->user->ID ) : WC_Order_Export_Data_Extractor::get_customer_order_count_by_email( $this->order_meta["_billing_email"] );
 		} elseif ( $field == 'customer_total_spent' ) {
@@ -403,7 +403,7 @@ class WC_Order_Export_Order_Fields {
 					}
 				}
 			}
-			$row[$field] = implode( "\n", $comments );
+			$row[$field] = implode( "\n", array_filter( $comments ) );
 		} elseif ( $field == 'embedded_edit_order_link' ) {
 			$row[$field] = sprintf(
 				'<a href="%s" target="_blank">%s</a>',

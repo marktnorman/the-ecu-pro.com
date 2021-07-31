@@ -164,7 +164,7 @@ class Wt_Import_Export_For_Woo_Basic_History
 						}
 					}else{
                                             $out['status']=1;                                            
-                                            $out['html']= sprintf( __( 'Please check the Save import log is enabled under <a target = "_blank" href="%s">settings</a>' ), admin_url('admin.php?page=wt_import_export_for_woo_basic'));
+                                            $out['html']= sprintf( __( 'Please check the Generate import log is enabled under <a target = "_blank" href="%s">settings</a>' ), admin_url('admin.php?page=wt_import_export_for_woo_basic'));
                                         }
 				}
 			}

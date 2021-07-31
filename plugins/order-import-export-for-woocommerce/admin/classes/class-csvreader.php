@@ -65,6 +65,7 @@ class Wt_Import_Export_For_Woo_Basic_Csvreader
 
 	    	foreach($sample_data_key as $k => $key) 
 	        {
+				$key = trim($key);
 	            if(!$key)
 	            {
 	                continue;
@@ -211,7 +212,8 @@ class Wt_Import_Export_For_Woo_Basic_Csvreader
 	    		
 	    		/* clearing temp variables */
 	    		$row_column_count=$head_column_count=null;
-	    		unset($row_column_count, $head_column_count);
+				unset($row_column_count, $head_column_count);
+				$head_arr = array_map('trim', $head_arr); 
 
 	    		/* preparing associative array */
 	    		$data_row=array_combine($head_arr, $row);	    		

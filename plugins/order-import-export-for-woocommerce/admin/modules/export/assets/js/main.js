@@ -5,7 +5,7 @@ var wt_iew_basic_export=(function( $ ) {
 		ajax_data:{},
 		selected_template:0,
 		selected_template_name:'',
-		to_export:'',
+		to_export:'order',
 		to_export_title:'',
 		export_method:'',
 		current_step:'',
