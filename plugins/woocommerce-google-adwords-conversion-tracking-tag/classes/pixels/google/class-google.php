@@ -129,7 +129,7 @@ class Google extends Pixel
     
     protected function get_formatted_order_items( $order, $channel = '' )
     {
-        $order_items = $order->get_items();
+        $order_items = $this->wooptpm_get_order_items( $order );
         $order_items_array = [];
         $list_position = 1;
         foreach ( (array) $order_items as $order_item ) {
@@ -156,7 +156,7 @@ class Google extends Pixel
                 $item_details_array['google_business_vertical'] = (string) $this->google_business_vertical;
             }
             
-            if ( $this->is_google_analytics_active() ) {
+            if ( $this->is_google_analytics_active() && $channel != 'ads' ) {
                 $item_details_array['name'] = (string) $product->get_name();
                 //                $item_details_array['list_name'] = '';
                 $item_details_array['brand'] = (string) $this->get_brand_name( $product_id );
@@ -273,8 +273,9 @@ class Google extends Pixel
             'google' => [
             'ads'       => [
             'dynamic_remarketing'      => [
-            'status'  => ( $this->options_obj->google->ads->dynamic_remarketing ? true : false ),
-            'id_type' => $this->get_dyn_r_id_type(),
+            'status'                      => ( $this->options_obj->google->ads->dynamic_remarketing ? true : false ),
+            'id_type'                     => $this->get_dyn_r_id_type(),
+            'send_events_with_parent_ids' => apply_filters( 'wooptpm_send_events_with_parent_ids', true ),
         ],
             'conversionIds'            => $this->get_google_ads_conversion_ids(),
             'google_business_vertical' => $this->google_business_vertical,
@@ -349,7 +350,7 @@ class Google extends Pixel
     
     private function inject_borlabs_consent_mode_update() : string
     {
-        return "\n                (function updateGoogleConsentMode() {\n                    if (typeof BorlabsCookie == 'undefined' || typeof gtag == 'undefined') {\n                        window.setTimeout(updateGoogleConsentMode, 50);\n                    } else {\n                        if (window.BorlabsCookie.checkCookieGroupConsent('statistics')) {\n                            gtag('consent', 'update', {\n                                'analytics_storage': 'granted'\n                        });\n                    }\n        \n                    if (window.BorlabsCookie.checkCookieGroupConsent('marketing')) {\n                        gtag('consent', 'update', {\n                            'ad_storage': 'granted'\n                            });\n                        }\n                    }\n                })();" . PHP_EOL;
+        return "\n                (function updateGoogleConsentMode() {\n                    if (typeof BorlabsCookie == 'undefined' || typeof gtag == 'undefined') {\n                        window.setTimeout(updateGoogleConsentMode, 50);\n                    } else {\n                        if (window.BorlabsCookie.checkCookieGroupConsent('statistics')) {\n//                            console.log('update analytics_storage to granted');\n\n                            gtag('consent', 'update', {\n                                'analytics_storage': 'granted'\n                        });\n                    }\n        \n                    if (window.BorlabsCookie.checkCookieGroupConsent('marketing')) {\n//                        console.log('update ad_storage to granted');\n                        gtag('consent', 'update', {\n                            'ad_storage': 'granted'\n                            });\n                        }\n                    }\n                })();" . PHP_EOL;
     }
 
 }

@@ -4,9 +4,9 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: CRM, Email Marketing, Live Chat, Forms, Analytics, Popups, Newsletter
 Requires at least: 4.0
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 8.0.294
+Stable tag: 8.4.5
 
 Capture, organize and engage web visitors with free forms, live chat, CRM (contact management), email marketing, and analytics. Easy to use, no coding.
 
@@ -228,12 +228,14 @@ Please visit the <a href="https://community.hubspot.com/?utm_source=wordpress-pl
 == Changelog ==
 
 <a href="http://plugins.svn.wordpress.org/leadin/trunk/changelog.txt" target="_blank">Full changelog here</a>
-- Current version: 8.0.294
-- Version release date: 2021-06-16
+- Current version: 8.4.5
+- Version release date: 2021-07-23
 
-= 8.0.287 (2021-06-15) =
-* Pass the deviceId param to the plugin in the query parameters
+= 8.4.0 (2021-07-23) =
+* New portals created in the EU now have their data kept in EU datacentres.
+* Ungated the OAuth connection flow for all users.
+* Updated deprecated block_categories hook for WordPress 5.8
 
-= 8.0.266 (2021-06-09) =
-* Always stringify payload for POST ajax request
+= 8.3.67 (2021-07-12) =
+* Remove leadin_affiliate_code filter. This filter is not used and should not have any user-facing consequence
 

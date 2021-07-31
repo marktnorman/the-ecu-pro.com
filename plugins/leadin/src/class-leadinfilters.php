@@ -3,6 +3,8 @@ namespace Leadin;
 
 use Leadin\options\AccountOptions;
 
+const NA1_HUBLET = 'na1';
+
 /**
  * Class containing all the custom filters defined to be used instead of constants.
  */
@@ -22,7 +24,7 @@ class LeadinFilters {
 	private static function apply_hublet( $prefix ) {
 		$hublet = self::get_leadin_hublet();
 		$result = $prefix;
-		if ( ! empty( $hublet ) ) {
+		if ( ! empty( $hublet ) && NA1_HUBLET !== $hublet ) {
 			$result = "$prefix-$hublet";
 		}
 		return $result;

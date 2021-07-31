@@ -43,6 +43,12 @@ export function makeProxyRequest(method, hubspotApiPath, data) {
   return makeRequest(method, proxyApiPath, data);
 }
 
+export function fetchOAuthToken() {
+  return makeRequest('GET', '/oauth-token').catch(err => {
+    return { status: err.status, message: err.responseText };
+  });
+}
+
 /**
  * To surface errors to the interframe, we need to catch the error
  * and return it to through penpal as a normal message, which the iframe

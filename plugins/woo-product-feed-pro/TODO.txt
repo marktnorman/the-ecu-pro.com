@@ -6,7 +6,6 @@ Tutorial / Blog posts:
 - product highlight / details article
 
 Priority issues:
-- Add Facebook Conversion API connection
 - Add automotive fields for Facebook feed, see: https://developers.facebook.com/docs/marketing-api/dynamic-ads-auto/auto-catalog/
 - Autosuggest for category mapping broken
 - Add AddToCart event on buttons again

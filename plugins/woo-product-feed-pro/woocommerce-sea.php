@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Product Feed PRO for WooCommerce
- * Version:     10.3.2
+ * Version:     10.4.7
  * Plugin URI:  https://www.adtribes.io/support/?utm_source=wpadmin&utm_medium=plugin&utm_campaign=woosea_product_feed_pro
  * Description: Configure and maintain your WooCommerce product feeds for Google Shopping, Facebook, Remarketing, Bing, Yandex, Comparison shopping websites and over a 100 channels more.
  * Author:      AdTribes.io
@@ -11,7 +11,7 @@
  * License:     GPL3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Requires at least: 4.5
- * Tested up to: 5.7
+ * Tested up to: 5.8
  *
  * Text Domain: woo-product-feed-pro
  * Domain Path: /languages
@@ -48,7 +48,7 @@ if (!defined('ABSPATH')) {
  * Plugin versionnumber, please do not override.
  * Define some constants
  */
-define( 'WOOCOMMERCESEA_PLUGIN_VERSION', '10.3.2' );
+define( 'WOOCOMMERCESEA_PLUGIN_VERSION', '10.4.7' );
 define( 'WOOCOMMERCESEA_PLUGIN_NAME', 'woocommerce-product-feed-pro' );
 define( 'WOOCOMMERCESEA_PLUGIN_NAME_SHORT', 'woo-product-feed-pro' );
 
@@ -339,7 +339,8 @@ function woosea_add_facebook_pixel( $product = null ){
 	$fb_pagetype = WooSEA_Google_Remarketing::woosea_google_remarketing_pagetype();
    	$add_facebook_pixel = get_option ('add_facebook_pixel');
 	$add_facebook_capi = get_option ('add_facebook_capi');
-
+	$viewContent = "";
+	$event_id = uniqid (rand (),true);
 	$currency = get_woocommerce_currency();     
 	
 	if($add_facebook_pixel == "yes"){	
@@ -357,6 +358,7 @@ function woosea_add_facebook_pixel( $product = null ){
 			define('FACEBOOK_PIXEL_OFFLINE_EVENT_SET_ID', $facebook_pixel_id);
 			$fb_capi_data["match_keys"] = array();
 			$fb_capi_data["event_time"] = time();
+			$fb_capi_data["event_id"] = $event_id;
 			$fb_capi_data["user_data"]["client_ip_address"] = WC_Geolocation::get_ip_address();
 			$fb_capi_data["user_data"]["client_user_agent"] = $_SERVER['HTTP_USER_AGENT'];
 			$fb_capi_data["action_source"] = "website";	
@@ -421,7 +423,7 @@ function woosea_add_facebook_pixel( $product = null ){
 									}
 								}
 								$fb_price = floatval(str_replace(',', '.', str_replace(',', '.', $fb_price)));
-								$viewContent = "fbq(\"track\",\"ViewContent\",{content_category:\"$cats\", content_name:\"$product_name\", content_type:\"product\", content_ids:[\"$fb_prodid\"], value:\"$fb_price\", currency:\"$currency\"});";
+								$viewContent = "fbq(\"track\",\"ViewContent\",{content_category:\"$cats\", content_name:\"$product_name\", content_type:\"product\", content_ids:[\"$fb_prodid\"], value:\"$fb_price\", currency:\"$currency\"},{eventID:\"$event_id\"});";
 
 								// Facebook CAPI data
 								$fb_capi_data["event_name"] = "ViewContent";
@@ -462,7 +464,7 @@ function woosea_add_facebook_pixel( $product = null ){
 									$fb_price = $fb_lowprice;
 								}
 								$fb_price = floatval(str_replace(',', '.', str_replace(',', '.', $fb_price)));
-								$viewContent = "fbq(\"track\",\"ViewContent\",{content_category:\"$cats\", content_name:\"$product_name\", content_type:\"product_group\", content_ids:[$content], value:\"$fb_price\", currency:\"$currency\"});";
+								$viewContent = "fbq(\"track\",\"ViewContent\",{content_category:\"$cats\", content_name:\"$product_name\", content_type:\"product_group\", content_ids:[$content], value:\"$fb_price\", currency:\"$currency\"},{eventID:\"$event_id\"});";
 
 								// Facebook CAPI data
 								$fb_capi_data["event_name"] = "ViewContent";
@@ -477,7 +479,7 @@ function woosea_add_facebook_pixel( $product = null ){
 							// This is a simple product page
 							$fb_price =  wc_format_localized_price( $product->get_price() );
 							$fb_price = floatval(str_replace(',', '.', str_replace(',', '.', $fb_price)));
-							$viewContent = "fbq(\"track\",\"ViewContent\",{content_category:\"$cats\", content_name:\"$product_name\", content_type:\"product\", content_ids:[\"$fb_prodid\"], value:\"$fb_price\", currency:\"$currency\"});";
+							$viewContent = "fbq(\"track\",\"ViewContent\",{content_category:\"$cats\", content_name:\"$product_name\", content_type:\"product\", content_ids:[\"$fb_prodid\"], value:\"$fb_price\", currency:\"$currency\"},{eventID:\"$event_id\"});";
 
 							// Facebook CAPI data
 							$fb_capi_data["event_name"] = "ViewContent";
@@ -515,13 +517,11 @@ function woosea_add_facebook_pixel( $product = null ){
 						}
 						$contents = rtrim($contents, ",");
 						$order_real = floatval(str_replace(',', '.', str_replace(',', '.', $order_real)));
-						$viewContent = "fbq('track','Purchase',{currency:'$currency', value:'$order_real', content_type:'product', contents:[$contents]});";
+						$viewContent = "fbq('track','Purchase',{currency:'$currency', value:'$order_real', content_type:'product', contents:[$contents]},{eventID:\"$event_id\"});";
 
 						// Facebook CAPI data
 						$fb_capi_data["event_name"] = "Purchase";
-						$fb_capi_data["custom_data"]["content_ids"] = $fb_prod_id;
-						$fb_capi_data["custom_data"]["content_name"] = $product_name;
-						$fb_capi_data["custom_data"]["content_category"] = $cats;
+						$fb_capi_data["custom_data"]["content_ids"] = $prod_id;
 						$fb_capi_data["custom_data"]["currency"] = $currency;
 						$fb_capi_data["custom_data"]["value"] = $order_real;
 						$fb_capi_data["custom_data"]["content_type"] = "product";
@@ -559,7 +559,7 @@ function woosea_add_facebook_pixel( $product = null ){
 
 							// User is on the billing pages
 							if($checkoutpage == $current_url){
-								$viewContent = "fbq(\"track\",\"InitiateCheckout\",{currency:\"$currency\", value:\"$cart_total_amount\", content_type:\"product\", content_ids:[$contents]});";
+								$viewContent = "fbq(\"track\",\"InitiateCheckout\",{currency:\"$currency\", value:\"$cart_total_amount\", content_type:\"product\", content_ids:[$contents]},{eventID:\"$event_id\"});";
 
 								// Facebook CAPI data
 								$fb_capi_data["event_name"] = "InitiateCheckout";
@@ -570,7 +570,7 @@ function woosea_add_facebook_pixel( $product = null ){
 								$fb_capi_data["custom_data"]["content_type"] = "product";
 							} else {
 								// User is on the basket page
-								$viewContent = "fbq(\"track\",\"AddToCart\",{currency:\"$currency\", value:\"$cart_total_amount\", content_type:\"product\", content_ids:[$contents]});";
+								$viewContent = "fbq(\"track\",\"AddToCart\",{currency:\"$currency\", value:\"$cart_total_amount\", content_type:\"product\", content_ids:[$contents]},{eventID:\"$event_id\"});";
 
 								// Facebook CAPI data
 								$fb_capi_data["event_name"] = "AddToCart";
@@ -612,7 +612,7 @@ function woosea_add_facebook_pixel( $product = null ){
 		               	$fb_prodid = rtrim($fb_prodid, ",");
 				$category_name = $term->name;
                                 $category_path = woosea_get_term_parents( $term->term_id, 'product_cat', $project_taxonomy = false, $link = false, $nicename = false, $visited = array() );
-				$viewContent = "fbq(\"track\",\"ViewCategory\",{content_category:'$category_path', content_name:'$category_name', content_type:\"product\", content_ids:\"[$fb_prodid]\"});";
+				$viewContent = "fbq(\"track\",\"ViewCategory\",{content_category:'$category_path', content_name:'$category_name', content_type:\"product\", content_ids:\"[$fb_prodid]\"},{eventID:\"$event_id\"});";
 
 				// Facebook CAPI data
 				$fb_capi_data["event_name"] = "ViewCategory";
@@ -647,7 +647,7 @@ function woosea_add_facebook_pixel( $product = null ){
 					}
 				}
 		               	$fb_prodid = rtrim($fb_prodid, ",");
-				$viewContent = "fbq(\"trackCustom\",\"Search\",{search_string:\"$search_string\", content_type:\"product\", content_ids:\"[$fb_prodid]\"});";
+				$viewContent = "fbq(\"trackCustom\",\"Search\",{search_string:\"$search_string\", content_type:\"product\", content_ids:\"[$fb_prodid]\"},{eventID:\"$event_id\"});";
 
 				// Facebook CAPI data
 				$fb_capi_data["event_name"] = "Search";
@@ -684,7 +684,7 @@ function woosea_add_facebook_pixel( $product = null ){
 			?>
 		</script>
 		<noscript>
-  			<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=<?php echo htmlentities($facebook_pixel_id, ENT_QUOTES, 'UTF-8');;?>&ev=PageView&noscript=1"/>
+  			<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=<?php echo htmlentities($facebook_pixel_id, ENT_QUOTES, 'UTF-8');;?>&ev=PageView&noscript=1&eid=<?php print"$event_id";?>"/>
 		</noscript>	
 		<!-- End Facebook Pixel Code -->
 		<?php
@@ -743,7 +743,17 @@ function woosea_add_remarketing_tags( $product = null ){
 		}
 
 		if($adwords_conversion_id > 0){
+		?>
+	        	<!-- Global site tag (gtag.js) - Google Ads: <?php echo htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?> - Added by the Product Feed Pro plugin from AdTribes.io  -->
+                	<script async src="https://www.googletagmanager.com/gtag/js?id=AW-<?php echo htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>"></script>
+                	<script>
+                        	window.dataLayer = window.dataLayer || [];
+                        	function gtag(){dataLayer.push(arguments);}
+                        	gtag('js', new Date());
 
+                        	gtag('config', '<?php echo 'AW-'.htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>');
+                	</script>
+		<?php
 			if ($ecomm_pagetype == "product"){
                 		if ( '' !== $product->get_price()) {
                  		$ecomm_prodid = get_the_id();
@@ -807,62 +817,81 @@ function woosea_add_remarketing_tags( $product = null ){
       					}
 				}
 				?>
-				<script type="text/javascript">
-				var google_tag_params = {
-				ecomm_prodid: <?php print "$ecomm_prodid";?>,
-				ecomm_pagetype: '<?php print "$ecomm_pagetype";?>',
-				ecomm_totalvalue: <?php print "$ecomm_price";?>,
-				};
+				<script>
+  					gtag('event', 'view_item', {
+    						'send_to'	: <?php echo 'AW-'.htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>,
+    						'value'		: <?php print "$ecomm_price";?>,
+    						'items'		: [{
+      									'id': <?php print "$ecomm_prodid";?>,
+      									'google_business_vertical': 'retail'
+    								}]
+  					});
 				</script>
-		
 			<?php
 			}
 		} elseif ($ecomm_pagetype == "cart"){
-				// Get the first product from cart and use that product ID
-				foreach( WC()->cart->get_cart() as $cart_item ){
-    					$ecomm_prodid = $cart_item['product_id'];
-    					break;
+                                // This is on the order thank you page
+                                if( isset( $_GET['key'] ) && is_wc_endpoint_url( 'order-received' ) ) {
+                                        $order_string = sanitize_text_field($_GET['key']);
+                                        if(!empty($order_string)){
+                                                $order_id = wc_get_order_id_by_order_key( $order_string );
+                                                $order = wc_get_order( $order_id );
+                                                $order_items = $order->get_items();
+                                                $currency = get_woocommerce_currency();
+                                                $contents = "";
+                                                $order_real = wc_format_localized_price($order->get_total());
+
+                                                if ( !is_wp_error( $order_items )) {
+                                                        foreach( $order_items as $item_id => $order_item) {
+                                                                $prod_id = $order_item->get_product_id();
+                                                                $variation_id = $order_item->get_variation_id();
+                                                                if($variation_id > 0){
+                                                                        $prod_id = $variation_id;
+                                                                }
+                                                                $prod_quantity = $order_item->get_quantity();
+                                                        }
+                                                }
+                                                $order_real = floatval(str_replace(',', '.', str_replace(',', '.', $order_real)));
+                                        	?>
+                                        	<script>
+                                                	gtag('event', 'purchase', {
+                                                        	'send_to'       : <?php echo 'AW-'.htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>,
+                                                        	'value'         : <?php print "$order_real";?>,
+                                                        	'items'         : [{
+                                                                	        'id': <?php print "$prod_id";?>,
+                                                                        	'google_business_vertical': 'retail'
+                                                                	}]
+                                                	});
+                                        	</script>
+                                        	<?php	
+					}
+				} else {
+				// This is on the cart page, no purchase yet
+					// Get the first product from cart and use that product ID
+					foreach( WC()->cart->get_cart() as $cart_item ){
+    						$ecomm_prodid = $cart_item['product_id'];
+    						break;
+					}
+
+                                        $currency = get_woocommerce_currency();
+                                        $cart_items = WC()->cart->get_cart();
+                                        $cart_quantity = count($cart_items);
+                                        $cart_total_amount = wc_format_localized_price(WC()->cart->get_cart_contents_total()+WC()->cart->tax_total);
+                                        $cart_total_amount = floatval(str_replace(',', '.', str_replace(',', '.', $cart_total_amount)));
+					?>
+					<script>
+  						gtag('event', 'add_to_cart', {
+    							'send_to'	: <?php echo 'AW-'.htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>,
+    							'value'		: <?php print "$cart_total_amount";?>,
+    							'items'		: [{
+      									'id': <?php print "$ecomm_prodid";?>,
+      									'google_business_vertical': 'retail'
+    								}]
+  						});
+					</script>
+					<?php
 				}
-				?>
-				<script type="text/javascript">
-				var google_tag_params = {
-				ecomm_prodid: '<?php print "$ecomm_prodid";?>',
-				ecomm_pagetype: '<?php print "$ecomm_pagetype";?>',
-				};
-				</script>
-				<?php
-		} else {
-			// This is another page than a product page
-			?>
-               		<script type="text/javascript">
-     	          	var google_tag_params = {
-     	          	ecomm_pagetype: '<?php print "$ecomm_pagetype";?>',
-    	           	};
-        	       	</script>
-			<?php
-		}
-		?>
-			<!-- Google remarketing tag added by AdTribes.io -->
-			<!--------------------------------------------------
-			You need to make sure that the ecomm_prodid parameter, which we fill with your
-			WooCommerce product Id matches the g:id field for your Google Merchant Center feed. 
-			--------------------------------------------------->
-			<script type="text/javascript">
-			/* <![CDATA[ */
-			var google_conversion_id = <?php echo htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>;
-			var google_custom_params = window.google_tag_params;
-			var google_remarketing_only = true;
-			/* ]]> */
-			</script>
-			<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-			</script>
-			<noscript>
-			<div style="display:inline;">
-			<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/<?php echo htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>/?guid=ON&amp;script=0"/>
-			</div>
-			</noscript>
-			<!-- End Google Remarketing Pixel Code -->
-			<?php
+			}
 		}
 	}
 }

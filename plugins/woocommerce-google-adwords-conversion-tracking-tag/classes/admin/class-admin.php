@@ -65,41 +65,41 @@ class Admin
         //        wp_enqueue_style('wooptpm-selectWoo', plugin_dir_url(__DIR__) . '../css/selectWoo.min.css', [], WGACT_CURRENT_VERSION);
         wp_enqueue_script(
             'wooptpm-script-blocker-warning',
-            WGACT_PLUGIN_DIR_PATH . 'js/admin/script-blocker-warning.js',
+            WOOPTPM_PLUGIN_DIR_PATH . 'js/admin/script-blocker-warning.js',
             [ 'jquery' ],
             WGACT_CURRENT_VERSION,
             false
         );
         wp_enqueue_script(
             'wooptpm-admin-helpers',
-            WGACT_PLUGIN_DIR_PATH . 'js/admin/helpers.js',
+            WOOPTPM_PLUGIN_DIR_PATH . 'js/admin/helpers.js',
             [ 'jquery' ],
             WGACT_CURRENT_VERSION,
             false
         );
         wp_enqueue_script(
             'wooptpm-admin-tabs',
-            WGACT_PLUGIN_DIR_PATH . 'js/admin/tabs.js',
+            WOOPTPM_PLUGIN_DIR_PATH . 'js/admin/tabs.js',
             [ 'jquery' ],
             WGACT_CURRENT_VERSION,
             false
         );
         wp_enqueue_script(
             'wooptpm-selectWoo',
-            WGACT_PLUGIN_DIR_PATH . 'js/admin/selectWoo.full.min.js',
+            WOOPTPM_PLUGIN_DIR_PATH . 'js/admin/selectWoo.full.min.js',
             [ 'jquery' ],
             WGACT_CURRENT_VERSION,
             false
         );
         wp_enqueue_style(
             'wooptpm-admin',
-            WGACT_PLUGIN_DIR_PATH . 'css/admin.css',
+            WOOPTPM_PLUGIN_DIR_PATH . 'css/admin.css',
             [],
             WGACT_CURRENT_VERSION
         );
         wp_enqueue_style(
             'wooptpm-selectWoo',
-            WGACT_PLUGIN_DIR_PATH . 'css/selectWoo.min.css',
+            WOOPTPM_PLUGIN_DIR_PATH . 'css/selectWoo.min.css',
             [],
             WGACT_CURRENT_VERSION
         );
@@ -270,7 +270,7 @@ class Admin
             // add the field for the Pinterest pixel
             add_settings_field(
                 'wgact_plugin_pinterest_pixel_id',
-                esc_html__( 'Pinterest pixel ID', 'woocommerce-google-adwords-conversion-tracking-tag' ),
+                esc_html__( 'Pinterest pixel ID', 'woocommerce-google-adwords-conversion-tracking-tag' ) . $this->html_beta(),
                 [ $this, 'wgact_option_html_pinterest_pixel_id' ],
                 'wgact_plugin_options_page',
                 $section_ids['settings_name']
@@ -284,16 +284,13 @@ class Admin
                 $section_ids['settings_name']
             );
             // add the field for the TikTok pixel
-            //            add_settings_field(
-            //                'wgact_plugin_tiktok_pixel_id',
-            //                esc_html__(
-            //                    'TikTok pixel ID',
-            //                    'woocommerce-google-adwords-conversion-tracking-tag'
-            //                ) . $this->html_beta(),
-            //                [$this, 'wgact_option_html_tiktok_pixel_id'],
-            //                'wgact_plugin_options_page',
-            //                $section_ids['settings_name']
-            //            );
+            add_settings_field(
+                'wgact_plugin_tiktok_pixel_id',
+                esc_html__( 'TikTok pixel ID', 'woocommerce-google-adwords-conversion-tracking-tag' ) . $this->html_beta(),
+                [ $this, 'wgact_option_html_tiktok_pixel_id' ],
+                'wgact_plugin_options_page',
+                $section_ids['settings_name']
+            );
         }
         
         // add the field for the Hotjar pixel
@@ -445,7 +442,7 @@ class Admin
             // add Google Ads enhanced conversions
             add_settings_field(
                 'wooptpm_setting_google_ads_enhanced_conversions',
-                esc_html__( 'Google Ads enhanced conversions', 'woocommerce-google-adwords-conversion-tracking-tag' ) . $this->html_beta(),
+                esc_html__( 'Google Ads Enhanced Conversions', 'woocommerce-google-adwords-conversion-tracking-tag' ) . $this->html_beta(),
                 [ $this, 'wooptpm_setting_html_google_ads_enhanced_conversions' ],
                 'wgact_plugin_options_page',
                 $section_ids['settings_name']
@@ -567,7 +564,7 @@ class Admin
         // add fields for Facebook microdata
         add_settings_field(
             'wgact_setting_facebook_microdata_active',
-            esc_html__( 'Facebook microdata', 'woocommerce-google-adwords-conversion-tracking-tag' ) . $this->html_beta(),
+            esc_html__( 'Facebook Microdata Tags for Catalogues', 'woocommerce-google-adwords-conversion-tracking-tag' ) . $this->html_beta(),
             [ $this, 'wgact_setting_html_facebook_microdata' ],
             'wgact_plugin_options_page',
             $section_ids['settings_name']
@@ -1576,6 +1573,7 @@ class Admin
         </label>
         <?php 
         echo  $this->get_status_icon( $this->options['facebook']['microdata'], $this->options['facebook']['pixel_id'], true ) ;
+        echo  $this->get_documentation_html( '/wgact/?utm_source=woocommerce-plugin&utm_medium=documentation-link&utm_campaign=woopt-pixel-manager-docs&utm_content=facebook-microdata#/pixels/facebook?id=microdata-tags-for-catalogues' ) ;
         echo  $this->html_pro_feature() ;
         
         if ( $this->options['facebook']['microdata'] && !$this->options['facebook']['pixel_id'] ) {

@@ -116,7 +116,7 @@ trait Trait_Google
     {
         $product = $order_item->get_product();
 
-        if(!is_object($product)){
+        if (!is_object($product)) {
 
 //            $this->log_problematic_product_id();
             wc_get_logger()->debug('get_order_item_data received an order item which is not a valid product: ' . $order_item->get_id(), ['source' => 'wooptpm']);
@@ -133,18 +133,19 @@ trait Trait_Google
         }
 
         return [
-            'id'          => (string)$dyn_r_ids[$this->get_ga_id_type()],
-            'name'        => (string)$name,
-            'quantity'    => (int)$order_item['quantity'],
-            'affiliation' => (string)get_bloginfo('name'),
+            'id'             => (string)$dyn_r_ids[$this->get_ga_id_type()],
+            'name'           => (string)$name,
+            'quantity'       => (int)$order_item['quantity'],
+            'affiliation'    => (string)get_bloginfo('name'),
             //            'coupon' => '',
             //            'discount' => 0,
-            'brand'       => (string)$this->get_brand_name($product->get_id()),
+            'brand'          => (string)$this->get_brand_name($product->get_id()),
             // https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#pr_ca
-            'category'    => implode(',', $this->get_product_category($product->get_id())),
-            'variant'     => (string)($product->get_type() === 'variation') ? $this->get_formatted_variant_text($product) : '',
+            'category'       => implode(',', $this->get_product_category($product->get_id())),
+            'category_array' => $this->get_product_category($product->get_id()),
+            'variant'        => (string)($product->get_type() === 'variation') ? $this->get_formatted_variant_text($product) : '',
             //            'tax'      => 0,
-            'price'       => (float)$this->wooptpm_get_order_item_price($order_item, $product),
+            'price'          => (float)$this->wooptpm_get_order_item_price($order_item, $product),
             //            'list_name' => ,
             //            'currency' => '',
         ];
@@ -155,14 +156,34 @@ trait Trait_Google
         if ((new Environment_Check())->is_woo_discount_rules_active()) {
             $item_value = $order_item->get_meta('_advanced_woo_discount_item_total_discount');
             if (is_array($item_value) && array_key_exists('discounted_price', $item_value) && $item_value['discounted_price'] != 0) {
-                return $item_value['discounted_price'];
+                return (float)$item_value['discounted_price'];
             } elseif (is_array($item_value) && array_key_exists('initial_price', $item_value) && $item_value['initial_price'] != 0) {
-                return $item_value['initial_price'];
+                return (float)$item_value['initial_price'];
             } else {
-                return $product->get_price();
+                return (float)$product->get_price();
             }
         } else {
-            return $product->get_price();
+            return (float)$product->get_price();
         }
+    }
+
+    protected function add_categories_to_ga4_product_items($item_details_array, $categories)
+    {
+        $categories = array_unique($categories);
+
+        if(count($categories) > 0){
+
+            $max_categories = 5;
+
+            $item_details_array['item_category'] = $categories[0];
+
+            $max = count($categories) > $max_categories ? $max_categories : count($categories);
+
+            for ($i = 1; $i < $max; $i++) {
+                $item_details_array['item_category' . ($i + 1)] = $categories[$i];
+            }
+        }
+
+        return $item_details_array;
     }
 }

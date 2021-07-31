@@ -23,6 +23,10 @@ class Facebook_Pixel_Manager_Microdata extends Pixel_Manager_Base
         $this->facebook_microdata_pixel->inject_product($product, $product_attributes);
     }
 
+    public function inject_order_received_page_no_dedupe($order, $order_total, $is_new_customer)
+    {
+    }
+
     protected function inject_opening_script_tag()
     {
         // remove default script output
