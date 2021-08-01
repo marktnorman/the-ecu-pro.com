@@ -40,21 +40,27 @@ function wpcf7_generate_work_order_id($cf7)
             $work_order_type = 'ECU';
         }
 
-        $last_work_order_row = $wpdb->get_results("SELECT * FROM $work_order_table WHERE work_order_type = $work_order_type ORDER BY row_order_id DESC LIMIT 1;");
-        var_dump($last_work_order_row);
-        die();
+        $last_work_order_row = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM $work_order_table WHERE work_order_type = '%s' ORDER BY row_order_id DESC LIMIT 1;",
+                $work_order_type
+            )
+        );
 
         // No more products die
         if (empty($last_work_order_row)) {
             return $wpcf;
         } else {
             // We found the last row
-            $work_order_name = 'FRM1';
+            $last_saved_order = substr($last_work_order_row[0]->work_order_name, -1);
+            $last_saved_order_int = (int)$last_saved_order++;
+
+            $work_order_updated_name = $work_order_type . $last_saved_order_int;
 
             $wpdb->insert(
                 $work_order_table,
                 array(
-                    'work_order_name'     => $work_order_name,
+                    'work_order_name'     => $work_order_updated_name,
                     'work_order_type' => $work_order_type,
                     'order_id' => $order->get_id(),
                     'user_id' => $order->get_user_id()
