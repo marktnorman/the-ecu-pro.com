@@ -53,7 +53,8 @@ function wpcf7_generate_work_order_id($cf7)
         } else {
             // We found the last row
             $last_saved_order = substr($last_work_order_row[0]->work_order_name, -1);
-            $last_saved_order_int = (int)$last_saved_order++;
+            $last_saved_order_int = (int)$last_saved_order;
+            $last_saved_order_int = $last_saved_order_int + 1;
 
             $work_order_updated_name = $work_order_type . $last_saved_order_int;
 
