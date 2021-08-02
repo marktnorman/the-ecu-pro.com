@@ -5519,3 +5519,68 @@ a.ecu-repair-request:hover {
 .woocommerce-order-received .align-items-center {
     display: none !important;
 }
+
+.woocommerce-order form.wpcf7-form {
+    width: 100%;
+    display: block;
+    max-width: 60%;
+    margin: 0 auto;
+}
+
+form .field-group {
+    width: 48%;
+    display: inline-block;
+    margin-bottom: 2%;
+    position: relative;
+}
+
+form .field-group label {
+    color: #ACB8C3;
+    font-size: 16px;
+    height: 55px;
+    line-height: 55px;
+    top: 24px;
+    text-transform: none;
+    font-weight: 600;
+    position: absolute;
+    left: 15px;
+    transition: all linear .1s;
+    z-index: 9999;
+    margin-bottom: 0;
+}
+
+form .field-group input:focus + label {
+    color: #6F86A0 !important;
+    height: 10px !important;
+    font-size: 10px !important;
+    line-height: 10px !important;
+    text-transform: uppercase !important;
+    top: 30px !important;
+}
+
+form .field-group input[type="text"],
+form .field-group input[type="email"],
+form .field-group input[type="tel"] {
+    outline: none;
+    box-shadow: none;
+    text-align: left;
+    line-height: 1.42857;
+    vertical-align: middle;
+    z-index: 9998;
+    height: 55px;
+    padding: 5px 15px 0;
+    width: 100%;
+    color: #6F86A0;
+    font-size: 16px !important;
+}
+
+form .field-group:nth-child(even) {
+    margin-right: 2%;
+}
+
+form .field-group.full-width {
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 2%;
+    margin-right: 0;
+}
