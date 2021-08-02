@@ -5549,7 +5549,7 @@ form .field-group label {
     margin-bottom: 0;
 }
 
-form .field-group input:focus + label {
+form .field-group input:focus > label {
     color: #6F86A0 !important;
     height: 10px !important;
     font-size: 10px !important;
@@ -5572,6 +5572,37 @@ form .field-group input[type="tel"] {
     width: 100%;
     color: #6F86A0;
     font-size: 16px !important;
+}
+
+form .field-group input[type="textarea"] {
+    border: 0;
+    outline: none;
+    box-shadow: none;
+    text-align: left;
+    line-height: 1.42857;
+    vertical-align: middle;
+    z-index: 9998;
+    padding: 15px 15px;
+    width: 100%;
+    color: #6F86A0;
+    font-size: 16px !important;
+    background: #F0F0F0 !important;
+}
+
+form .field-group input[type="submit"] {
+    font-size: 14px;
+    width: 100%;
+    background: #24437E;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background linear .3s;
+    display: block;
+    height: 55px;
+    border: 0;
+    padding: 5px 15px 0;
+    border-radius: 8px;
 }
 
 form .field-group:nth-child(even) {
