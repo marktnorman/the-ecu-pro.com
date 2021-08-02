@@ -5539,7 +5539,7 @@ form .field-group label {
     font-size: 16px;
     height: 55px;
     line-height: 55px;
-    top: 24px;
+    top: 0px;
     text-transform: none;
     font-weight: 600;
     position: absolute;
@@ -5549,7 +5549,7 @@ form .field-group label {
     margin-bottom: 0;
 }
 
-form .field-group input:focus > label {
+form .field-group input:focus + label {
     color: #6F86A0 !important;
     height: 10px !important;
     font-size: 10px !important;
@@ -5574,7 +5574,7 @@ form .field-group input[type="tel"] {
     font-size: 16px !important;
 }
 
-form .field-group input[type="textarea"] {
+form .field-group textarea {
     border: 0;
     outline: none;
     box-shadow: none;
