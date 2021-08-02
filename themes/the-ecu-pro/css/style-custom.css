@@ -2783,7 +2783,7 @@ h2.homepage-section-title::after {
 }
 
 .homepage-section-outer.how-it-works-outer-container p {
-    margin-bottom:10px !important;
+    margin-bottom: 10px !important;
 }
 
 .accordian-title {
@@ -5513,4 +5513,9 @@ a.ecu-repair-request:hover {
 
 #header #main-header-menu #menu-menu ul.sub-menu li a:last-child {
     padding-bottom: 15px !important;
+}
+
+.woocommerce-order-received #home-background-image,
+.woocommerce-order-received .align-items-center {
+    display: none !important;
 }
