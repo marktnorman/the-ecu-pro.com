@@ -676,6 +676,18 @@
                 $('#video-popup-container iframe').attr('src', '');
             });
         }
+        if ($('.page-template-page_dummy_checkout_completed').length > 0) {
+            $('input').on("focus", function () {
+                var input = $(this);
+                // assuming label is the parent, i.e. <label><input /></label>
+                var label = $(this).closest('.field-group').find('label');
+                label.addClass('focussed');
+                input.on("blur", function () {
+                    label.removeClass('focussed');
+                    input.off("blur");
+                });
+            });
+        }
 
         if ($(window).width() < 997) {
             $('.header-main .header-center').insertAfter($('.header-main .header-right'));

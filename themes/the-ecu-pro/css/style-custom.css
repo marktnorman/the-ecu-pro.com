@@ -5549,7 +5549,7 @@ form .field-group label {
     margin-bottom: 0;
 }
 
-form .field-group input:focus + label {
+form .field-group label.focussed {
     color: #6F86A0 !important;
     height: 10px !important;
     font-size: 10px !important;
