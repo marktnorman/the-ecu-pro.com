@@ -687,6 +687,17 @@
                     input.off("blur");
                 });
             });
+
+            $('textarea').on("focus", function () {
+                var input = $(this);
+                // assuming label is the parent, i.e. <label><input /></label>
+                var label = $(this).closest('.field-group').find('label');
+                label.addClass('focussed');
+                input.on("blur", function () {
+                    label.removeClass('focussed');
+                    input.off("blur");
+                });
+            });
         }
 
         if ($(window).width() < 997) {
