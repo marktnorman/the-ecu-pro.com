@@ -5552,6 +5552,14 @@ form .field-group label.focussed {
     top: 6px !important;
 }
 
+.infoContainer.hide {
+    display: none;
+}
+
+.infoContainer.show {
+    display: inline-block;
+}
+
 form .field-group input[type="text"],
 form .field-group input[type="email"],
 form .field-group input[type="tel"] {
