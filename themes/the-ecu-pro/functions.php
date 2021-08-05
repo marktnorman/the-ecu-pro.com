@@ -224,7 +224,7 @@ function child_theme_admin_styles()
 add_action('wp_enqueue_scripts', 'theecupro_enqueue_assets');
 function theecupro_enqueue_assets()
 {
-    $version = '10.9.3';
+    $version = '10.9.4';
 
     // CARRY ON
     wp_enqueue_style('theecupro-default-style', get_stylesheet_uri());
@@ -1336,7 +1336,8 @@ function redirect_after_work_order_creation()
                 if (jQuery('#work-order-tag-container').length > 0) {
                     jQuery('.infoContainer').addClass('show');
                     jQuery('.infoContainer').removeClass('hide');
-                    jQuery('.work-order-tag-div').html(<?php echo $order_tag ?>);
+                    jQuery('#work-order-tag-container .wpcf7').addClass('hide');
+                    jQuery('.work-order-tag-div').text(<?php echo $order_tag; ?>);
                 }
             }
         }, false);

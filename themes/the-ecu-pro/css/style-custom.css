@@ -5557,7 +5557,7 @@ form .field-group label.focussed {
 }
 
 .infoContainer.show {
-    display: inline-block;
+    display: inline-block !important;
 }
 
 form .field-group input[type="text"],
