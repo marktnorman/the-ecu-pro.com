@@ -224,7 +224,7 @@ function child_theme_admin_styles()
 add_action('wp_enqueue_scripts', 'theecupro_enqueue_assets');
 function theecupro_enqueue_assets()
 {
-    $version = '10.9.0';
+    $version = '10.9.1';
 
     // CARRY ON
     wp_enqueue_style('theecupro-default-style', get_stylesheet_uri());
@@ -1302,8 +1302,9 @@ add_filter('body_class', 'dummy_checkout_woo_body_class');
  *
  * @return mixed
  */
-function dummy_checkout_woo_body_class($classes) {
-    if (is_page( 'work-order-tag-creation' )) {
+function dummy_checkout_woo_body_class($classes)
+{
+    if (is_page('work-order-tag-creation')) {
         $classes[] = 'woocommerce-checkout';
         $classes[] = 'woocommerce-page';
         $classes[] = 'woocommerce-order-received';
@@ -1311,4 +1312,22 @@ function dummy_checkout_woo_body_class($classes) {
     }
 
     return $classes;
+}
+
+add_action('wp_footer', 'redirect_after_work_order_creation');
+
+/**
+ * redirect_after_work_order_creation
+ */
+function redirect_after_work_order_creation()
+{
+    ?>
+    <script type="text/javascript">
+        document.addEventListener('wpcf7mailsent', function (event) {
+            if ('97196' == event.detail.contactFormId) {
+                location = 'https://the-ecu-pro.com/checkout/order-received/97237/?key=wc_order_IQ4dh9rlvS5Wn';
+            }
+        }, false);
+    </script>
+    <?php
 }

@@ -64,7 +64,7 @@ defined('ABSPATH') || exit;
             $orderLink = '/new-ecu-order/';
         }
 
-        $custom_message = '<div style="margin-bottom: 20px;"><table class="td order-form-table" cellspacing="0" cellpadding="4">
+        $custom_message = '<div class="woocommerce-checkout-helper-container" style="margin-bottom: 20px;"><table class="td order-form-table" cellspacing="0" cellpadding="4">
 				<tr>
 					<th class="td" scope="col" style="text-align:center; line-height: 40px;">
 					<p style="color: red;">To complete your order please complete the online form:<br />
