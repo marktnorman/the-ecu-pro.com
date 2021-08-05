@@ -224,7 +224,7 @@ function child_theme_admin_styles()
 add_action('wp_enqueue_scripts', 'theecupro_enqueue_assets');
 function theecupro_enqueue_assets()
 {
-    $version = '10.8.7';
+    $version = '10.8.8';
 
     // CARRY ON
     wp_enqueue_style('theecupro-default-style', get_stylesheet_uri());
@@ -1303,7 +1303,7 @@ add_filter('body_class', 'dummy_checkout_woo_body_class');
  * @return mixed
  */
 function dummy_checkout_woo_body_class($classes) {
-    if (is_page( 'checkout-success-dummy' )) {
+    if (is_page( 'work-order-tag-creation' )) {
         $classes[] = 'woocommerce-checkout';
         $classes[] = 'woocommerce-page';
         $classes[] = 'woocommerce-order-received';
