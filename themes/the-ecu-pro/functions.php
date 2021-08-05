@@ -1328,8 +1328,6 @@ function redirect_after_work_order_creation()
                 <?php
                 if (isset($_COOKIE["work-order-tag"])) {
                     $order_tag = $_COOKIE["work-order-tag"];
-                } else {
-                    $order_tag = '';
                 }
                 ?>
 
