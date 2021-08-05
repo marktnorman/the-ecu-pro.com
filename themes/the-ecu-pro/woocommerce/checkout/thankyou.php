@@ -64,7 +64,10 @@ defined('ABSPATH') || exit;
             $orderLink = '/new-ecu-order/';
         }
 
-        $custom_message = '<div class="woocommerce-checkout-helper-container" style="margin-bottom: 20px;"><table class="td order-form-table" cellspacing="0" cellpadding="4">
+        if (isset($_COOKIE["work-order-tag"])) {
+            $custom_message = '<div class="woocommerce-checkout-helper-container" style="margin-bottom: 20px;"><p>Please add this to your packaging when shipped to us - '.$_COOKIE["work-order-tag"].'</p></div>';
+        } else {
+            $custom_message = '<div class="woocommerce-checkout-helper-container" style="margin-bottom: 20px;"><table class="td order-form-table" cellspacing="0" cellpadding="4">
 				<tr>
 					<th class="td" scope="col" style="text-align:center; line-height: 40px;">
 					<p style="color: red;">To complete your order please complete the online form:<br />
@@ -73,6 +76,8 @@ defined('ABSPATH') || exit;
 					</th>
 				</tr>
 			</table></div>';
+        }
+
 
         echo $custom_message; ?>
 

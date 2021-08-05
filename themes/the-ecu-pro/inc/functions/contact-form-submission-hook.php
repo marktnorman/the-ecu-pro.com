@@ -66,22 +66,16 @@ function wpcf7_generate_work_order_id($cf7)
                     'order_id'        => $order->get_id(),
                     'user_id'         => $order->get_user_id()
                 )
-            ); ?>
+            );
 
-            <script type="text/javascript">
-                // Check first
-                let form_status = localStorage.getItem('work-order-tag');
+            if (isset($_COOKIE["work-order-tag"])) {
+                unset($_COOKIE["work-order-tag"]);
+                setcookie("work-order-tag", $work_order_updated_name, -1, '/');
+            } else {
+                setcookie("work-order-tag", $work_order_updated_name, -1, '/');
+            }
 
-                if (form_status === null) {
-                    localStorage.setItem('work-order-tag', <?php $work_order_updated_name ?>);
-                } else {
-                    // unset first
-                    localStorage.clear();
-                    localStorage.setItem('work-order-tag', <?php $work_order_updated_name ?>);
-                }
-            </script>
-
-        <?php }
+        }
 
         return $wpcf;
 

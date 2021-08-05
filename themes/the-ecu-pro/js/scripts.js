@@ -709,15 +709,6 @@
             });
         }
 
-        if ($('.woocommerce-checkout-helper-container').length > 0) {
-            // Check first
-            let work_order_var = localStorage.getItem('work-order-tag');
-
-            if (work_order_var !== null) {
-                $('.woocommerce-checkout-helper-container').html('<p>Please include this on your package when you ship to The ECU Pro</p> ' + work_order_var);
-            }
-        }
-
         if ($(window).width() < 997) {
             $('.header-main .header-center').insertAfter($('.header-main .header-right'));
 
