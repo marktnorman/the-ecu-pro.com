@@ -1335,7 +1335,7 @@ function redirect_after_work_order_creation()
                     jQuery('.infoContainer').addClass('show');
                     jQuery('.infoContainer').removeClass('hide');
                     jQuery('#work-order-tag-container .wpcf7').addClass('hide');
-                    jQuery('.work-order-tag-div').text(<?php echo $order_tag; ?>);
+                    jQuery('.work-order-tag-div').text('<?php echo $order_tag; ?>');
                 }
             }
         }, false);
