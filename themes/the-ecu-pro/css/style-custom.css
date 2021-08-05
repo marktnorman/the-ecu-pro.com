@@ -5520,13 +5520,6 @@ a.ecu-repair-request:hover {
     display: none !important;
 }
 
-.woocommerce-order form.wpcf7-form {
-    width: 100%;
-    display: block;
-    max-width: 60%;
-    margin: 0 auto;
-}
-
 form .field-group {
     width: 48.7%;
     display: inline-block;
@@ -5555,7 +5548,7 @@ form .field-group label.focussed {
     font-size: 10px !important;
     line-height: 10px !important;
     text-transform: uppercase !important;
-    top: 7px !important;
+    top: 6px !important;
 }
 
 form .field-group input[type="text"],

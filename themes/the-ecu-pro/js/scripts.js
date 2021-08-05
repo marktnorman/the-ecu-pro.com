@@ -676,7 +676,7 @@
                 $('#video-popup-container iframe').attr('src', '');
             });
         }
-        if ($('.page-template-page_dummy_checkout_completed').length > 0) {
+        if ($('#work-order-tag-container').length > 0) {
             $('input').on("focus", function () {
                 var input = $(this);
                 // assuming label is the parent, i.e. <label><input /></label>
