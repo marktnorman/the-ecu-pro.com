@@ -1328,17 +1328,11 @@ function redirect_after_work_order_creation()
                 setTimeout(
                     function()
                     {
-                        <?php
-                        if (isset($_COOKIE["work-order-tag"])) {
-                            $order_tag = $_COOKIE["work-order-tag"];
-                        }
-                        ?>
-
                         if (jQuery('#work-order-tag-container').length > 0) {
                             jQuery('.infoContainer').addClass('show');
                             jQuery('.infoContainer').removeClass('hide');
                             jQuery('#work-order-tag-container .wpcf7').addClass('hide');
-                            jQuery('.work-order-tag-div').text('<?php echo $order_tag; ?>');
+                            jQuery('.work-order-tag-div').text(<?php echo '"'.$_COOKIE["work-order-tag"].'"'; ?>);
                         }
                     }, 2000);
             }
