@@ -322,7 +322,7 @@ function include_dependencies()
     require_once get_stylesheet_directory() . '/inc/functions/product-meta-frontend-update.php';
     require_once get_stylesheet_directory() . '/inc/functions/generate-short-description.php';
     require_once get_stylesheet_directory() . '/inc/functions/generate-bottom-description.php';
-    require_once get_stylesheet_directory() . '/inc/functions/contact-form-submission-hook.php';
+    //require_once get_stylesheet_directory() . '/inc/functions/contact-form-submission-hook.php';
 }
 
 /**
@@ -1325,16 +1325,53 @@ function redirect_after_work_order_creation()
     <script type="text/javascript">
         document.addEventListener('wpcf7mailsent', function (event) {
             if ('97196' == event.detail.contactFormId) {
-                setTimeout(
-                    function()
-                    {
-                        if (jQuery('#work-order-tag-container').length > 0) {
-                            jQuery('.infoContainer').addClass('show');
-                            jQuery('.infoContainer').removeClass('hide');
-                            jQuery('#work-order-tag-container .wpcf7').addClass('hide');
-                            jQuery('.infoContainer .work-order-tag-div').html(<?php echo '"'.$_COOKIE["work-order-tag"].'"'; ?>);
-                        }
-                    }, 2000);
+
+                <?php
+
+                global $wpdb;
+
+                $work_order_table = 'wp_work_order_identifier';
+
+                $last_work_order_row = $wpdb->get_results(
+                    $wpdb->prepare(
+                        "SELECT * FROM $work_order_table ORDER BY row_order_id DESC LIMIT 1;"
+                    )
+                );
+
+                // No more products die
+                if (!empty($last_work_order_row)) {
+                    // We found the last row
+                    $last_saved_order     = substr($last_work_order_row[0]->work_order_name, -1);
+                    $last_saved_order_int = (int) $last_saved_order;
+                    $last_saved_order_int = $last_saved_order_int + 1;
+
+                    $work_order_updated_name = 'FRM' . $last_saved_order_int;
+
+                    $wpdb->insert(
+                        $work_order_table,
+                        array(
+                            'work_order_name' => $work_order_updated_name,
+                            'work_order_type' => 'FRM'
+                        )
+                    );
+
+                    if (isset($_COOKIE["work-order-tag"])) {
+                        unset($_COOKIE["work-order-tag"]);
+                        setcookie("work-order-tag", $work_order_updated_name, -1, '/');
+                    } else {
+                        setcookie("work-order-tag", $work_order_updated_name, -1, '/');
+                    }
+
+                }
+
+                ?>
+
+                if (jQuery('#work-order-tag-container').length > 0) {
+                    jQuery('.infoContainer').addClass('show');
+                    jQuery('.infoContainer').removeClass('hide');
+                    jQuery('#work-order-tag-container .wpcf7').addClass('hide');
+                    jQuery('.infoContainer .work-order-tag-div').html(<?php echo '"' . $_COOKIE["work-order-tag"] . '"'; ?>);
+                }
             }
         }, false);
     </script>
