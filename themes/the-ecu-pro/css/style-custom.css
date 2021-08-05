@@ -5525,6 +5525,7 @@ form .field-group {
     display: inline-block;
     margin-bottom: 2%;
     position: relative;
+    vertical-align: top;
 }
 
 form .field-group label {

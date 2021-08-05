@@ -69,6 +69,8 @@ function wpcf7_generate_work_order_id($cf7)
             );
         }
 
+        echo $work_order_updated_name;
+
         return $wpcf;
 
     }
