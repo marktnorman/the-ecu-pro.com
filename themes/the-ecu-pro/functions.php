@@ -1313,30 +1313,3 @@ function dummy_checkout_woo_body_class($classes)
 
     return $classes;
 }
-
-add_action('wp_footer', 'redirect_after_work_order_creation');
-
-/**
- * redirect_after_work_order_creation
- */
-function redirect_after_work_order_creation()
-{
-    ?>
-    <script type="text/javascript">
-        document.addEventListener('wpcf7mailsent', function (event) {
-            if ('97196' == event.detail.contactFormId) {
-
-                if (jQuery('#work-order-tag-container').length > 0) {
-
-                    var retrieve_id = localStorage.getItem('work-order-generated');
-
-                    jQuery('.infoContainer').addClass('show');
-                    jQuery('.infoContainer').removeClass('hide');
-                    jQuery('#work-order-tag-container .wpcf7').addClass('hide');
-                    jQuery('.infoContainer .work-order-tag-div').html(retrieve_id);
-                }
-            }
-        }, false);
-    </script>
-    <?php
-}

@@ -15,22 +15,24 @@ get_header(); ?>
                         <div id="work-order-tag-container" class="woocommerce-order">
                             <div style="margin-top: 20px;">
 
-                                <div class="infoContainer hide">
-                                    <span id="richTxtMsgSpan" class="infoCont"> <label class="descFld">
-Thank you!<br><br><span class="colour" style="color: rgb(255, 51, 51)">Please write the following order number on your box with the parts that you send in:</span><br><br><span
-                                                    class="size" style="font-size: 18.6667px"><span class="work-order-tag-div"></span><br><br><br></span><span
-                                                    class="size" style="font-size: 48px"><br><br><br></span><div><br></div>
-</label> </span></div>
-
                                 <?php
 
-                                if (have_posts()) {
-                                    while (have_posts()) {
-                                        the_post();
-                                        the_content();
+                                if (isset($_GET) && !empty($_GET['work-order'])) { ?>
+                                    <div class="infoContainer">
+                                    <span id="richTxtMsgSpan" class="infoCont"> <label class="descFld">
+Thank you!<br><br><span class="colour" style="color: rgb(255, 51, 51)">Please write the following order number on your box with the parts that you send in:</span><br><br><span
+                                                    class="size" style="font-size: 18.6667px"><span
+                                                        class="work-order-tag-div"></span><br><br><br></span><span
+                                                    class="size" style="font-size: 48px"><br><br><br></span><div><br></div>
+</label> </span></div>
+                                <?php } else {
+                                    if (have_posts()) {
+                                        while (have_posts()) {
+                                            the_post();
+                                            the_content();
+                                        }
                                     }
                                 }
-
                                 ?>
                             </div>
                         </div>

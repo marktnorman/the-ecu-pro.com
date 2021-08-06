@@ -43,23 +43,8 @@ function wpcf7_generate_work_order_id($cf7)
                 )
             );
 
-            $version = '1.0.0';
-
-            wp_enqueue_script(
-                'theecupro-work-order',
-                get_template_directory_uri() . '/js/work-order-config.js',
-                [],
-                $version,
-                true
-            );
-
-            wp_localize_script(
-                'theecupro-work-order',
-                'ecu_object',
-                array(
-                    'id' => $work_order_updated_name
-                )
-            );
+            wp_redirect( esc_url( add_query_arg( 'work-order', $work_order_updated_name, '/work-order-tag-creation/' ) ) );
+            exit;
 
         }
 
