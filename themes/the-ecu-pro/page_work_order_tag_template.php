@@ -42,19 +42,20 @@ get_header(); ?>
                                             $work_order_table,
                                             array(
                                                 'work_order_name' => $work_order_updated_name,
-                                                'work_order_type' => 'FRM'
+                                                'work_order_type' => 'FRM',
                                             )
                                         );
                                     }
 
                                     ?>
-                                    <div class="infoContainer">
-                                    <span id="richTxtMsgSpan" class="infoCont"> <label class="descFld">
-Thank you!<br><br><span class="colour" style="color: rgb(255, 51, 51)">Please write the following order number on your box with the parts that you send in:</span><br><br><span
-                                                    class="size" style="font-size: 18.6667px"><span
-                                                        class="work-order-tag-div"><?php echo $work_order_updated_name; ?></span><br><br><br></span><span
-                                                    class="size" style="font-size: 48px"><br><br><br></span><div><br></div>
-</label> </span></div>
+
+                                    <div class="success-container">
+                                        <h3>Thank you!</h3>
+                                        <p>Please write the following order number on your box with the parts that you
+                                            send in:</p>
+                                        <span class="order-id"><?php echo $work_order_updated_name; ?></span>
+                                    </div>
+
                                 <?php } else {
                                     if (have_posts()) {
                                         while (have_posts()) {

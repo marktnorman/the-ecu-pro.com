@@ -5552,6 +5552,10 @@ form .field-group label.focussed {
     top: 6px !important;
 }
 
+.page-template-page_work_order_tag_template div.wpcf7-mail-sent-ok {
+    display: none;
+}
+
 .infoContainer.hide {
     display: none;
 }
