@@ -43,16 +43,27 @@ function wpcf7_generate_work_order_id($cf7)
                 )
             );
 
-            if (isset($_COOKIE["work-order-tag"])) {
-                unset($_COOKIE["work-order-tag"]);
-                setcookie("work-order-tag", $work_order_updated_name, -1, '/');
-            } else {
-                setcookie("work-order-tag", $work_order_updated_name, -1, '/');
-            }
+            $version = '1.0.0';
+
+            wp_enqueue_script(
+                'theecupro-work-order',
+                get_template_directory_uri() . '/js/work-order-config.js',
+                [],
+                $version,
+                true
+            );
+
+            wp_localize_script(
+                'theecupro-work-order',
+                'ecu_object',
+                array(
+                    'id' => $work_order_updated_name
+                )
+            );
 
         }
 
-        return $wpcf;
+        //return $wpcf;
 
     }
 
