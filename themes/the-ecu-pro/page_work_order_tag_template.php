@@ -22,7 +22,7 @@ get_header(); ?>
                                     <span id="richTxtMsgSpan" class="infoCont"> <label class="descFld">
 Thank you!<br><br><span class="colour" style="color: rgb(255, 51, 51)">Please write the following order number on your box with the parts that you send in:</span><br><br><span
                                                     class="size" style="font-size: 18.6667px"><span
-                                                        class="work-order-tag-div"></span><br><br><br></span><span
+                                                        class="work-order-tag-div"><?php echo $_GET['work-order']; ?></span><br><br><br></span><span
                                                     class="size" style="font-size: 48px"><br><br><br></span><div><br></div>
 </label> </span></div>
                                 <?php } else {

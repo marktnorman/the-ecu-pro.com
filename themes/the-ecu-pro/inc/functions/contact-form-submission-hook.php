@@ -44,11 +44,10 @@ function wpcf7_generate_work_order_id($cf7)
             );
 
             wp_redirect( esc_url( add_query_arg( 'work-order', $work_order_updated_name, '/work-order-tag-creation/' ) ) );
-            exit;
 
         }
 
-        //return $wpcf;
+        return $wpcf;
 
     }
 
