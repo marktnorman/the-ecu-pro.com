@@ -322,7 +322,6 @@ function include_dependencies()
     require_once get_stylesheet_directory() . '/inc/functions/product-meta-frontend-update.php';
     require_once get_stylesheet_directory() . '/inc/functions/generate-short-description.php';
     require_once get_stylesheet_directory() . '/inc/functions/generate-bottom-description.php';
-    require_once get_stylesheet_directory() . '/inc/functions/contact-form-submission-hook.php';
 }
 
 /**
@@ -1312,4 +1311,22 @@ function dummy_checkout_woo_body_class($classes)
     }
 
     return $classes;
+}
+
+add_action('wp_footer', 'redirect_after_work_order_creation');
+
+/**
+ * redirect_after_work_order_creation
+ */
+function redirect_after_work_order_creation()
+{
+    ?>
+    <script type="text/javascript">
+        document.addEventListener('wpcf7mailsent', function (event) {
+            if ('97196' == event.detail.contactFormId) {
+                location = 'https://the-ecu-pro.com/work-order-tag-creation?success=true';
+            }
+        }, false);
+    </script>
+    <?php
 }
