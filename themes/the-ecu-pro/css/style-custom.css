@@ -5545,7 +5545,7 @@ form .field-group label {
 }
 
 form .field-group.no-label-update label {
-    position: absolute !important;
+    position: initial !important;
 }
 
 form .field-group label.focussed {
