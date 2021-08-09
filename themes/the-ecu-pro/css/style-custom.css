@@ -5544,6 +5544,10 @@ form .field-group label {
     margin-bottom: 0;
 }
 
+form .field-group.no-label-update label {
+    position: absolute !important;
+}
+
 form .field-group label.focussed {
     color: #6F86A0 !important;
     height: 10px !important;
