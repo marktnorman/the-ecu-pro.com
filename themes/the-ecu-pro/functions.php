@@ -1325,9 +1325,11 @@ function redirect_after_work_order_creation()
     <script type="text/javascript">
         document.addEventListener('wpcf7mailsent', function (event) {
             if ('97196' == event.detail.contactFormId) {
-                location = 'https://the-ecu-pro.com/frm-tag-creation?success=FRM';
+                console.log(event.detail.inputs);
+                //location = 'https://the-ecu-pro.com/frm-tag-creation?success=FRM&associated-email=';
             } else if ('97296' == event.detail.contactFormId) {
-                location = 'https://the-ecu-pro.com/dme-tag-creation?success=DME';
+                console.log(event.detail.inputs);
+                //location = 'https://the-ecu-pro.com/dme-tag-creation?success=DME&associated-email=';
             }
         }, false);
     </script>

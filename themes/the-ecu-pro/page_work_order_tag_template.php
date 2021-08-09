@@ -17,7 +17,7 @@ get_header(); ?>
 
                                 <?php
 
-                                if (isset($_GET) && !empty($_GET['success'])) {
+                                if (isset($_GET) && !empty($_GET['success']) && !empty($_GET['associated-email'])) {
 
                                     global $wpdb;
 
@@ -59,13 +59,52 @@ get_header(); ?>
                                         );
                                     }
 
+                                    // API mail request
+                                    require_once(__DIR__ . 'vendor/autoload.php');
+
+                                    // Configure API key authorization: api-key
+                                    $config = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey(
+                                        'api-key',
+                                        SENDINBLUE_API_KEY
+                                    );
+
+                                    // Uncomment below line to configure authorization using: partner-key
+                                    // $config = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('partner-key', 'YOUR_API_KEY');
+                                    $apiInstance                 = new SendinBlue\Client\Api\TransactionalEmailsApi(
+                                    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+                                    // This is optional, `GuzzleHttp\Client` will be used as default.
+                                        new GuzzleHttp\Client(),
+                                        $config
+                                    );
+                                    $sendSmtpEmail               = new \SendinBlue\Client\Model\SendSmtpEmail(
+                                    ); // \SendinBlue\Client\Model\SendSmtpEmail | Values to send a transactional email
+                                    $sendSmtpEmail['to']         = array(
+                                        array(
+                                            'email' => 'theecupro001@gmail.com',
+                                            'name'  => 'The ECU Pro'
+                                        )
+                                    );
+                                    $sendSmtpEmail['templateId'] = 1;
+                                    $sendSmtpEmail['params']     = array('name' => 'Uys', 'surname' => 'Cloete');
+                                    $sendSmtpEmail['headers']    = array('X-Mailin-custom' => 'content-type:application/json|accept:application/json');
+                                    $sendSmtpEmail['tags'] = array('work-order-id' => $work_order_updated_name, 'associated-work-order-email' => $_GET['associated-email']);
+
+                                    try {
+                                        $result = $apiInstance->sendTransacEmail($sendSmtpEmail);
+                                        print_r($result);
+                                    } catch (Exception $e) {
+                                        echo 'Exception when calling TransactionalEmailsApi->sendTransacEmail: ', $e->getMessage(
+                                        ), PHP_EOL;
+                                    }
+
                                     ?>
 
                                     <div class="success-container">
                                         <h3>Thank you!</h3>
                                         <p>Please write the following order number on your box with the parts that you
                                             send in:</p>
-                                        <span class="order-id-message">Important - </span><span class="order-id"><?php echo $work_order_updated_name; ?></span>
+                                        <span class="order-id-message">Important - </span><span
+                                                class="order-id"><?php echo $work_order_updated_name; ?></span>
                                     </div>
 
                                 <?php } else {
