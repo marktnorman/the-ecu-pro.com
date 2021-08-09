@@ -25,7 +25,8 @@ get_header(); ?>
 
                                     $last_work_order_row = $wpdb->get_results(
                                         $wpdb->prepare(
-                                            "SELECT * FROM $work_order_table ORDER BY row_order_id DESC LIMIT 1;"
+                                            "SELECT * FROM $work_order_table WHERE work_order_type = '%s' ORDER BY row_order_id DESC LIMIT 1;",
+                                            $_GET['success']
                                         )
                                     );
 
@@ -36,13 +37,13 @@ get_header(); ?>
                                         $last_saved_order_int = (int) $last_saved_order;
                                         $last_saved_order_int = $last_saved_order_int + 1;
 
-                                        $work_order_updated_name = 'FRM' . $last_saved_order_int;
+                                        $work_order_updated_name = $_GET['success'] . $last_saved_order_int;
 
                                         $wpdb->insert(
                                             $work_order_table,
                                             array(
                                                 'work_order_name' => $work_order_updated_name,
-                                                'work_order_type' => 'FRM',
+                                                'work_order_type' => $_GET['success'],
                                             )
                                         );
                                     }

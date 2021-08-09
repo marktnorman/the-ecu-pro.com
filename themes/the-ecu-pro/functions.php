@@ -224,7 +224,7 @@ function child_theme_admin_styles()
 add_action('wp_enqueue_scripts', 'theecupro_enqueue_assets');
 function theecupro_enqueue_assets()
 {
-    $version = '10.9.9';
+    $version = '11.0.0';
 
     // CARRY ON
     wp_enqueue_style('theecupro-default-style', get_stylesheet_uri());
@@ -1298,12 +1298,13 @@ add_filter('use_block_editor_for_post', '__return_false');
 add_filter('body_class', 'dummy_checkout_woo_body_class');
 /**
  * @param $classes
+ * Custom classes for styling
  *
  * @return mixed
  */
 function dummy_checkout_woo_body_class($classes)
 {
-    if (is_page('work-order-tag-creation')) {
+    if (is_page('frm-tag-creation') || is_page('dme-tag-creation')) {
         $classes[] = 'woocommerce-checkout';
         $classes[] = 'woocommerce-page';
         $classes[] = 'woocommerce-order-received';
@@ -1324,7 +1325,9 @@ function redirect_after_work_order_creation()
     <script type="text/javascript">
         document.addEventListener('wpcf7mailsent', function (event) {
             if ('97196' == event.detail.contactFormId) {
-                location = 'https://the-ecu-pro.com/work-order-tag-creation?success=true';
+                location = 'https://the-ecu-pro.com/frm-tag-creation?success=FRM';
+            } else if ('97296' == event.detail.contactFormId) {
+                location = 'https://the-ecu-pro.com/dme-tag-creation?success=DME';
             }
         }, false);
     </script>
