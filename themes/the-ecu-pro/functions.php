@@ -1325,11 +1325,25 @@ function redirect_after_work_order_creation()
     <script type="text/javascript">
         document.addEventListener('wpcf7mailsent', function (event) {
             if ('97196' == event.detail.contactFormId) {
-                console.log(event.detail.inputs);
-                //location = 'https://the-ecu-pro.com/frm-tag-creation?success=FRM&associated-email=';
+                var inputs = event.detail.inputs;
+
+                for ( var i = 0; i < inputs.length; i++ ) {
+                    if ( 'your-email' == inputs[i].name ) {
+                        var user_email = inputs[i].value;
+                        break;
+                    }
+                }
+                location = 'https://the-ecu-pro.com/frm-tag-creation?success=FRM&associated-email=' + user_email;
             } else if ('97296' == event.detail.contactFormId) {
-                console.log(event.detail.inputs);
-                //location = 'https://the-ecu-pro.com/dme-tag-creation?success=DME&associated-email=';
+                var inputs = event.detail.inputs;
+
+                for ( var i = 0; i < inputs.length; i++ ) {
+                    if ( 'your-email' == inputs[i].name ) {
+                        var user_email = inputs[i].value;
+                        break;
+                    }
+                }
+                location = 'https://the-ecu-pro.com/dme-tag-creation?success=DME&associated-email=' + user_email;
             }
         }, false);
     </script>
