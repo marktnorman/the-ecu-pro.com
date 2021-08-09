@@ -690,6 +690,12 @@
                 label.addClass('focussed');
             });
 
+            $('select').on("focus", function () {
+                var input = $(this);
+                var label = $(this).closest('.field-group').find('label');
+                label.addClass('focussed');
+            });
+
             $('#work-order-tag-container').on('input', function() {
                 var input = $(this);
                 var label = $(this).closest('.field-group').find('label');
@@ -697,6 +703,12 @@
             });
 
             $('#work-order-tag-container').on('textarea', function() {
+                var input = $(this);
+                var label = $(this).closest('.field-group').find('label');
+                label.addClass('focussed');
+            });
+
+            $('#work-order-tag-container').on('select', function() {
                 var input = $(this);
                 var label = $(this).closest('.field-group').find('label');
                 label.addClass('focussed');

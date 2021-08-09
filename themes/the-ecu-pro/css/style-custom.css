@@ -5582,7 +5582,7 @@ form .field-group label.focussed {
     font-weight: bold;
     font-size: 24px;
     color: #d03433;
-    margin-top: 20px;
+    margin: 20px 0 0 5px;
     display: inline-block;
 }
 
@@ -5596,7 +5596,8 @@ form .field-group label.focussed {
 
 form .field-group input[type="text"],
 form .field-group input[type="email"],
-form .field-group input[type="tel"] {
+form .field-group input[type="tel"],
+form .field-group select{
     outline: none;
     box-shadow: none;
     text-align: left;
