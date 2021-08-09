@@ -46,6 +46,17 @@ get_header(); ?>
                                                 'work_order_type' => $_GET['success'],
                                             )
                                         );
+                                    } else {
+
+                                        $work_order_updated_name = $_GET['success'] . '1';
+
+                                        $wpdb->insert(
+                                            $work_order_table,
+                                            array(
+                                                'work_order_name' => $work_order_updated_name,
+                                                'work_order_type' => $_GET['success'],
+                                            )
+                                        );
                                     }
 
                                     ?>
@@ -54,7 +65,7 @@ get_header(); ?>
                                         <h3>Thank you!</h3>
                                         <p>Please write the following order number on your box with the parts that you
                                             send in:</p>
-                                        <span class="order-id"><?php echo $work_order_updated_name; ?></span>
+                                        <span class="order-id-message">Important - </span><span class="order-id"><?php echo $work_order_updated_name; ?></span>
                                     </div>
 
                                 <?php } else {

@@ -1624,9 +1624,10 @@ span.product-single-sku {
 }
 
 body.woocommerce-order-received .main-content div.woocommerce {
-    max-width: 1400px;
+    max-width: 780px;
     margin-left: auto;
     margin-right: auto;
+    width: 100%;
 }
 
 body.woocommerce-order-received .main-content div.woocommerce section.woocommerce-order-details {
@@ -5562,11 +5563,24 @@ form .field-group label.focussed {
 
 .success-container h3 {
     margin-bottom: 20px;
+    font-size: 32px;
+}
+
+.success-container p {
+    font-size: 18px;
+}
+
+.success-container span.order-id-message {
+    font-weight: bold;
+    font-size: 24px;
+    color: #000000;
+    margin-top: 20px;
+    display: inline-block;
 }
 
 .success-container span.order-id {
     font-weight: bold;
-    font-size: 22px;
+    font-size: 24px;
     color: #d03433;
     margin-top: 20px;
     display: inline-block;
