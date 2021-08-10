@@ -80,8 +80,7 @@ get_header(); ?>
                                     ); // \SendinBlue\Client\Model\SendSmtpEmail | Values to send a transactional email
                                     $sendSmtpEmail['to'] = array(
                                         array(
-                                            //'email' => 'theecupro001@gmail.com',
-                                            'email' => 'marktnorman@gmail.com',
+                                            'email' => 'theecupro001@gmail.com',
                                             'name'  => 'The ECU Pro'
                                         )
                                     );
