@@ -60,7 +60,7 @@ get_header(); ?>
                                     }
 
                                     // API mail request
-                                    require_once(__DIR__ . 'vendor/autoload.php');
+                                    require_once(__DIR__ . '/vendor/autoload.php');
 
                                     // Configure API key authorization: api-key
                                     $config = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey(
@@ -70,25 +70,26 @@ get_header(); ?>
 
                                     // Uncomment below line to configure authorization using: partner-key
                                     // $config = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('partner-key', 'YOUR_API_KEY');
-                                    $apiInstance                 = new SendinBlue\Client\Api\TransactionalEmailsApi(
+                                    $apiInstance         = new SendinBlue\Client\Api\TransactionalEmailsApi(
                                     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
                                     // This is optional, `GuzzleHttp\Client` will be used as default.
                                         new GuzzleHttp\Client(),
                                         $config
                                     );
-                                    $sendSmtpEmail               = new \SendinBlue\Client\Model\SendSmtpEmail(
+                                    $sendSmtpEmail       = new \SendinBlue\Client\Model\SendSmtpEmail(
                                     ); // \SendinBlue\Client\Model\SendSmtpEmail | Values to send a transactional email
-                                    $sendSmtpEmail['to']         = array(
+                                    $sendSmtpEmail['to'] = array(
                                         array(
                                             //'email' => 'theecupro001@gmail.com',
                                             'email' => 'marktnorman@gmail.com',
                                             'name'  => 'The ECU Pro'
                                         )
                                     );
+
                                     $sendSmtpEmail['templateId'] = 1;
-                                    $sendSmtpEmail['params']     = array('name' => 'Uys', 'surname' => 'Cloete');
+                                    $sendSmtpEmail['sender']     = array('name' => 'Uys Cloete', 'email' => 'admin@the-ecu-pro.com');
+                                    $sendSmtpEmail['params']     = array('work_order_email' => $_GET['associated-email'], 'work_order_id' => $work_order_updated_name);
                                     $sendSmtpEmail['headers']    = array('X-Mailin-custom' => 'content-type:application/json|accept:application/json');
-                                    $sendSmtpEmail['tags'] = array('work-order-id' => $work_order_updated_name, 'associated-work-order-email' => $_GET['associated-email']);
 
                                     try {
                                         $result = $apiInstance->sendTransacEmail($sendSmtpEmail);
