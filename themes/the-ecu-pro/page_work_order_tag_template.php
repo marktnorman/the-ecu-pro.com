@@ -87,27 +87,46 @@ get_header(); ?>
                                     );
 
                                     $sendSmtpEmail['templateId'] = 1;
-                                    $sendSmtpEmail['sender']     = array('name' => 'Uys Cloete', 'email' => 'admin@the-ecu-pro.com');
-                                    $sendSmtpEmail['params']     = array('work_order_email' => $_GET['associated-email'], 'work_order_id' => $work_order_updated_name);
+                                    $sendSmtpEmail['sender']     = array(
+                                        'name'  => 'Uys Cloete',
+                                        'email' => 'admin@the-ecu-pro.com'
+                                    );
+                                    $sendSmtpEmail['params']     = array(
+                                        'work_order_email' => $_GET['associated-email'],
+                                        'work_order_id'    => $work_order_updated_name
+                                    );
                                     $sendSmtpEmail['headers']    = array('X-Mailin-custom' => 'content-type:application/json|accept:application/json');
 
                                     try {
                                         $result = $apiInstance->sendTransacEmail($sendSmtpEmail);
-                                        print_r($result);
+
+                                        $logData = array(
+                                            'Work order successfully generated' => $result
+                                        );
+
+                                        write_log($logData);
                                     } catch (Exception $e) {
-                                        echo 'Exception when calling TransactionalEmailsApi->sendTransacEmail: ', $e->getMessage(
-                                        ), PHP_EOL;
+                                        $logData = array(
+                                            'Work order ID generation failed' => $e->getMessage()
+                                        );
+
+                                        write_log($logData);
                                     }
 
-                                    ?>
-
-                                    <div class="success-container">
-                                        <h3>Thank you!</h3>
-                                        <p>Please write the following order number on your box with the parts that you
-                                            send in:</p>
-                                        <span class="order-id-message">Important - </span><span
-                                                class="order-id"><?php echo $work_order_updated_name; ?></span>
-                                    </div>
+                                    if (!empty($work_order_updated_name)) { ?>
+                                        <div class="success-container">
+                                            <h3>Thank you!</h3>
+                                            <p>Please write the following order number on your box with the parts that you
+                                                send in:</p>
+                                            <span class="order-id-message">Important - </span><span
+                                                    class="order-id"><?php echo $work_order_updated_name; ?></span>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div class="success-container">
+                                            <h3>Oops!</h3>
+                                            <p>Something has gone wrong, please contact: uyscloete.uc@gmail.com</p>
+                                        </div>
+                                    <?php } ?>
 
                                 <?php } else {
                                     if (have_posts()) {
