@@ -4220,6 +4220,20 @@ a.ecu-repair-request:hover {
     border-radius: 10px;
 }
 
+.page-template-page_work_order_frm_template .zf-templateWidth {
+    position: unset;
+    top: unset;
+    z-index: 9999;
+    margin-left: auto;
+    margin-right: auto;
+    right: unset;
+    text-align: inherit;
+    width: 800px;
+    min-width: unset;
+    background: #fff;
+    border-radius: 10px;
+}
+
 .zf-templateWidth ul {
     list-style: none;
     padding: 0;
