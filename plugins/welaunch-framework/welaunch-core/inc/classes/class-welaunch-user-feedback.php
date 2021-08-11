@@ -283,7 +283,7 @@ class weLaunch_User_Feedback {
 						</p>
 					</div>
 					<div class="welaunch-install-now">
-						<?php printf( '<a href="%1$s" class="button button-primary welaunch-install-button" target="_blank">%2$s</a>', esc_url( 'https://wordpress.org/support/plugin/welaunch-framework/reviews/?filter=5#new-post' ), esc_html__( 'Leave a Review', 'welaunch-framework' ) ); ?>
+						<?php printf( '<a href="%1$s" class="button button-primary welaunch-install-button" target="_blank">%2$s</a>', esc_url( 'https://codecanyon.net/downloads' ), esc_html__( 'Leave a Review', 'welaunch-framework' ) ); ?>
 						<a href="<?php echo esc_url( $no_bug_url ); ?>" class="no-thanks"><?php echo esc_html__( 'No thanks / I already have', 'welaunch-framework' ); ?></a>
 					</div>
 				</div>

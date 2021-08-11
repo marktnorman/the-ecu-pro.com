@@ -224,7 +224,7 @@ function child_theme_admin_styles()
 add_action('wp_enqueue_scripts', 'theecupro_enqueue_assets');
 function theecupro_enqueue_assets()
 {
-    $version = '10.7.9';
+    $version = '11.0.5';
 
     // CARRY ON
     wp_enqueue_style('theecupro-default-style', get_stylesheet_uri());
@@ -304,6 +304,27 @@ function theecupro_enqueue_assets()
         null,
         true
     );
+
+    if (is_page('frm-zf-tag-generation')) {
+        wp_enqueue_script(
+            'sales-integration',
+            get_stylesheet_directory_uri() . '/js/salesiqintegration.js',
+            array('jquery')
+        );
+
+        wp_enqueue_script(
+            'sales-validation',
+            get_stylesheet_directory_uri() . '/js/validation.js',
+            array('jquery')
+        );
+
+        wp_enqueue_style(
+            'zf-styles',
+            get_stylesheet_directory_uri() . '/css/zf-styles.css',
+            ['theecupro-custom-style', 'theecupro-theme-style'],
+            $version
+        );
+    }
 
 }
 
@@ -1241,7 +1262,7 @@ function work_order_form_redirection()
         $order = wc_get_order($_GET['order-id']);
 
         if (!empty($order)) {
-            $items = $order->get_items();
+            $items       = $order->get_items();
             $productType = '';
 
             foreach ($items as $item) {
@@ -1289,4 +1310,67 @@ function redirect_host_correction()
         wp_redirect($updated_location);
         exit;
     }
+}
+
+// Disabling Glutenberg
+add_filter('use_block_editor_for_post', '__return_false');
+
+
+add_filter('body_class', 'dummy_checkout_woo_body_class');
+/**
+ * @param $classes
+ * Custom classes for styling
+ *
+ * @return mixed
+ */
+function dummy_checkout_woo_body_class($classes)
+{
+    if (is_page('frm-tag-creation') || is_page('dme-tag-creation')) {
+        $classes[] = 'woocommerce-checkout';
+        $classes[] = 'woocommerce-page';
+        $classes[] = 'woocommerce-order-received';
+        $classes[] = 'woocommerce-js';
+    }
+
+    if (is_page('frm-zf-tag-generation')) {
+        $classes[] = 'zf-backgroundBg';
+    }
+
+    return $classes;
+}
+
+add_action('wp_footer', 'redirect_after_work_order_creation');
+
+/**
+ * redirect_after_work_order_creation
+ */
+function redirect_after_work_order_creation()
+{
+    ?>
+    <script type="text/javascript">
+        document.addEventListener('wpcf7mailsent', function (event) {
+            if ('97196' == event.detail.contactFormId) {
+                var inputs = event.detail.inputs;
+
+                for (var i = 0; i < inputs.length; i++) {
+                    if ('your-email' == inputs[i].name) {
+                        var user_email = inputs[i].value;
+                        break;
+                    }
+                }
+                location = 'https://the-ecu-pro.com/frm-tag-creation?success=FRM&associated-email=' + user_email;
+            } else if ('97296' == event.detail.contactFormId) {
+                var inputs = event.detail.inputs;
+
+                for (var i = 0; i < inputs.length; i++) {
+                    if ('your-email' == inputs[i].name) {
+                        var user_email = inputs[i].value;
+                        break;
+                    }
+                }
+                location = 'https://the-ecu-pro.com/dme-tag-creation?success=DME&associated-email=' + user_email;
+            }
+        }, false);
+    </script>
+    <?php
 }

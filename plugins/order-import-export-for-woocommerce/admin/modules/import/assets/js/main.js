@@ -5,7 +5,7 @@ var wt_iew_basic_import=(function( $ ) {
 		ajax_data:{},
 		selected_template:0,
 		selected_template_name:'',
-		to_import:'',
+		to_import:'order',
 		to_import_title:'',
 		import_method:'',
 		current_step:'',
@@ -471,7 +471,7 @@ var wt_iew_basic_import=(function( $ ) {
 				}
 			}
 
-			if(this.current_step=='method_import' && !this.is_valid_file) /* method import page, then check file validation is done. */
+			if(this.current_step=='method_import') // && !this.is_valid_file) /* method import page, then check file validation is done. */
 			{
 				if(action_type=='step' && this.is_previous_step(action)) /* step action and previous step */
 				{

@@ -676,6 +676,50 @@
                 $('#video-popup-container iframe').attr('src', '');
             });
         }
+        if ($('#work-order-tag-container').length > 0) {
+            $('input').on("focus", function () {
+                var input = $(this);
+                // assuming label is the parent, i.e. <label><input /></label>
+                var label = $(this).closest('.field-group').find('label');
+                label.addClass('focussed');
+            });
+
+            $('textarea').on("focus", function () {
+                var input = $(this);
+                var label = $(this).closest('.field-group').find('label');
+                label.addClass('focussed');
+            });
+
+            $('select').on("focus", function () {
+                var input = $(this);
+                var label = $(this).closest('.field-group').find('label');
+                label.addClass('focussed');
+            });
+
+            $('#work-order-tag-container').on('input', function() {
+                var input = $(this);
+                var label = $(this).closest('.field-group').find('label');
+                label.addClass('focussed');
+            });
+
+            $('#work-order-tag-container').on('textarea', function() {
+                var input = $(this);
+                var label = $(this).closest('.field-group').find('label');
+                label.addClass('focussed');
+            });
+
+            $('#work-order-tag-container').on('select', function() {
+                var input = $(this);
+                var label = $(this).closest('.field-group').find('label');
+                label.addClass('focussed');
+            });
+
+            $('#work-order-tag-container label').click(function() {
+                var label = $(this);
+                var input = $(this).closest('.field-group').find('input');
+                input.focus();
+            });
+        }
 
         if ($(window).width() < 997) {
             $('.header-main .header-center').insertAfter($('.header-main .header-right'));

@@ -341,6 +341,27 @@
 get_template_part('templates/click-to-view-number-form');
 
 wp_footer();
+
+if (is_page('frm-zf-tag-generation')) { ?>
+    <script type="text/javascript">
+        var zf_DateRegex = new RegExp("^(([0][1-9])|([1-2][0-9])|([3][0-1]))[-](Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[-](?:(?:19|20)[0-9]{2})$");
+        var zf_MandArray = ["Name_First", "Name_Last", "Email", "PhoneNumber_countrycode", "SingleLine"];
+        var zf_FieldArray = ["Name_First", "Name_Last", "Email", "PhoneNumber_countrycode", "Address_AddressLine1", "Address_AddressLine2", "Address_City", "Address_Region", "Address_ZipCode", "Address_Country", "SingleLine", "SingleLine1"];
+        var isSalesIQIntegrationEnabled = true;
+        var salesIQFieldsArray = [{
+            "formFieldName": "Email",
+            "formFieldType": 9,
+            "salesIQFieldName": "Email"
+        }, {
+            "formFieldName": "Name",
+            "formFieldType": 7,
+            "salesIQFieldName": "Name",
+            "fieldCompLinkName": "Name_First"
+        }, {"formFieldName": "PhoneNumber", "formFieldType": 11, "salesIQFieldName": "Phone"}];
+    </script>
+<?php }
+
+
 ?>
 
 </body>

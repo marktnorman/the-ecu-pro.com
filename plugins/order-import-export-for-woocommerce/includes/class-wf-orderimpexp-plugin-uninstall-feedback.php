@@ -92,6 +92,10 @@ if (!class_exists('WF_OrderImpExp_Uninstall_Feedback')) :
                                 </li>
                             <?php } ?>
                         </ul>
+                        <div class="wt-uninstall-feedback-privacy-policy">
+                            <?php _e('We do not collect any personal data when you submit this form. It\'s your feedback that we value.', 'order-import-export-for-woocommerce'); ?>
+                            <a href="https://www.webtoffee.com/privacy-policy/" target="_blank"><?php _e('Privacy Policy', 'order-import-export-for-woocommerce'); ?></a>
+                        </div>                          
                     </div>
                     <div class="wforderimpexp-modal-footer">
                         <a href="#" class="dont-bother-me"><?php _e('I rather wouldn\'t say', 'order-import-export-for-woocommerce'); ?></a>
@@ -141,6 +145,20 @@ if (!class_exists('WF_OrderImpExp_Uninstall_Feedback')) :
                     padding: 12px 20px;
                     text-align: right;
                 }
+                .wt-uninstall-feedback-privacy-policy {
+                    text-align: left;
+                    font-size: 12px;
+                    color: #aaa;
+                    line-height: 14px;
+                    margin-top: 20px;
+                    font-style: italic;
+                }
+
+                .wt-uninstall-feedback-privacy-policy a {
+                    font-size: 11px;
+                    color: #4b9cc3;
+                    text-decoration-color: #99c3d7;
+                }                
             </style>
             <script type="text/javascript">
                 (function ($) {

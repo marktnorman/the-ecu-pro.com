@@ -43,7 +43,7 @@ class Facebook_Pixel_Manager extends Pixel_Manager_Base
         //        wp_enqueue_script('wooptpm-facebook', plugin_dir_url(__DIR__) . '../../js/public/facebook.js', ['jquery', 'wooptpm'], WGACT_CURRENT_VERSION, true);
         wp_enqueue_script(
             'wooptpm-facebook',
-            WGACT_PLUGIN_DIR_PATH . 'js/public/facebook.js',
+            WOOPTPM_PLUGIN_DIR_PATH . 'js/public/facebook.js',
             [ 'jquery', 'wooptpm' ],
             WGACT_CURRENT_VERSION,
             true
@@ -70,9 +70,13 @@ class Facebook_Pixel_Manager extends Pixel_Manager_Base
         $this->facebook_browser_pixel->inject_cart( $cart, $cart_total );
     }
     
-    public function inject_order_received_page( $order, $order_total, $is_new_customer )
+    public function inject_order_received_page_dedupe( $order, $order_total, $is_new_customer )
     {
         $this->facebook_browser_pixel->inject_order_received_page( $order, $order_total, $is_new_customer );
+    }
+    
+    public function inject_order_received_page_no_dedupe( $order, $order_total, $is_new_customer )
+    {
     }
     
     protected function inject_opening_script_tag()

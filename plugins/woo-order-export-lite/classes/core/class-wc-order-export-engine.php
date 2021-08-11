@@ -31,7 +31,7 @@ class WC_Order_Export_Engine {
 			'{to_date}'   		=> isset( $date['to_date'] ) ? date( "Y-m-d", strtotime( $date['to_date'] ) ) : '',
 		);
 
-		if ( self::$make_separate_orders && strpos( $mask, '%order_id' ) === false ) {
+		if ( self::$make_separate_orders && strpos( $mask, '%order_id' ) === false  && strpos( $mask, '{order_number}' ) === false ) {
 			$mask_parts                                          = explode( '.', $mask );
 			$before_prefix                                       = count( $mask_parts ) > 1 ? 2 : 1;
 			$mask_parts[ count( $mask_parts ) - $before_prefix ] .= '-%order_id';

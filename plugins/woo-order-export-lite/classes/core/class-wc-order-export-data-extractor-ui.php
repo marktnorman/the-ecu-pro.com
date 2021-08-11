@@ -735,6 +735,11 @@ class WC_Order_Export_Data_Extractor_UI extends WC_Order_Export_Data_Extractor {
 				'checked' => 0,
 				'format'  => 'number',
 			),
+			'summary_report_total_sum_items_exported' => array(
+				'label'   => __( 'Summary Report Sum of Items (Exported)', 'woo-order-export-lite' ),
+				'checked' => 0,
+				'format'  => 'number',
+			),
 			'summary_report_total_amount' => array(
 				'label'   => __( 'Summary Report Total Amount', 'woo-order-export-lite' ),
 				'checked' => 0,
@@ -1382,6 +1387,7 @@ class WC_Order_Export_Data_Extractor_UI extends WC_Order_Export_Data_Extractor {
 
 	public static function get_wc_email_templates() {
 		$emails = WC_Emails::instance();
+		$email_titles = array( '' => __( 'Please, choose the template', 'woo-order-export-lite' ) );
 		foreach( $emails->get_emails() as $email ) {
 			if(!in_array($email->id, array('customer_reset_password', 'customer_new_account'))) {
 				$email_titles[ $email->id ] = $email->title;

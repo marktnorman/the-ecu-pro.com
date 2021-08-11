@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Plugin Name:  WooCommerce Conversion Tracking
+ * Plugin Name:  WooCommerce Pixel Manager
  * Description:  Visitor and conversion value tracking for WooCommerce. Highly optimized for data accuracy (which drives optimal campaign performance).
  * Author:       woopt
  * Plugin URI:   https://wordpress.org/plugins/woocommerce-google-adwords-conversion-tracking-tag/
  * Author URI:   https://woopt.com
- * Version:      1.10.10
+ * Version:      1.11.0
  * License:      GPLv2 or later
  * Text Domain:  woocommerce-google-adwords-conversion-tracking-tag
  * WC requires at least: 2.6
- * WC tested up to: 5.2
+ * WC tested up to: 5.5
  *
- *t
+ *
  **/
 // TODO export settings function
 // TODO add option checkbox on uninstall and ask if user wants to delete options from db
@@ -94,11 +94,12 @@ if ( function_exists( 'wga_fs' ) ) {
     }
     
     // ... Your plugin's main file logic ...
-    define( 'WGACT_PLUGIN_PREFIX', 'wooptpm_' );
-    define( 'WGACT_DB_VERSION', '3' );
-    define( 'WGACT_DB_OPTIONS_NAME', 'wgact_plugin_options' );
-    define( 'WGACT_DB_RATINGS', 'wgact_ratings' );
-    define( 'WGACT_PLUGIN_DIR_PATH', plugin_dir_url( __FILE__ ) );
+    define( 'WOOPTPM_PLUGIN_PREFIX', 'wooptpm_' );
+    define( 'WOOPTPM_DB_VERSION', '3' );
+    define( 'WOOPTPM_DB_OPTIONS_NAME', 'wgact_plugin_options' );
+    define( 'WOOPTPM_DB_RATINGS', 'wgact_ratings' );
+    define( 'WOOPTPM_NOTIFICATIONS', 'wgact_notifications' );
+    define( 'WOOPTPM_PLUGIN_DIR_PATH', plugin_dir_url( __FILE__ ) );
     class WGACT
     {
         protected  $options ;
@@ -131,7 +132,7 @@ if ( function_exists( 'wga_fs' ) ) {
                 $plugin_version = $plugin_data['Version'];
                 define( 'WGACT_CURRENT_VERSION', $plugin_version );
                 // running the DB updater
-                if ( get_option( WGACT_DB_OPTIONS_NAME ) ) {
+                if ( get_option( WOOPTPM_DB_OPTIONS_NAME ) ) {
                     ( new Db_Upgrade() )->run_options_db_upgrade();
                 }
                 // load the options
@@ -143,6 +144,9 @@ if ( function_exists( 'wga_fs' ) ) {
                 // run environment workflows
                 add_action( 'admin_notices', [ $this, 'run_admin_compatibility_checks' ] );
                 add_action( 'admin_notices', [ $this, 'environment_check_admin_notices' ] );
+                add_action( 'admin_notices', function () {
+                    $this->environment_check->run_incompatible_plugins_checks();
+                } );
                 $this->environment_check->permanent_compatibility_mode();
                 $this->run_compatibility_modes();
                 $this->environment_check->flush_cache_on_plugin_changes();
@@ -201,7 +205,7 @@ if ( function_exists( 'wga_fs' ) ) {
             // check if cookie prevention has been activated
             // load the cookie consent management functions
             $cookie_consent = new Cookie_Consent_Management();
-            $cookie_consent->setPluginPrefix( WGACT_PLUGIN_PREFIX );
+            $cookie_consent->setPluginPrefix( WOOPTPM_PLUGIN_PREFIX );
             if ( $cookie_consent->is_cookie_prevention_active() == false ) {
                 // inject pixels
                 new Pixel_Manager( $this->options );
@@ -218,14 +222,14 @@ if ( function_exists( 'wga_fs' ) ) {
         {
             // set options equal to defaults
             //            global $wgact_plugin_options;
-            $this->options = get_option( WGACT_DB_OPTIONS_NAME );
+            $this->options = get_option( WOOPTPM_DB_OPTIONS_NAME );
             
             if ( false === $this->options ) {
                 // if no options have been set yet, initiate default options
                 //            error_log('options empty, loading default');
                 //                $this->options = $this->wgact_get_default_options();
                 $this->options = ( new Default_Options() )->get_default_options();
-                update_option( WGACT_DB_OPTIONS_NAME, $this->options );
+                update_option( WOOPTPM_DB_OPTIONS_NAME, $this->options );
                 //            $options = get_option(WGACT_DB_OPTIONS_NAME);
                 //		    error_log(print_r($options, true));
             } else {
@@ -243,7 +247,7 @@ if ( function_exists( 'wga_fs' ) ) {
                 }
                 // add new default options to the options db array
                 $this->options = ( new Default_Options() )->update_with_defaults( $this->options, ( new Default_Options() )->get_default_options() );
-                update_option( WGACT_DB_OPTIONS_NAME, $this->options );
+                update_option( WOOPTPM_DB_OPTIONS_NAME, $this->options );
             }
         
         }

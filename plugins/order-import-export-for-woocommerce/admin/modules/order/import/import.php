@@ -196,14 +196,29 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
                     $this->item_data['payment_method_title'] = $value;
                     continue;
                 }
-
-                if ( 'date_created' == $column || 'post_date' == $column || '_paid_date' == $column || 'paid_date' == $column || 'order_date' == $column) {
+                if ('transaction_id' == $column ) {
+                    $this->item_data['transaction_id'] = $value;
+                    continue;
+                }
+                if ('customer_ip_address' == $column ) {
+                    $this->item_data['customer_ip_address'] = $value;
+                    continue;
+                }
+                if ('customer_user_agent' == $column) {
+                    $this->item_data['customer_user_agent'] = $value;
+                    continue;
+                }
+                if ( 'date_created' == $column || 'post_date' == $column || 'order_date' == $column) {
                     $date = $this->wt_parse_date_field($value,$column);
                     $this->item_data['date_created'] = date('Y-m-d H:i:s', $date);
-                    if('_paid_date' == $column || 'paid_date' == $column)
-                    $this->item_data['date_paid'] = date('Y-m-d H:i:s', $date);
                     continue;
                 }  
+                if(('_paid_date' == $column || 'paid_date' == $column) && $value != ''){
+
+                    $date = $this->wt_parse_date_field($value,$column);
+                    $this->item_data['date_paid'] = date('Y-m-d H:i:s', $date);
+                    continue;
+                }
 
                 if ('post_modified' == $column || 'date_modified' == $column || 'date_completed' == $column || '_completed_date' == $column ) {
                     $date = $this->wt_parse_date_field($value,$column);
@@ -404,7 +419,14 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
 
             if(empty($this->item_data['order_id'])){                                 
                 $this->item_data['order_id'] = $this->wt_parse_id_field($mapping_fields,$this->item_data);
-            }            
+            } 
+            
+            if (empty($this->item_data['status'])) {
+                    if ($this->item_data['order_id'] > 0) {
+                        $ord = wc_get_order($this->item_data['order_id']);
+                        $this->item_data['status'] = preg_replace('/^wc-/', '', $ord->get_status());
+                    }
+            }
 
             return $this->item_data;
         } catch (Exception $e) {
@@ -812,7 +834,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
             $shipping_items = array(
                 'Items' => $items,
                 'method_id' => $method_id,
-                'taxes' => $taxes
+                'taxes' => maybe_unserialize($taxes)
             );
         }
         
@@ -1371,17 +1393,15 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
     }
 
     public function process_item($data) { 
+
         try {                        
             global $wpdb;
             do_action('wt_woocommerce_order_import_before_process_item', $data);
             $data = apply_filters('wt_woocommerce_order_import_process_item', $data); 
              
             $post_id = $data['order_id'];
-            
-            $status = isset($data['status']) ? $data['status'] : 'wc-pending';
-            if($this->merge){
-                $status = isset($data['status']) ? $data['status'] : '';
-            }
+
+            $status = !empty($data['status']) ? $data['status'] : 'wc-pending';
             
                        
             // wc_create_order();  woocommerce/includes/wc-core-function.php:83 -> $order = new WC_Order(); woocommerce/includes/class-wc-order.php:16 -> $order->save(); 
@@ -1426,7 +1446,9 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
                 $order_id = $order->get_id();
             }
 
+            if(isset($data['billing']))
             $order->set_address($data['billing'], 'billing');
+            if(isset($data['shipping']))
             $order->set_address($data['shipping'], 'shipping');  
             
             $order->set_prices_include_tax( 'yes' === get_option( 'woocommerce_prices_include_tax' ) );
@@ -1710,7 +1732,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
 
                         
             $this->set_meta_data($order, $data);  
-                                   
+      
             if($this->status_mail == true){   
                 $order->update_status('wc-' . preg_replace('/^wc-/', '', $status)); 
             } else {    
@@ -1895,7 +1917,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
     function set_meta_data(&$object, $data) {
         if (isset($data['meta_data'])) {
             $order_id = $object->get_id();
-			$add_download_permissions = false;
+            $add_download_permissions = false;
             foreach ($data['meta_data'] as $meta) {                                                
                 if (( 'Download Permissions Granted' == $meta['key'] || '_download_permissions_granted' == $meta['key'] ) && $meta['value']) {
                     $add_download_permissions = true;
@@ -1912,13 +1934,10 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
                 
                 $object->update_meta_data($meta['key'], $meta['value']);
             }
-            
+
             // Grant downloadalbe product permissions
             if ($add_download_permissions) {
-                wc_downloadable_product_permissions($order_id);
-                $next_update = get_post_meta( $order_id, '_wt_import_key');
-                $force_update = isset($next_update) ? FALSE : TRUE;
-                $force = apply_filters('wt_force_update_downloadalbe_product_permissions', $force_update);
+                $force = apply_filters('wt_force_update_downloadalbe_product_permissions', true);
                 wc_downloadable_product_permissions($order_id, $force);
 
             }
@@ -1937,7 +1956,9 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
             remove_action( 'woocommerce_order_status_failed_to_completed_notification', array( $email_class->emails['WC_Email_New_Order'], 'trigger' ) );
             remove_action( 'woocommerce_order_status_failed_to_on-hold_notification', array( $email_class->emails['WC_Email_New_Order'], 'trigger' ) );
             remove_action( 'woocommerce_order_status_failed_to_pending_notification', array( $email_class->emails['WC_Email_New_Order'], 'trigger' ) );
-
+            remove_action( 'woocommerce_order_status_cancelled_to_completed_notification', array( $email_class->emails['WC_Email_New_Order'], 'trigger' ) );
+            remove_action( 'woocommerce_order_status_cancelled_to_processing_notification', array( $email_class->emails['WC_Email_New_Order'], 'trigger' ) );
+            
             // Processing  emails
             remove_action( 'woocommerce_order_status_pending_to_processing_notification', array( $email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' ) );
             remove_action( 'woocommerce_order_status_pending_to_on-hold_notification', array( $email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' ) );

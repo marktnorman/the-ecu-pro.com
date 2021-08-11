@@ -4,8 +4,8 @@ Donate link: https://paypal.me/ipprokaev/0usd
 Tags: woocommerce,export,order,xls,csv,xml,woo export lite,export orders,orders export,csv export,xml export,xls export,tsv
 Requires PHP: 5.4.0
 Requires at least: 4.7
-Tested up to: 5.7
-Stable tag: 3.1.8
+Tested up to: 5.8
+Stable tag: 3.1.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,6 +116,16 @@ Yes, you can email a request to aprokaev@gmail.com. We intensively develop this 
 6. Select orders to export and use "bulk action".
 
 == Changelog ==
+
+= 3.1.9 - 2021-06-22 =
+* New field "Sum of Items (Exported)" for mode "Summary Report By Customers"
+* Added extra operators for filter by item meta
+* Correctly export description of variation
+* Correctly show alias for deleted role
+* Fixed bug - fatal error if variation was deleted
+* Fixed bug - unixtimestamp exported as number (not date) to Excel
+* Fixed bug - option "Export only matched product items" didn't work if order has variations of same product
+* Fixed bug - TAX fields (added via >Setup Fields>Other items) ignored shipping amount 
 
 = 3.1.8 - 2021-02-22 =
 * Fixed XSS vulnerability

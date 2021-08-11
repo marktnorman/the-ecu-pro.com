@@ -106,7 +106,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
 	public function advanced_setting_fields($fields)
 	{
 		$fields['enable_import_log']=array(
-			'label'=>__("Save Import log"),
+			'label'=>__("Generate Import log"),
 			'type'=>'radio',
 			'radio_fields'=>array(
 				1=>__('Yes'),
@@ -115,7 +115,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
                         'value' =>1,
 			'field_name'=>'enable_import_log',
 			'field_group'=>'advanced_field',			
-			'help_text'=>__('Save import log as text file and make it available in the history section.'),
+			'help_text'=>__('Generate import log as text file and make it available in the history section.'),
 			'validation_rule'=>array('type'=>'absint'),
 		);
 		$import_methods=array_map(function($vl){ return $vl['title']; }, $this->import_methods);
@@ -123,7 +123,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
 			'label'=>__("Default Import method"),
 			'type'=>'select',
 			'sele_vals'=>$import_methods,
-                        'value' =>'quick',
+                        'value' =>'new',
 			'field_name'=>'default_import_method',
 			'field_group'=>'advanced_field',			
 			'help_text'=>__('Select the default method of import.'),

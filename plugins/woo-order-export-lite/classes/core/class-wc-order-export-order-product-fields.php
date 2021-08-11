@@ -34,8 +34,10 @@ class WC_Order_Export_Order_Product_Fields {
 		$this->product_id = $this->item->get_product_id();
 		$this->product_fields_with_tags = array( 'product_variation', 'post_content', 'post_excerpt' );
 
-		$this->parent_product_id = method_exists( $product,
-			'get_parent_id' ) ? $product->get_parent_id() : ( isset( $product->parent ) ? $product->parent->id : 0 );
+		if( $product ) {
+			$this->parent_product_id = method_exists( $product,
+				'get_parent_id' ) ? $product->get_parent_id() : ( isset( $product->parent ) ? $product->parent->id : 0 );
+		}
 	}
 
 	private static function get_product_category_full( $product_id ) {
@@ -101,9 +103,11 @@ class WC_Order_Export_Order_Product_Fields {
 				$field_value = ! empty( $user->display_name ) ? $user->display_name : '';
 			}
 		} elseif ( $field == 'post_content' ) {
-			$field_value = $this->post ? $this->post->post_content : '';
+			$field_value = $this->product ? $this->product->get_description() : "";
+			if( !$field_value )
+				$field_value = $this->post ? $this->post->post_content : ''; //try read directly from main post
 		} elseif ( $field == 'post_excerpt' ) {
-			$field_value = $this->post ? $this->post->post_excerpt : '';
+			$field_value = $this->post ? $this->post->post_excerpt : '';// still read from main post
 		} elseif ( $field == 'embedded_product_image' ) {
 			$field_value = "";
 			$attachment_id = null;
@@ -140,7 +144,7 @@ class WC_Order_Export_Order_Product_Fields {
 		} elseif ( $field == 'type' ) {
 			$field_value = '';
 			if ( $this->product ) {
-				$field_value = method_exists( $this->product,
+				$field_value = is_object( $this->product ) && method_exists( $this->product,
 					'get_type' ) ? $this->product->get_type() : $this->product->product_type;
 			}
 		} elseif ( $field == 'tags' ) {
@@ -199,7 +203,7 @@ class WC_Order_Export_Order_Product_Fields {
 		} elseif ( $field == 'product_url' ) {
 			$field_value = get_permalink( $this->product_id );
 		} elseif ( $field == 'sku' ) {
-			$field_value = method_exists( $this->product,
+			$field_value = is_object( $this->product ) && method_exists( $this->product,
 				'get_' . $field ) ? $this->product->{'get_' . $field}() : get_post_meta( $this->variation_id, '_' . $field,
 				true );
 		}
@@ -294,7 +298,7 @@ class WC_Order_Export_Order_Product_Fields {
 			if ( $field_value == '' ) {  //2. read from product 
 				$field_value = get_post_meta( $this->product_id, $field, true );
 			}
-			if ( $field_value === '' AND method_exists( $this->product,'get_' . $field )  )  //3. try method
+			if ( $field_value === '' AND is_object( $this->product ) && method_exists( $this->product,'get_' . $field )  )  //3. try method
 			{
 				$field_value = $this->product->{'get_' . $field}();
 			}

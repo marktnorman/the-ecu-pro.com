@@ -435,7 +435,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
             $item_meta = self::get_order_line_item_meta($item_id);
             foreach ($item_meta as $key => $value) {
                 switch ($key) {
-                    case 'Items':
+                    case 'Items':	
                     case 'method_id':
                     case 'taxes':
                         if (is_object($value))
@@ -446,12 +446,12 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                         break;
                 }
             }
-            foreach (array('Items', 'method_id', 'taxes') as $value) {
+            foreach (array('Items','method_id', 'taxes') as $value) {
                 if (!isset($meta[$value])) {
                     $meta[$value] = '';
                 }
             }
-            $shipping_items[] = trim(implode('|', array('items:' . $meta['Items'], 'method_id:' . $meta['method_id'], 'taxes:' . $meta['taxes'])));
+            $shipping_items[] = trim(implode('|', array('items:' . $meta['Items'],'method_id:' . $meta['method_id'], 'taxes:' . $meta['taxes'])));
         }
 
         //get fee and total
@@ -520,11 +520,13 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
         }
 
         if (version_compare(WC_VERSION, '2.7', '<')) {
+            
+            $paid_date = get_post_meta($order->id, '_date_paid');
             $order_data = array(
                 'order_id' => $order->id,
                 'order_number' => $order->get_order_number(),
                 'order_date' => date('Y-m-d H:i:s', strtotime(get_post($order->id)->post_date)),
-                'paid_date' => date('Y-m-d H:i:s', get_post_meta($order->id, '_date_paid')),
+                'paid_date' => isset($paid_date) ? date('Y-m-d H:i:s', $paid_date) : '',
                 'status' => $order->get_status(),
                 'shipping_total' => $order->get_total_shipping(),
                 'shipping_tax_total' => wc_format_decimal($order->get_shipping_tax(), 2),
@@ -537,7 +539,10 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                 'order_total' => wc_format_decimal($order->get_total(), 2),
                 'order_currency' => $order->get_order_currency(),
                 'payment_method' => $order->payment_method,
-                'payment_method' => $order->payment_method_title,
+                'payment_method_title' => $order->payment_method_title,
+                'transaction_id' => $order->transaction_id,
+                'customer_ip_address' => $order->customer_ip_address,
+                'customer_user_agent' => $order->customer_user_agent, 
                 'shipping_method' => $order->get_shipping_method(),
                 'customer_id' => $order->get_user_id(),
                 'customer_user' => $order->get_user_id(),
@@ -573,11 +578,12 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                 'download_permissions' => $order->download_permissions_granted ? $order->download_permissions_granted : 0,
             );
         } else {
+            $paid_date = $order->get_date_paid();
             $order_data = array(
                 'order_id' => $order->get_id(),
                 'order_number' => $order->get_order_number(),
                 'order_date' => date('Y-m-d H:i:s', strtotime(get_post($order->get_id())->post_date)),
-                'paid_date' => date('Y-m-d H:i:s', strtotime($order->get_date_paid())),
+                'paid_date' => $paid_date, //isset($paid_date) ? date('Y-m-d H:i:s', strtotime($paid_date)) : '',
                 'status' => $order->get_status(),
                 'shipping_total' => $order->get_total_shipping(),
                 'shipping_tax_total' => wc_format_decimal($order->get_shipping_tax(), 2),
@@ -591,6 +597,9 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                 'order_currency' => $order->get_currency(),
                 'payment_method' => $order->get_payment_method(),
                 'payment_method_title' => $order->get_payment_method_title(),
+                'transaction_id' => $order->get_transaction_id(),
+                'customer_ip_address' => $order->get_customer_ip_address(),
+                'customer_user_agent' => $order->get_customer_user_agent(), 
                 'shipping_method' => $order->get_shipping_method(),
                 'customer_id' => $order->get_user_id(),
                 'customer_user' => $order->get_user_id(),
@@ -623,7 +632,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                 'coupon_items' => implode(';', $coupon_items),
                 'refund_items' => implode(';', $refund_items),
                 'order_notes' => implode('||', (defined('WC_VERSION') && (WC_VERSION >= 3.2)) ? self::get_order_notes_new($order) : self::get_order_notes($order)),
-                'download_permissions' => $order->is_download_permitted() ? $order->is_download_permitted() : 0,
+                'download_permissions' => $order->is_download_permitted() ? $order->is_download_permitted() : 0,                
             );
         }
                                         
@@ -718,6 +727,16 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
             AND (po.post_date BETWEEN '$start_date' AND '$end_date')";
         if ($export_order_statuses != 'any') {
             $query .= " AND po.post_status IN ( '" . implode("','", $export_order_statuses) . "' )";
+        }
+        if ($export_order_statuses == 'any') {
+            $defualt_exclude_status = get_post_stati(array('exclude_from_search' => true));
+            $stati = array_values(get_post_stati());
+            foreach ($stati as $key => $status) {
+                if (in_array($status, $defualt_exclude_status, true)) {
+                    unset($stati[$key]);
+                }
+            }
+            $query .= " AND po.post_status IN ( '" . implode("','", $stati) . "' )";
         }
         if ($exclude_already_exported) {
             $query .= " AND pm.meta_key = 'wf_order_exported_status' AND pm.meta_value=1";

@@ -191,6 +191,17 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Export {
                     continue;
                 }
                 
+               if($column == 'product_categories' || $column == 'exclude_product_categories'){
+
+                    $cpn_product_category_ids = explode(',', $coupon->$column);
+                    $cpn_product_category_name = array();
+                    foreach ($cpn_product_category_ids as $cpn_product_category_id) {
+                       $cpn_product_category_name[] = get_term( $cpn_product_category_id )->name;
+                    }
+                    $row[$column] = implode(',', $cpn_product_category_name);
+                    continue;
+                }
+                
                 if('date_expires' == $column && !empty($coupon->$column)){
                     $row[$column] = date('Y-m-d',$coupon->$column);
                     continue;
@@ -238,6 +249,7 @@ class Wt_Import_Export_For_Woo_Basic_Coupon_Export {
            
             $row[$column] = '';
         }
+
         return apply_filters('hf_alter_coupon_csv_data', $row, $csv_columns);
 
     }

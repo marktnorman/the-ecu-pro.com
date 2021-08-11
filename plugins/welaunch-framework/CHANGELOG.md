@@ -1,5 +1,15 @@
 # Changelog
 ======
+1.0.9
+======
+- NEW:	Added German, Spanish, Italian, French & Dutch Translations
+
+======
+1.0.8
+======
+- FIX:	Added a class exists check
+
+======
 1.0.7
 ======
 - NEW:	Added shop look & dark pattern plugins

@@ -8,9 +8,7 @@ use  WGACT\Classes\Admin\Environment_Check ;
 use  WGACT\Classes\Pixels\Bing\Bing_Pixel_Manager ;
 use  WGACT\Classes\Pixels\Facebook\Facebook_Pixel_Manager ;
 use  WGACT\Classes\Pixels\Facebook\Facebook_Pixel_Manager_Microdata ;
-use  WGACT\Classes\Pixels\Google\Google_Analytics_4_Refund ;
 use  WGACT\Classes\Pixels\Google\Google_Analytics_Refund ;
-use  WGACT\Classes\Pixels\Google\Google_Analytics_UA_Refund ;
 use  WGACT\Classes\Pixels\Google\Google_Pixel_Manager ;
 use  WGACT\Classes\Pixels\Google\Trait_Google ;
 use  WGACT\Classes\Pixels\Hotjar\Hotjar_Pixel ;
@@ -91,6 +89,8 @@ class Pixel_Manager extends Pixel_Manager_Base
         add_action( 'wp_enqueue_scripts', [ $this, 'wooptpm_front_end_scripts' ] );
         add_action( 'wp_ajax_wooptpm_get_cart_items', [ $this, 'ajax_wooptpm_get_cart_items' ] );
         add_action( 'wp_ajax_nopriv_wooptpm_get_cart_items', [ $this, 'ajax_wooptpm_get_cart_items' ] );
+        add_action( 'wp_ajax_wooptpm_purchase_pixels_fired', [ $this, 'ajax_purchase_pixels_fired_handler' ] );
+        add_action( 'wp_ajax_nopriv_wooptpm_purchase_pixels_fired', [ $this, 'ajax_purchase_pixels_fired_handler' ] );
         /*
          * Inject pixel snippets after <body> tag
          */
@@ -120,6 +120,65 @@ class Pixel_Manager extends Pixel_Manager_Base
             3
         );
         add_action( 'wp_head', [ $this, 'woocommerce_inject_product_data_on_product_page' ] );
+        // do_action( 'woocommerce_after_cart_item_name', $cart_item, $cart_item_key );
+        add_action(
+            'woocommerce_after_cart_item_name',
+            [ $this, 'woocommerce_after_cart_item_name' ],
+            10,
+            2
+        );
+        add_action(
+            'woocommerce_after_mini_cart_item_name',
+            [ $this, 'woocommerce_after_cart_item_name' ],
+            10,
+            2
+        );
+        add_action( 'woocommerce_mini_cart_contents', [ $this, 'woocommerce_mini_cart_contents' ] );
+    }
+    
+    public function woocommerce_mini_cart_contents()
+    {
+        foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+            $this->woocommerce_after_cart_item_name( $cart_item, $cart_item_key );
+        }
+    }
+    
+    public function woocommerce_after_cart_item_name( $cart_item, $cart_item_key )
+    {
+        $data = [
+            'product_id'   => $cart_item['product_id'],
+            'variation_id' => $cart_item['variation_id'],
+        ];
+        ?>
+        <script>
+            window.wooptpmDataLayer.cartItemKeys                                 = window.wooptpmDataLayer.cartItemKeys || {};
+            window.wooptpmDataLayer.cartItemKeys['<?php 
+        echo  $cart_item_key ;
+        ?>'] = <?php 
+        echo  json_encode( $data ) ;
+        ?>
+        </script>
+
+        <?php 
+    }
+    
+    private function get_cart_parent_product_for_pinterest( $product_id )
+    {
+        $product = wc_get_product( $product_id );
+        
+        if ( !is_object( $product ) ) {
+            //            $this->log_problematic_product_id();
+            wc_get_logger()->debug( 'get_product_data_layer_script received an invalid product', [
+                'source' => 'wooptpm',
+            ] );
+            return '';
+        }
+        
+        $this->dyn_r_ids = $this->get_dyn_r_ids( $product );
+        return [
+            'id'        => (string) $product->get_id(),
+            'dyn_r_ids' => $this->dyn_r_ids,
+        ];
     }
     
     // on product page
@@ -203,11 +262,12 @@ class Pixel_Manager extends Pixel_Manager_Base
             'id'          => (string) $product->get_id(),
             'sku'         => (string) $product->get_sku(),
             'name'        => (string) $product->get_name(),
-            'price'       => (int) $price,
+            'price'       => (double) $price,
             'brand'       => $this->get_brand_name( $product->get_id() ),
-            'category'    => (array) $this->get_product_category( $product->get_id() ),
-            'quantity'    => (int) 1,
+            'category'    => $this->get_product_category( $product->get_id() ),
+            'quantity'    => 1,
             'dyn_r_ids'   => $this->dyn_r_ids,
+            'isVariable'  => $product->get_type() == 'variable',
             'isVariation' => false,
         ];
         
@@ -216,12 +276,13 @@ class Pixel_Manager extends Pixel_Manager_Base
             $data['name'] = $parent_product->get_name();
             $data['isVariation'] = true;
             $data['parentId'] = $parent_product->get_id();
+            $data['parentId_dyn_r_ids'] = $this->get_dyn_r_ids( $parent_product );
             $data['variant'] = $this->get_formatted_variant_text( $product );
         }
         
         // if placed in <head> it must be a <meta> tag else, it can be an <input> tag
         $tag = ( $meta_tag ? "meta" : "input" );
-        $html = "\n            <{$tag} type='hidden' class='wooptpmProductId' data-id='" . $product->get_id() . "'>\n            <script>\n                window.wooptpmDataLayer.products = window.wooptpmDataLayer.products || {};\n                window.wooptpmDataLayer.products[" . $product->get_id() . "] = " . json_encode( $data ) . ";";
+        $html = "\n            <{$tag} type='hidden' class='wooptpmProductId' data-id='" . $product->get_id() . "'>\n            <script type=\"text/javascript\" data-cfasync=\"false\">\n                window.wooptpmDataLayer.products = window.wooptpmDataLayer.products || {};\n                window.wooptpmDataLayer.products[" . $product->get_id() . "] = " . json_encode( $data ) . ";";
         if ( $set_position === true ) {
             $html .= "\n                window.wooptpmDataLayer.products[{$product->get_id()}]['position'] = window.wooptpmDataLayer.position++;";
         }
@@ -320,9 +381,9 @@ class Pixel_Manager extends Pixel_Manager_Base
     {
         
         if ( $this->can_order_confirmation_be_processed( $order ) ) {
-            $ratings = get_option( WGACT_DB_RATINGS );
+            $ratings = get_option( WOOPTPM_DB_RATINGS );
             $ratings['conversions_count'] = $ratings['conversions_count'] + 1;
-            update_option( WGACT_DB_RATINGS, $ratings );
+            update_option( WOOPTPM_DB_RATINGS, $ratings );
         } else {
             $this->conversion_pixels_already_fired_html();
         }
@@ -350,9 +411,9 @@ class Pixel_Manager extends Pixel_Manager_Base
             ];
             $data['cart'][$product->get_id()] = [
                 'id'          => (string) $product->get_id(),
-                'dyn_r_ids'   => (array) $this->get_dyn_r_ids( $product ),
-                'name'        => (string) $product->get_name(),
-                'brand'       => (string) $this->get_brand_name( $product->get_id() ),
+                'dyn_r_ids'   => $this->get_dyn_r_ids( $product ),
+                'name'        => $product->get_name(),
+                'brand'       => $this->get_brand_name( $product->get_id() ),
                 'quantity'    => (int) $value['quantity'],
                 'price'       => (double) $product->get_price(),
                 'isVariation' => false,
@@ -360,10 +421,11 @@ class Pixel_Manager extends Pixel_Manager_Base
             
             if ( $product->get_type() == 'variation' ) {
                 $parent_product = wc_get_product( $product->get_parent_id() );
-                $data['cart'][$product->get_id()]['name'] = (string) $parent_product->get_name();
+                $data['cart'][$product->get_id()]['name'] = $parent_product->get_name();
                 $data['cart'][$product->get_id()]['isVariation'] = true;
                 $data['cart'][$product->get_id()]['parentId'] = (string) $parent_product->get_id();
-                $data['cart'][$product->get_id()]['category'] = (array) $this->get_product_category( $product->get_parent_id() );
+                $data['cart'][$product->get_id()]['parentId_dyn_r_ids'] = $this->get_dyn_r_ids( $parent_product );
+                $data['cart'][$product->get_id()]['category'] = $this->get_product_category( $product->get_parent_id() );
                 $variant_text_array = [];
                 $attributes = $product->get_attributes();
                 if ( $attributes ) {
@@ -384,12 +446,29 @@ class Pixel_Manager extends Pixel_Manager_Base
         wp_send_json( $data );
     }
     
+    public function ajax_purchase_pixels_fired_handler()
+    {
+        //        error_log('test save');
+        //        if (!check_ajax_referer('wooptpm-premium-only-nonce', 'nonce', false)) {
+        //        error_log('post nonce: ' . $_POST['nonce']);
+        //        if (!wp_verify_nonce($_POST['nonce'], $_POST['action'])) {
+        //            wp_send_json_error('Invalid security token sent.');
+        //            error_log('Invalid security token sent.');
+        //            wp_die();
+        //        }
+        $order_id = filter_var( $_POST['order_id'], FILTER_SANITIZE_STRING );
+        update_post_meta( $order_id, '_wooptpm_conversion_pixel_fired', true );
+        wp_send_json_success();
+        wp_die();
+        // this is required to terminate immediately and return a proper response
+    }
+    
     public function wooptpm_front_end_scripts()
     {
         //        wp_enqueue_script('wooptpm', plugin_dir_url(__DIR__) . '../js/public/wooptpm.js', ['jquery', 'jquery-cookie'], WGACT_CURRENT_VERSION, false);
         wp_enqueue_script(
             'wooptpm',
-            WGACT_PLUGIN_DIR_PATH . 'js/public/wooptpm.js',
+            WOOPTPM_PLUGIN_DIR_PATH . 'js/public/wooptpm.js',
             [ 'jquery', 'jquery-cookie' ],
             WGACT_CURRENT_VERSION,
             false
@@ -399,7 +478,7 @@ class Pixel_Manager extends Pixel_Manager_Base
         ] );
     }
     
-    public function inject_order_received_page( $order, $order_total, $is_new_customer )
+    public function inject_order_received_page_dedupe( $order, $order_total, $is_new_customer )
     {
     }
     
