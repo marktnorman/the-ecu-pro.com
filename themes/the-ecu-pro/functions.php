@@ -305,6 +305,27 @@ function theecupro_enqueue_assets()
         true
     );
 
+    if (is_page('frm-zf-tag-generation')) {
+        wp_enqueue_script(
+            'sales-integration',
+            get_stylesheet_directory_uri() . '/js/salesiqintegration.js',
+            array('jquery')
+        );
+
+        wp_enqueue_script(
+            'sales-validation',
+            get_stylesheet_directory_uri() . '/js/validation.js',
+            array('jquery')
+        );
+
+        wp_enqueue_style(
+            'zf-styles',
+            get_stylesheet_directory_uri() . '/css/zf-styles.css',
+            ['theecupro-custom-style', 'theecupro-theme-style'],
+            $version
+        );
+    }
+
 }
 
 add_action('init', 'include_dependencies');
@@ -1311,6 +1332,10 @@ function dummy_checkout_woo_body_class($classes)
         $classes[] = 'woocommerce-js';
     }
 
+    if (is_page('frm-zf-tag-generation')) {
+        $classes[] = 'zf-backgroundBg';
+    }
+
     return $classes;
 }
 
@@ -1327,8 +1352,8 @@ function redirect_after_work_order_creation()
             if ('97196' == event.detail.contactFormId) {
                 var inputs = event.detail.inputs;
 
-                for ( var i = 0; i < inputs.length; i++ ) {
-                    if ( 'your-email' == inputs[i].name ) {
+                for (var i = 0; i < inputs.length; i++) {
+                    if ('your-email' == inputs[i].name) {
                         var user_email = inputs[i].value;
                         break;
                     }
@@ -1337,8 +1362,8 @@ function redirect_after_work_order_creation()
             } else if ('97296' == event.detail.contactFormId) {
                 var inputs = event.detail.inputs;
 
-                for ( var i = 0; i < inputs.length; i++ ) {
-                    if ( 'your-email' == inputs[i].name ) {
+                for (var i = 0; i < inputs.length; i++) {
+                    if ('your-email' == inputs[i].name) {
                         var user_email = inputs[i].value;
                         break;
                     }
