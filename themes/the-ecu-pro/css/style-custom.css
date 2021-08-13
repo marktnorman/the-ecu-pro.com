@@ -5537,7 +5537,7 @@ a.ecu-repair-request:hover {
 }
 
 .page-template-page_work_order_tag_template #home-background-image,
-.page-template-page_work_order_tag_template .align-items-center
+.page-template-page_work_order_tag_template .align-items-center,
 .page-template-page_work_order_dme_template #home-background-image,
 .page-template-page_work_order_dme_template .align-items-center {
     display: none !important;
