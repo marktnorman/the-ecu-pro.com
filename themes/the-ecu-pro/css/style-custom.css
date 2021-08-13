@@ -4220,6 +4220,11 @@ a.ecu-repair-request:hover {
     border-radius: 10px;
 }
 
+.page-template-page_work_order_frm_template #home-background-image,
+.page-template-page_work_order_frm_template .align-items-center {
+    display: none !important;
+}
+
 .page-template-page_work_order_frm_template .zf-templateWidth {
     position: unset;
     top: unset;

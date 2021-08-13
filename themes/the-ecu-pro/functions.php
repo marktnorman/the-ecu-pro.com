@@ -224,7 +224,7 @@ function child_theme_admin_styles()
 add_action('wp_enqueue_scripts', 'theecupro_enqueue_assets');
 function theecupro_enqueue_assets()
 {
-    $version = '11.0.5';
+    $version = '11.0.6';
 
     // CARRY ON
     wp_enqueue_style('theecupro-default-style', get_stylesheet_uri());
@@ -305,7 +305,7 @@ function theecupro_enqueue_assets()
         true
     );
 
-    if (is_page('frm-zf-tag-generation')) {
+    if (is_page('frm-repair-request')) {
         wp_enqueue_script(
             'sales-integration',
             get_stylesheet_directory_uri() . '/js/salesiqintegration.js',
@@ -324,6 +324,9 @@ function theecupro_enqueue_assets()
             ['theecupro-custom-style', 'theecupro-theme-style'],
             $version
         );
+
+        // Old backup
+        //<iframe style="height: 1030px; width: 99%; border: none;" src="https://forms.zohopublic.com/theecupro/form/FRMRepairNeworder/formperma/quq2ae6TdZGo3g94TBVPueElGeCce-X5j2d0lH8YEQU" frameborder="0"></iframe>
     }
 
 }
@@ -1332,7 +1335,7 @@ function dummy_checkout_woo_body_class($classes)
         $classes[] = 'woocommerce-js';
     }
 
-    if (is_page('frm-zf-tag-generation')) {
+    if (is_page('frm-repair-request')) {
         $classes[] = 'zf-backgroundBg';
     }
 
