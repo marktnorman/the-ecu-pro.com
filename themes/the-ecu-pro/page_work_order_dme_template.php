@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Work order FRM repair
+ * Template Name: Work order DME repair
  */
 
 get_header(); ?>
