@@ -371,6 +371,9 @@
                     $('.cta-buttons-product .continue-button').addClass('payment-trigger');
                     $('.cta-buttons-product .continue-button').text('Pay now');
 
+                    // Clear the select state field
+                    $('#billing_state').val(null).trigger('change');
+
                     $([document.documentElement, document.body]).animate({
                         scrollTop: $('.entry-summary .tabs').offset().top
                     }, 2000);
