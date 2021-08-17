@@ -2137,10 +2137,6 @@ h3#order_review_heading {
     margin: 40px 0;
 }
 
-.woocommerce #payment #place_order, .woocommerce-page #payment #place_order {
-    display: none !important;
-}
-
 .woocommerce div.product .form-row.form-row-last {
     width: 48.5%;
     display: inline-block;
