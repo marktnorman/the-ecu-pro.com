@@ -2001,11 +2001,16 @@ ul.shipping-options-container li label span.woocommerce-Price-amount {
 .woocommerce div.product .cta-buttons-product {
     max-width: 100%;
     width: 100%;
-    display: inline-block;
+    display: none !important;
     margin: 0px auto 20px auto;
     position: relative;
     z-index: 9997;
     padding: 0 20px;
+}
+
+#wc-stripe-payment-request-wrapper .single_add_to_cart_button,
+#wc-stripe-payment-request-button-separator {
+    display: none;
 }
 
 .woocommerce div.product .cta-buttons-product a.call-me-back-button {

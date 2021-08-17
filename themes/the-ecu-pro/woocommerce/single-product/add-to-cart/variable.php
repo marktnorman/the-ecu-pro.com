@@ -119,6 +119,19 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
                             </tbody>
                         </table>
 
+                        <?php
+
+                        $ecu_condition_value  = get_field("ecu_condition", $product->get_id());
+                        $ecu_condition_object = get_field_object("ecu_condition", $product->get_id(), true, false);
+
+                        if (!empty($ecu_condition_value)) { ?>
+                        <input type="checkbox" id="validation-checkbox" name="ecu_send_validate"
+                               class="validation-checkbox checkbox"
+                               value="<?php echo $ecu_condition_value; ?>">
+                        <label class="validation-checkbox-label"
+                               for="validation-checkbox"><?php echo $ecu_condition_object['value']; ?></label>
+                        <?php } ?>
+
                         <div class="single_variation_wrap">
                             <?php
                             /**
@@ -143,18 +156,7 @@ do_action('woocommerce_before_add_to_cart_form'); ?>
                         </div>
                     <?php endif; ?>
 
-                    <?php do_action('woocommerce_after_variations_form');
-
-                    $ecu_condition_value  = get_field("ecu_condition", $product->get_id());
-                    $ecu_condition_object = get_field_object("ecu_condition", $product->get_id(), true, false);
-
-                    if (!empty($ecu_condition_value)) { ?>
-                        <input type="checkbox" id="validation-checkbox" name="ecu_send_validate"
-                               class="validation-checkbox checkbox"
-                               value="<?php echo $ecu_condition_value; ?>">
-                        <label class="validation-checkbox-label"
-                               for="validation-checkbox"><?php echo $ecu_condition_object['value']; ?></label>
-                    <?php } ?>
+                    <?php do_action('woocommerce_after_variations_form'); ?>
                 </form>
             </div>
         </div>
