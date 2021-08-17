@@ -1959,10 +1959,6 @@ ul.shipping-options-container li label span.woocommerce-Price-amount {
     display: none !important;
 }
 
-.woocommerce div.product form.cart .single_variation_wrap .woocommerce-variation-add-to-cart {
-    display: none;
-}
-
 .woocommerce div.product form.cart .variations select {
     max-width: none;
     min-width: 75%;
@@ -2000,10 +1996,6 @@ ul.shipping-options-container li label span.woocommerce-Price-amount {
     clear: both;
     width: 100%;
     text-align: left;
-}
-
-.woocommerce div.product form.cart .button {
-    display: none !important;
 }
 
 .woocommerce div.product .cta-buttons-product {
