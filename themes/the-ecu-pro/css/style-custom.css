@@ -2009,8 +2009,9 @@ ul.shipping-options-container li label span.woocommerce-Price-amount {
 }
 
 #wc-stripe-payment-request-wrapper .single_add_to_cart_button,
-#wc-stripe-payment-request-button-separator {
-    display: none;
+#wc-stripe-payment-request-button-separator,
+.woocommerce div.product form.cart .button{
+    display: none !important;
 }
 
 .woocommerce div.product .cta-buttons-product a.call-me-back-button {
