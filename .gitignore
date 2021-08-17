@@ -21,3 +21,4 @@ languages/
 index.php
 error_log
 .htaccess
+maintenance/
