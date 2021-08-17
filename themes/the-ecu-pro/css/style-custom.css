@@ -3888,14 +3888,6 @@ a.ecu-repair-request:hover {
     background-color: #0188cc !important;
 }
 
-#wc-stripe-payment-request-wrapper {
-    display: none !important;
-}
-
-#wc-stripe-payment-request-button-separator {
-    display: none !important;
-}
-
 #mini-cart .cart_list {
     max-height: none;
     min-height: unset;
