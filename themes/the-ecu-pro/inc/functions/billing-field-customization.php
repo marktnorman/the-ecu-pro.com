@@ -15,6 +15,7 @@ function custom_billing_fields( $fields ) {
     $fields['billing_postcode']['class'] = array('form-row-postcode');
     $fields['billing_city']['class'] = array('form-row-city');
     $fields['billing_state']['class'] = array('form-row-state');
+    $fields['billing_state']['autocomplete'] = 'off';
 
     return $fields;
 }
@@ -28,6 +29,7 @@ function override_default_address_checkout_fields( $address_fields ) {
     $address_fields['address_1']['placeholder'] = 'Shipping Address';
     $address_fields['address_1']['priority'] = 5;
     $address_fields['state']['placeholder'] = 'State';
+    $address_fields['state']['autocomplete'] = 'off';
     $address_fields['state']['priority'] = 9;
     $address_fields['postcode']['placeholder'] = 'Zip Code';
     $address_fields['postcode']['priority'] = 7;

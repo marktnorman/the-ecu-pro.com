@@ -425,6 +425,10 @@
 
 @media only screen and (max-width: 790px) {
 
+    .page-template-page_work_order_frm_template .zf-templateWidth, .page-template-page_work_order_dme_template .zf-templateWidth {
+        width: 100% !important;
+    }
+
     form .field-group {
         width: 100%;
     }
