@@ -2008,9 +2008,13 @@ ul.shipping-options-container li label span.woocommerce-Price-amount {
     padding: 0 20px;
 }
 
+.woocommerce-store-notice, p.demo_store {
+    background-color: #d03433 !important;
+}
+
 #wc-stripe-payment-request-wrapper .single_add_to_cart_button,
 #wc-stripe-payment-request-button-separator,
-.woocommerce div.product form.cart .button{
+.woocommerce div.product form.cart .button {
     display: none !important;
 }
 
@@ -5609,7 +5613,7 @@ form .field-group label.focussed {
 form .field-group input[type="text"],
 form .field-group input[type="email"],
 form .field-group input[type="tel"],
-form .field-group select{
+form .field-group select {
     outline: none;
     box-shadow: none;
     text-align: left;

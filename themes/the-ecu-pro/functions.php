@@ -217,14 +217,14 @@ add_action('after_setup_theme', 'theecupro_setup');
 add_action('admin_enqueue_scripts', 'child_theme_admin_styles');
 function child_theme_admin_styles()
 {
-    wp_enqueue_style('admin-styles', get_stylesheet_directory_uri() . '/css/admin-style.css', '', '5.1.8');
+    wp_enqueue_style('admin-styles', get_stylesheet_directory_uri() . '/css/admin-style.css', '', '5.1.9');
 }
 
 
 add_action('wp_enqueue_scripts', 'theecupro_enqueue_assets');
 function theecupro_enqueue_assets()
 {
-    $version = '11.1.6';
+    $version = '11.1.7';
 
     // CARRY ON
     wp_enqueue_style('theecupro-default-style', get_stylesheet_uri());
