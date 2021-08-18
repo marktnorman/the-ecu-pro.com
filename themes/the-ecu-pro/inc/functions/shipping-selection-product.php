@@ -1,7 +1,7 @@
 <?php
 
 // Enable customer WC_Session
-add_action( 'init', 'wc_session_enabler' );
+//add_action( 'init', 'wc_session_enabler' );
 function wc_session_enabler() {
     if ( is_user_logged_in() || is_admin() )
         return;

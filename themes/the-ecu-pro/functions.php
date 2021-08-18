@@ -367,7 +367,7 @@ function include_dependencies()
     require_once get_stylesheet_directory() . '/inc/functions/shipping-initiator.php';
     require_once get_stylesheet_directory() . '/inc/functions/get-checkout-total-value.php';
     require_once get_stylesheet_directory() . '/inc/functions/auto-user-auth.php';
-    require_once get_stylesheet_directory() . '/inc/functions/product-generation.php';
+    //require_once get_stylesheet_directory() . '/inc/functions/product-generation.php';
     require_once get_stylesheet_directory() . '/inc/functions/product-meta-frontend-update.php';
     require_once get_stylesheet_directory() . '/inc/functions/generate-short-description.php';
     require_once get_stylesheet_directory() . '/inc/functions/generate-bottom-description.php';
@@ -1367,7 +1367,7 @@ function dummy_checkout_woo_body_class($classes)
     return $classes;
 }
 
-add_action('wp_footer', 'redirect_after_work_order_creation');
+//add_action('wp_footer', 'redirect_after_work_order_creation');
 
 /**
  * redirect_after_work_order_creation

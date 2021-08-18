@@ -116,7 +116,10 @@ function update_product_description_meta_yoast($data)
     // Loop through variations data
     foreach ($product->get_available_variations() as $variation) {
         // Set for each variation ID the corresponding price in the data array (to be used in jQuery)
-        $variations_data[$variation['variation_id']] = $variation['regular_price'];
+        if (isset($variation['regular_price'])) {
+            $variations_data[$variation['variation_id']] = $variation['regular_price'];
+        }
+
         if ($variation['attributes']['attribute_pa_variation'] == $selected) {
             $selected_variation_price = $variation['display_price'];
         }
