@@ -224,7 +224,7 @@ function child_theme_admin_styles()
 add_action('wp_enqueue_scripts', 'theecupro_enqueue_assets');
 function theecupro_enqueue_assets()
 {
-    $version = '11.1.9';
+    $version = '11.2.0';
 
     // CARRY ON
     wp_enqueue_style('theecupro-default-style', get_stylesheet_uri());
@@ -352,7 +352,7 @@ function theecupro_enqueue_assets()
         // Old DME backup
         // <iframe frameborder="0" style="height:2040px;width:99%;border:none;" src='https://forms.zohopublic.com/theecupro/form/DMERepairNeworder/formperma/5WeBn72nrEr45AnXDVHTWf7cUHi7-e_zAJe_a3gsaAQ'></iframe>
 
-        }
+    }
 
 }
 
@@ -1351,4 +1351,33 @@ function redirect_after_work_order_creation()
         }, false);
     </script>
     <?php
+}
+
+add_filter('woocommerce_add_to_cart_validation', 'add_the_date_validation', 15, 5);
+
+/**
+ * @param $passed
+ *
+ * @return false|mixed
+ */
+function add_the_date_validation($passed)
+{
+    if (empty($_REQUEST['ecu_send_validate'])) {
+        wc_add_notice(__('Please confirm the condition below.', 'woocommerce'), 'error');
+        $passed = false;
+    }
+    return $passed;
+}
+
+
+add_filter('add_to_cart_redirect', 'redirect_to_checkout');
+
+/**
+ * @return mixed
+ */
+function redirect_to_checkout()
+{
+    global $woocommerce;
+    $checkout_url = $woocommerce->cart->get_checkout_url();
+    return $checkout_url;
 }

@@ -2072,10 +2072,11 @@ button#place_order {
 }
 
 span.error-no-selection {
-    font-size: 14px;
+    font-size: 15px;
     color: #ff3a3a;
     display: inline-block;
     width: 100%;
+    margin-top: 20px;
 }
 
 .woocommerce form p.form-row:nth-child(odd) {
