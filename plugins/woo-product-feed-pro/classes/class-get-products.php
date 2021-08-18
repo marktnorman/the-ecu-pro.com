@@ -262,13 +262,31 @@ class WooSEA_Get_Products {
 	      	$data = $wpdb->get_results($sql);
 
         	if (count($data)) {
-
                 	foreach ($data as $key => $value) {
                         	$value_display = str_replace("_", " ",$value->name);
-			       	if (!preg_match("/_product_attributes/i",$value->name)){
+				if (!preg_match("/_product_attributes/i",$value->name)){
 					$list[$value->name] = ucfirst($value_display);
-                        	} else {
-	                                $product_attr = unserialize($value->type);
+
+					// Adding support for the Yoast WooCommerce SEO unique identifiers
+					if($value->name == "wpseo_global_identifier_values"){
+						$type_expl = explode("\";", $value->type);
+
+						$yoast_gtin8_value = explode(":\"", $type_expl[1]);
+						$yoast_gtin12_value = explode(":\"", $type_expl[3]);
+						$yoast_gtin13_value = explode(":\"", $type_expl[5]);
+						$yoast_gtin14_value = explode(":\"", $type_expl[7]);
+						$yoast_isbn_value = explode(":\"", $type_expl[9]);
+						$yoast_mpn_value = explode(":\"", $type_expl[11]);
+
+						$list["yoast_gtin8"] = $yoast_gtin8_value[1];
+						$list["yoast_gtin12"] = $yoast_gtin12_value[1];
+						$list["yoast_gtin13"] = $yoast_gtin13_value[1];
+						$list["yoast_gtin14"] = $yoast_gtin14_value[1];
+						$list["yoast_isbn"] = $yoast_isbn_value[1];
+						$list["yoast_mpn"] = $yoast_mpn_value[1];
+					}	
+				} else {
+					$product_attr = unserialize($value->type);
 					if((!empty($product_attr)) AND (is_array($product_attr))){	
 						foreach ($product_attr as $key_inner => $arr_value) {
 							if(is_array($arr_value)){
@@ -280,7 +298,7 @@ class WooSEA_Get_Products {
                                 		}
 					}	
 				}
-                	}
+			}
 	              	return $list;
         	}
         	return false;
@@ -893,7 +911,6 @@ class WooSEA_Get_Products {
                                                                         	}
                                                                 	}
 								}
-								error_log("Table rate:" . $shipping_cost);
 							}
 
 							// CLASS SHIPPING COSTS
@@ -972,7 +989,6 @@ class WooSEA_Get_Products {
                                                         			$shipping_cost = apply_filters('wc_aelia_cs_convert', $shipping_cost, $from_currency, $project_config['AELIA']);
                                                 			}
 								}
-								error_log("Class shipping cost:" . $shipping_cost);
                             				}
 
 							// CHECK IF WE NEED TO REMOVE LOCAL PICKUP
@@ -1378,6 +1394,9 @@ class WooSEA_Get_Products {
 				} elseif ($feed_config['name'] == "Glami.gr") {
 					$xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><SHOP></SHOP>');	
 					$xml->asXML($file);
+				} elseif ($feed_config['name'] == "Vivino") {
+					$xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><vivino-product-list></vivino-product-list>');	
+					$xml->asXML($file);
 				} elseif ($feed_config['name'] == "Pricecheck.co.za") {
 					$xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><Offers></Offers>');	
 					$xml->asXML($file);
@@ -1386,7 +1405,6 @@ class WooSEA_Get_Products {
 					$xml->addAttribute('xmlns:content', 'http://purl.org/rss/1.0/modules/content/');
 					$xml->addAttribute('xmlns:wfw', 'http://wellformedweb.org/CommentAPI/');
 					$xml->addAttribute('xmlns:dc', 'http://purl.org/dc/elements/1.1/');
-//					$xml->addAttribute('xmlns:atom', 'http://www.w3.org/2005/Atom');
 					$xml->addAttribute('xmlns:sy', 'http://purl.org/rss/1.0/modules/syndication/');
 					$xml->addAttribute('xmlns:slash', 'http://purl.org/rss/1.0/modules/slash/');
 					$xml->addAttribute('version', '2.0');
@@ -1843,7 +1861,34 @@ class WooSEA_Get_Products {
 											$productp = $product->addChild($p,$v);
 											$productp->addAttribute('name', $pieces[1]);
 										} elseif ($feed_config['name'] == "Google Product Review") {
+										} elseif ($feed_config['name'] == "Vivino") {
+											$extra_arr = array('ean','jan','upc','producer','wine-name','appellation','vintage','country','color','image','description','alcohol','producer-address','importer-address','varietal','ageing','closure','winemaker','production-size','residual-sugar','acidity','ph','contains-milk-allergens','contains-egg-allergens','non-alcoholic');
+											$unit_arr = array ('production-size','residual-sugar','acidity');
 
+											if(in_array($k, $extra_arr)){
+												if(!isset($product->extras)){
+													$productp = $product->addChild('extras');
+												}
+												
+												// Add units to it	
+												if(in_array($k, $unit_arr)){
+													$productk = $productp->addChild($k,$v);
+													if($k == "acidity"){
+														$productk->addAttribute('unit', 'g/l');
+													}
+													if($k == "production-size"){
+														$productk->addAttribute('unit', 'bottles');
+													}
+													if($k == "residual-sugar"){
+														$productk->addAttribute('unit', 'g/l');
+													}
+												} else {
+													$productp->$k = $v;
+												}
+											} else {
+                                                                                                $product->addChild("$k");
+                                                                                                $product->$k = $v;
+											}
 										} elseif ($feed_config['name'] == "Fruugo.nl") {
 											$desc_arr = array('Language','Title','Description');
 											$price_arr = array('Currency','NormalPriceWithoutVAT','NormalPriceWithVAT','VATRate');
@@ -2558,7 +2603,7 @@ class WooSEA_Get_Products {
 
 			$product_data['author'] = get_the_author();
 			$product_data['quantity'] = $this->clean_quantity( $this->childID, "_stock" );
-			$product_data['visibility'] = $this->get_attribute_value( $this->childID,"_visibility" );
+			$product_data['visibility'] = $product->get_catalog_visibility();
 			$product_data['menu_order'] =  get_post_field( 'menu_order', $product_data['id'] );
 			$product_data['currency'] = get_woocommerce_currency();
 			if(isset($project_config['WCML'])){
@@ -3238,6 +3283,27 @@ class WooSEA_Get_Products {
                         		$custom_attributes['_aioseop_description'] = "All in one seo pack description";
                 		}
 
+                                if ( class_exists( 'Yoast_WooCommerce_SEO' ) ) {
+                                        if(array_key_exists("yoast_gtin8", $custom_attributes)){
+                                                $product_data["yoast_gtin8"] = $custom_attributes["yoast_gtin8"];
+                                        }
+                                        if(array_key_exists("yoast_gtin12", $custom_attributes)){
+                                                $product_data["yoast_gtin12"] = $custom_attributes["yoast_gtin12"];
+                                        }       
+                                        if(array_key_exists("yoast_gtin13", $custom_attributes)){
+                                                $product_data["yoast_gtin13"] = $custom_attributes["yoast_gtin13"];
+                                        }       
+                                        if(array_key_exists("yoast_gtin14", $custom_attributes)){
+                                                $product_data["yoast_gtin14"] = $custom_attributes["yoast_gtin14"];
+                                        }       
+                                        if(array_key_exists("yoast_isbn", $custom_attributes)){
+                                                $product_data["yoast_isbn"] = $custom_attributes["yoast_isbn"];
+                                        }
+                                        if(array_key_exists("yoast_mpn", $custom_attributes)){
+                                                $product_data["yoast_mpn"] = $custom_attributes["yoast_mpn"];
+                                        }
+                                }
+
 				foreach($custom_attributes as $custom_kk => $custom_vv){
     					$custom_value = get_post_meta( $product_data['id'], $custom_kk, true );
 					$new_key ="custom_attributes_" . $custom_kk;
@@ -3246,7 +3312,9 @@ class WooSEA_Get_Products {
 					if(preg_match("/image|bild/i", $custom_kk)) {
 						if (class_exists('ACF') AND ($custom_value > 0)) {
 							//$image = wp_get_attachment_image_src($custom_value, "large");
-							$custom_value = $image[0];
+							if(isset($image[0])){
+								$custom_value = $image[0];
+							}	
 						}	
 					}
 
@@ -3653,7 +3721,6 @@ class WooSEA_Get_Products {
         	                /**
                 	         * Get Custom Attributes for this variable product
                        	  	 */
-
                         	$custom_attributes = $this->get_custom_attributes( $product_data['id'] );
 
                                 if(!in_array("woosea optimized title", $custom_attributes)){
@@ -3667,7 +3734,28 @@ class WooSEA_Get_Products {
                                         $custom_attributes['_aioseop_title'] = "All in one seo pack title";
                                         $custom_attributes['_aioseop_description'] = "All in one seo pack description";
                                 }
-                  	      	
+
+                                if ( class_exists( 'Yoast_WooCommerce_SEO' ) ) {
+                                        if(array_key_exists("yoast_gtin8", $custom_attributes)){
+                                                $product_data["yoast_gtin8"] = $custom_attributes["yoast_gtin8"];
+                                        }
+                                        if(array_key_exists("yoast_gtin12", $custom_attributes)){
+                                                $product_data["yoast_gtin12"] = $custom_attributes["yoast_gtin12"];
+                                        }
+                                        if(array_key_exists("yoast_gtin13", $custom_attributes)){
+                                                $product_data["yoast_gtin13"] = $custom_attributes["yoast_gtin13"];
+                                        }
+                                        if(array_key_exists("yoast_gtin14", $custom_attributes)){
+                                                $product_data["yoast_gtin14"] = $custom_attributes["yoast_gtin14"];
+                                        }
+                                        if(array_key_exists("yoast_isbn", $custom_attributes)){
+                                                $product_data["yoast_isbn"] = $custom_attributes["yoast_isbn"];
+                                        }
+                                        if(array_key_exists("yoast_mpn", $custom_attributes)){
+                                                $product_data["yoast_mpn"] = $custom_attributes["yoast_mpn"];
+                                        }
+                                }
+
 				foreach($custom_attributes as $custom_kk => $custom_vv){
                                		$custom_value = get_post_meta( $product_data['id'], $custom_kk, true );
 
@@ -3728,6 +3816,27 @@ class WooSEA_Get_Products {
 				 * We also need to make sure that we get the custom attributes belonging to the simple mother product
 				 */
 	                       	$custom_attributes_mother = $this->get_custom_attributes( $product_data['item_group_id'] );
+
+                                if ( class_exists( 'Yoast_WooCommerce_SEO' ) ) {
+                                        if(array_key_exists("yoast_gtin8", $custom_attributes_mother)){
+                                                $product_data["yoast_gtin8"] = $custom_attributes_mother["yoast_gtin8"];
+					}
+                                        if(array_key_exists("yoast_gtin12", $custom_attributes_mother)){
+                                                $product_data["yoast_gtin12"] = $custom_attributes_mother["yoast_gtin12"];
+                                   	}
+                                        if(array_key_exists("yoast_gtin13", $custom_attributes_mother)){
+			             		$product_data["yoast_gtin13"] = $custom_attributes_mother["yoast_gtin13"];
+					}
+                                        if(array_key_exists("yoast_gtin14", $custom_attributes_mother)){
+                                                $product_data["yoast_gtin14"] = $custom_attributes_mother["yoast_gtin14"];
+					}
+                                        if(array_key_exists("yoast_isbn", $custom_attributes_mother)){
+                                                $product_data["yoast_isbn"] = $custom_attributes_mother["yoast_isbn"];
+					}
+                                        if(array_key_exists("yoast_mpn", $custom_attributes_mother)){
+                                                $product_data["yoast_mpn"] = $custom_attributes_mother["yoast_mpn"];
+                                        }
+                                }
 
                         	foreach($custom_attributes_mother as $custom_kk_m => $custom_value_m){
 
@@ -5749,10 +5858,6 @@ class WooSEA_Get_Products {
                                                                 }
                                                                 break;
 							case($pr_array['condition'] = "="):
-								//if(($pr_array['attribute'] == "raw_categories") AND ($pr_array['than'] == "include_only")){
-								//	$allowed = 1;
-								//	error_log("Ja hier 1");
-								//} elseif (($pr_array['criteria'] == "$pd_value") AND ($pr_array['than'] == "exclude")){
 								if (($pr_array['criteria'] == "$pd_value") AND ($pr_array['than'] == "exclude")){
 									$allowed = 0;
 								} elseif (($pr_array['criteria'] != "$pd_value") && ($pr_array['than'] == "include_only")){

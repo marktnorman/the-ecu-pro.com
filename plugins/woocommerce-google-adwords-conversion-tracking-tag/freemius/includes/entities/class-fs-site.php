@@ -139,6 +139,9 @@
          * @return bool
          */
         static function is_localhost_by_address( $url ) {
+
+            error_log('url: ' . $url);
+            
             if ( false !== strpos( $url, '127.0.0.1' ) ||
                  false !== strpos( $url, 'localhost' )
             ) {

@@ -74,17 +74,19 @@ class Debug_info
         $order_received_page_url = wc_get_checkout_url() . ltrim(wc_get_endpoint_url('order-received'), '/');
         $html                    .= 'is_order_received_page(): ' . $order_received_page_url . PHP_EOL . PHP_EOL;
 
-        $last_order_url = $this->environment_check->get_last_order_url();
-        $html           .= 'Last order URL: ' . $last_order_url . '&nodedupe' . PHP_EOL;
+        if($this->environment_check->does_one_order_exist()){
+            $last_order_url = $this->environment_check->get_last_order_url();
+            $html           .= 'Last order URL: ' . $last_order_url . '&nodedupe' . PHP_EOL;
 
-        $last_order_url_contains_order_received_page_url = strpos($this->environment_check->get_last_order_url(), $order_received_page_url) !== false ? 'yes' : 'no';
-        $html                                            .= 'Order received page uses proper is_order_received() url: ' . $last_order_url_contains_order_received_page_url . PHP_EOL;
+            $last_order_url_contains_order_received_page_url = strpos($this->environment_check->get_last_order_url(), $order_received_page_url) !== false ? 'yes' : 'no';
+            $html                                            .= 'Order received page uses proper is_order_received() url: ' . $last_order_url_contains_order_received_page_url . PHP_EOL;
 
-        $purchase_confirmation_page_redirect = $this->environment_check->does_url_redirect($last_order_url) ? 'yes' : 'no';
-        $html                                .= $this->show_warning($this->environment_check->does_url_redirect($last_order_url)) . 'Purchase confirmation page redirect: ' . $purchase_confirmation_page_redirect . PHP_EOL;
+            $purchase_confirmation_page_redirect = $this->environment_check->does_url_redirect($last_order_url) ? 'yes' : 'no';
+            $html                                .= $this->show_warning($this->environment_check->does_url_redirect($last_order_url)) . 'Purchase confirmation page redirect: ' . $purchase_confirmation_page_redirect . PHP_EOL;
 
-        if ($this->environment_check->does_url_redirect($last_order_url)) {
-            $html .= 'Redirect URL: ' . $this->environment_check->get_redirect_url($this->environment_check->get_last_order_url()) . PHP_EOL;
+            if ($this->environment_check->does_url_redirect($last_order_url)) {
+                $html .= 'Redirect URL: ' . $this->environment_check->get_redirect_url($this->environment_check->get_last_order_url()) . PHP_EOL;
+            }
         }
 
 //        $html                                .= 'wc_get_page_permalink(\'checkout\'): ' . wc_get_page_permalink('checkout') . PHP_EOL;

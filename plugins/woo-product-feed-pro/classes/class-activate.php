@@ -99,7 +99,14 @@ class WooSEA_Activation {
 					"fields" => "snapchat",
 					"taxonomy" => "google_shopping",
 					"utm_source" => "snapchat",
-                        		"type" => "Advertising" ),
+					"type" => "Advertising" ),
+				"Vivino" => array (
+                        		"channel_hash" => md5("Vivino"),
+					"name" => "Vivino",
+					"fields" => "vivino",
+					"taxonomy" => "none",
+					"utm_source" => "Vivino",
+					"type" => "Advertising" ),
         		),
 			"Custom Feed" => array (
 				"Custom Feed" => array (
@@ -439,8 +446,8 @@ class WooSEA_Activation {
       	   			"Prisjakt" => array (
                         		"channel_hash" => md5("Prisjakt"),
                         		"name" => "Prisjakt",
-					"fields" => "customfeed",
-					"taxonomy" => "none",
+					"fields" => "google_shopping",
+					"taxonomy" => "google_shopping",
 					"utm_source" => "Prisjakt",
                         		"type" => "Comparison shopping engine" ),
    				"Hintaseuranta" => array (
@@ -1240,8 +1247,8 @@ class WooSEA_Activation {
                 		"Prisjakt" => array (
                         		"channel_hash" => md5("Prisjakt.no"),
                         		"name" => "Prisjakt.no",
-					"fields" => "customfeed",
-					"taxonomy" => "none",
+					"fields" => "google_shopping",
+					"taxonomy" => "google_shopping",
 					"utm_source" => "Prisjakt.no",
                         		"type" => "Comparison shopping engine" ),
  			),
@@ -1468,8 +1475,8 @@ class WooSEA_Activation {
 				"Prisjakt" => array (
                         		"channel_hash" => md5("Prisjakt.se"),
                         		"name" => "Prisjakt.se",
-					"fields" => "customfeed",
-					"taxonomy" => "none",
+					"fields" => "google_shopping",
+					"taxonomy" => "google_shopping",
 					"utm_source" => "Pricerunner.se",
                         		"type" => "Comparison shopping engine" ),
 			), 

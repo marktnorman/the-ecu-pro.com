@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: Product Feed, Google Shopping, Google Shopping Feed, WooCommerce Product Feed, WooCommerce Product Feed PRO, Bing Shopping, Bing product feed, Bing remarking, Google Merchant Feed, Google DRM Feed, Google Dynamic Remarketing Feed, Facebook feed, Google feed, Bing feed, Facebook Product Feed, Facebook pixel, Facebook Conversion API, Facebook CAPI,Facebook Dynamic remarketing, Data Feed, WooCommerce Feed, XML product feed, CSV product feed, TSV, TXT product feed, comparison shopping engines, comparison shopping websites, vergelijk.nl, vergelijk.be, vertaa.fi, beslist.nl, kieskeurig.nl, bol.com, raketten, pricerunner, pricegrabber, Buy, leGuide, Kelkoo, Twenga, Yandex, Etsy, Dealtime, Shopzilla, Billiger, Google Product Review feed
 Requires at least: 4.5
 Tested up to: 5.8
-Stable tag: 10.4.6
+Stable tag: 10.5.1
 
 == Description ==
 
@@ -171,6 +171,7 @@ Some of the above mentioned feature can only be used by users who upgraded to th
 * Bing Shopping
 * Bing Shopping Promotions
 * Pinterest
+* <a href="https://help.vivino.com/s/article/How-do-I-create-my-product-feed-XML?language=en_US" target="_blank">Vivino</a>
 * <a href="https://businesshelp.snapchat.com/en-US/a/product-catalog-specs" target="_blank">Snapchat</a>
 * <a href="https://yandex.com/support/market-tech-requirements/index.html" target="_blank">Yandex</a>
 * ShopMania
@@ -333,6 +334,18 @@ Questions left or unanswered? Please do not hesitate to contact us at support@ad
 8. Set the basic configurations for your product feed
 
 === Changelog ===
+
+= 10.5.1 (2021-08-18) =
+* Fixed an issue where the visibility attribute did not return anything
+
+= 10.5.0 (2021-08-11) =
+* Added the Vivino template to the plugin
+
+= 10.4.9 (2021-08-10) =
+* Added support for Prisjakt (Sweden, Norway, Finland) feeds. The Google Shopping feed requirements are being used for it as of this release.
+
+= 10.4.8 (2021-08-10) =
+* Added support for the Yoast SEO WooCommerce unique identifiers GTIN's, ISBN, MPN so they can be used for feeds.
 
 = 10.4.7 (2021-07-28) =
 * Checked for compatibility with WP 5.8
@@ -3342,6 +3355,18 @@ Questions left or unanswered? Please do not hesitate to contact us at support@ad
 * Strip HTML from the (short) description attributes
 
 == Upgrade Notice ==
+
+= 10.5.1 =
+Fixed an issue where the visibility attribute did not return anything
+
+= 10.5.0 =
+Added the Vivino template to the plugin
+
+= 10.4.9 =
+Added support for Prisjakt (Sweden, Norway, Finland) feeds. The Google Shopping feed requirements are being used for it as of this release.
+
+= 10.4.8 =
+Added support for the Yoast SEO WooCommerce unique identifiers GTIN's, ISBN, MPN so they can be used for feeds.
 
 = 10.4.7 =
 Checked for compatibility with WP 5.8

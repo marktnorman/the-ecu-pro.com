@@ -1,3 +1,12 @@
+= 8.4.90 (2021-08-10) =
+* Add EU prefix to scripts domains for EU portals
+
+= 8.4.60 (2021-08-05) =
+* Added development backdoor for the new odyssey signup flow
+
+= 8.4.33 (2021-07-30) =
+* Check refresh token exists before attempting to make the refresh token API call.
+
 = 8.4.0 (2021-07-23) =
 * New portals created in the EU now have their data kept in EU datacentres.
 * Ungated the OAuth connection flow for all users.
@@ -396,17 +405,4 @@
 * Improve performances
 * Remove dependencies from HubSpot's CDN
 * Update license
-
-= 7.3.2 (2019-04-23) =
-* Move assets to /assets folder
-* New settings page
-* Improve forms page loading time
-
-= 7.3.0 (2019-04-16) =
-* Drop support for PHP<5.6
-* Drop support for WP<4
-* Removed hubspot from admin top bar
-
-= 7.3.1 (2019-04-16) =
-* Fix missing assets
 

@@ -226,4 +226,79 @@ trait Trait_Product
     {
         return apply_filters('wooptpm_order_items', $order->get_items(), $order);
     }
+
+    public function get_product_data_layer_script($product, $set_position = true, $meta_tag = false): string
+    {
+        if (!is_object($product)) {
+
+//            $this->log_problematic_product_id();
+            wc_get_logger()->debug('get_product_data_layer_script received an invalid product', ['source' => 'wooptpm']);
+
+            return '';
+        }
+
+        $data = $this->get_product_details_for_datalayer($product);
+
+        // if placed in <head> it must be a <meta> tag else, it can be an <input> tag
+        $tag = $meta_tag ? "meta" : "input";
+
+        $html = "
+            <$tag type='hidden' class='wooptpmProductId' data-id='" . $product->get_id() . "'>
+            <script type=\"text/javascript\" data-cfasync=\"false\">
+                window.wooptpmDataLayer.products = window.wooptpmDataLayer.products || {};
+                window.wooptpmDataLayer.products[" . $product->get_id() . "] = " . json_encode($data) . ";";
+
+        if ($set_position === true) {
+
+            $html .= "
+                window.wooptpmDataLayer.products[{$product->get_id()}]['position'] = window.wooptpmDataLayer.position++;";
+        }
+
+        $html .= "</script>";
+
+        return $html;
+    }
+
+    public function get_product_details_for_datalayer($product): array
+    {
+        global $woocommerce_wpml;
+
+        $dyn_r_ids = $this->get_dyn_r_ids($product);
+
+        if ((new Environment_Check())->is_wpml_woocommerce_multi_currency_active()) {
+            $price = $woocommerce_wpml->multi_currency->prices->get_product_price_in_currency($product->get_id(), get_woocommerce_currency());
+        } else {
+            $price = $product->get_price();
+        }
+
+        $product_details = [
+            'id'          => (string)$product->get_id(),
+            'sku'         => (string)$product->get_sku(),
+            'name'        => (string)$product->get_name(),
+            'price'       => (float)$price,
+            'brand'       => $this->get_brand_name($product->get_id()),
+            'category'    => $this->get_product_category($product->get_id()),
+            'quantity'    => 1,
+            'dyn_r_ids'   => $dyn_r_ids,
+            'isVariable'  => $product->get_type() == 'variable',
+            'isVariation' => false,
+        ];
+
+        if ($product->get_type() == 'variation') {
+
+            $parent_product = wc_get_product($product->get_parent_id());
+            if ($parent_product) {
+                $product_details['name']               = $parent_product->get_name();
+                $product_details['parentId_dyn_r_ids'] = $this->get_dyn_r_ids($parent_product);
+                $product_details['parentId']           = $parent_product->get_id();
+            } else {
+                wc_get_logger()->debug('Variation ' . $product->get_id() . ' doesn\'t link to a valid parent product.', ['source' => 'wooptpm']);
+            }
+
+            $product_details['isVariation'] = true;
+            $product_details['variant']     = $this->get_formatted_variant_text($product);
+        }
+
+        return $product_details;
+    }
 }

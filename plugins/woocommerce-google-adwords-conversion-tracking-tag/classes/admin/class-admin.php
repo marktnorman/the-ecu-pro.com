@@ -39,7 +39,7 @@ class Admin
     
     public function my_after_purchase_js( $js_function ) : string
     {
-        return "function ( response ) {\n\n            let\n                isTrial = (null != response.purchase.trial_ends),\n                isSubscription = (null != response.purchase.initial_amount),\n                total = isTrial ? 0 : (isSubscription ? response.purchase.initial_amount : response.purchase.gross).toString(),\n                productName = 'WooCommerce Pixel Manager',\n                // storeUrl = 'https://woopt.com',\n                storeName = 'woopt WooCommerce Pixel Manager';\n            \n            window.dataLayer = window.dataLayer || [];\n\n            function gtag() {\n                dataLayer.push(arguments);\n            }\n    \n            gtag('js', new Date());            \n    \n            gtag('config', 'UA-39746956-10', {'anonymize_ip':'true'});\n            gtag('config', 'G-LWRCPMQS9T');\n            gtag('config', 'AW-406204436');\n            \n            gtag('event', 'purchase', {\n                'send_to':['UA-39746956-10', 'G-LWRCPMQS9T'],\n                'transaction_id':response.purchase.id.toString(),\n                'currency':'USD',\n                'discount':0,\n                'items':[{\n                    'id':response.purchase.plan_id.toString(),\n                    'quantity':1,\n                    'price':total,\n                    'name':productName,\n                    'category': 'Plugin',\n                }],\n                'affiliation': storeName,\n                'value':response.purchase.initial_amount.toString()\n            });\n            \n            gtag('event', 'conversion', {\n              'send_to': 'AW-406204436/XrUYCK3J8YoCEJTg2MEB',\n              'value': response.purchase.initial_amount.toString(),\n              'currency': 'USD',\n              'transaction_id': response.purchase.id.toString()\n            });\n            \n            !function(f,b,e,v,n,t,s)\n            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?\n            n.callMethod.apply(n,arguments):n.queue.push(arguments)};\n            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';\n            n.queue=[];t=b.createElement(e);t.async=!0;\n            t.src=v;s=b.getElementsByTagName(e)[0];\n            s.parentNode.insertBefore(t,s)}(window, document,'script',\n            'https://connect.facebook.net/en_US/fbevents.js');\n            fbq('init', '257839909406661');\n            fbq('track', 'PageView');\n            \n            fbq('track', 'Purchase', {\n                currency: 'USD',\n                value: total\n            });\n\n        }";
+        return "function ( response ) {\n\n            let\n                isTrial = (null != response.purchase.trial_ends),\n                isSubscription = (null != response.purchase.initial_amount),\n                total = isTrial ? 0 : (isSubscription ? response.purchase.initial_amount : response.purchase.gross).toString(),\n                productName = 'WooCommerce Pixel Manager',\n                // storeUrl = 'https://woopt.com',\n                storeName = 'woopt WooCommerce Pixel Manager';\n            \n            window.dataLayer = window.dataLayer || [];\n\n            function gtag() {\n                dataLayer.push(arguments);\n            }\n    \n            gtag('js', new Date());            \n    \n            gtag('config', 'UA-39746956-10', {'anonymize_ip':'true'});\n            gtag('config', 'G-LWRCPMQS9T');\n            gtag('config', 'AW-406204436');\n            \n            gtag('event', 'purchase', {\n                'send_to':['UA-39746956-10', 'G-LWRCPMQS9T'],\n                'transaction_id':response.purchase.id.toString(),\n                'currency':'USD',\n                'discount':0,\n                'items':[{\n                    'id':response.purchase.plan_id.toString(),\n                    'quantity':1,\n                    'price':total,\n                    'name':productName,\n                    'category': 'Plugin',\n                }],\n                'affiliation': storeName,\n                'value':response.purchase.initial_amount.toString()\n            });\n            \n            gtag('event', 'conversion', {\n              'send_to': 'AW-406204436/XrUYCK3J8YoCEJTg2MEB',\n              'value': response.purchase.initial_amount.toString(),\n              'currency': 'USD',\n              'transaction_id': response.purchase.id.toString()\n            });\n            \n            !function(f,b,e,v,n,t,s)\n            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?\n            n.callMethod.apply(n,arguments):n.queue.push(arguments)};\n            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';\n            n.queue=[];t=b.createElement(e);t.async=!0;\n            t.src=v;s=b.getElementsByTagName(e)[0];\n            s.parentNode.insertBefore(t,s)}(window, document,'script',\n            'https://connect.facebook.net/en_US/fbevents.js');\n            fbq('init', '257839909406661');\n            fbq('track', 'PageView');\n            \n            fbq('track', 'Purchase', {\n                currency: 'USD',\n                value: total\n            });\n        }";
     }
     
     public function my_checkout_enrich( $html ) : string
@@ -439,10 +439,10 @@ class Admin
                 'wgact_plugin_options_page',
                 $section_ids['settings_name']
             );
-            // add Google Ads enhanced conversions
+            // add Google Ads Enhanced Conversions
             add_settings_field(
                 'wooptpm_setting_google_ads_enhanced_conversions',
-                esc_html__( 'Google Ads Enhanced Conversions', 'woocommerce-google-adwords-conversion-tracking-tag' ) . $this->html_beta(),
+                esc_html__( 'Google Ads Enhanced Conversions', 'woocommerce-google-adwords-conversion-tracking-tag' ),
                 [ $this, 'wooptpm_setting_html_google_ads_enhanced_conversions' ],
                 'wgact_plugin_options_page',
                 $section_ids['settings_name']
@@ -941,7 +941,7 @@ class Admin
     {
         echo  "<input id='wgact_plugin_analytics_ua_property_id' name='wgact_plugin_options[google][analytics][universal][property_id]' size='40' type='text' value='{$this->options['google']['analytics']['universal']['property_id']}' />" ;
         echo  $this->get_status_icon( $this->options['google']['analytics']['universal']['property_id'] ) ;
-        //        echo $this->get_documentation_html('/wgact/#/plugin-configuration?id=configure-the-plugin');
+        echo  $this->get_documentation_html( '/wgact/?utm_source=woocommerce-plugin&utm_medium=documentation-link&utm_campaign=woopt-pixel-manager-docs&utm_content=google-ads-conversion-id#/pixels/google-analytics-ua' ) ;
         echo  '<br><br>' ;
         esc_html_e( 'The Google Analytics Universal property ID looks like this:', 'woocommerce-google-adwords-conversion-tracking-tag' );
         echo  '&nbsp;<i>UA-12345678-1</i>' ;
@@ -951,7 +951,7 @@ class Admin
     {
         echo  "<input id='wgact_plugin_analytics_4_measurement_id' name='wgact_plugin_options[google][analytics][ga4][measurement_id]' size='40' type='text' value='{$this->options['google']['analytics']['ga4']['measurement_id']}' />" ;
         echo  $this->get_status_icon( $this->options['google']['analytics']['ga4']['measurement_id'] ) ;
-        //        echo $this->get_documentation_html('/wgact/#/plugin-configuration?id=configure-the-plugin');
+        echo  $this->get_documentation_html( '/wgact/?utm_source=woocommerce-plugin&utm_medium=documentation-link&utm_campaign=woopt-pixel-manager-docs&utm_content=google-ads-conversion-id#/pixels/google-analytics-4' ) ;
         echo  '<br><br>' ;
         esc_html_e( 'The Google Analytics 4 measurement ID looks like this:', 'woocommerce-google-adwords-conversion-tracking-tag' );
         echo  '&nbsp;<i>G-R912ZZ1MHH0</i>' ;
@@ -989,6 +989,7 @@ class Admin
         echo  "<input id='wgact_plugin_google_optimize_container_id' name='wgact_plugin_options[google][optimize][container_id]' size='40' type='text' value='{$this->options['google']['optimize']['container_id']}' />" ;
         echo  $this->get_status_icon( $this->options['google']['optimize']['container_id'] ) ;
         //        echo $this->get_documentation_html('/wgact/#/plugin-configuration?id=configure-the-plugin');
+        echo  $this->get_documentation_html( '/wgact/?utm_source=woocommerce-plugin&utm_medium=documentation-link&utm_campaign=woopt-pixel-manager-docs&utm_content=google-ads-conversion-id#/pixels/google-optimize' ) ;
         echo  '<br><br>' ;
         esc_html_e( 'The Google Optimize container ID looks like this:', 'woocommerce-google-adwords-conversion-tracking-tag' );
         echo  '&nbsp;<i>GTM-WMAB1BM</i>' ;
@@ -1370,11 +1371,11 @@ class Admin
         ?>
             />
             <?php 
-        esc_html_e( 'Enable Google Ads enhanced conversions', 'woocommerce-google-adwords-conversion-tracking-tag' );
+        esc_html_e( 'Enable Google Ads Enhanced Conversions', 'woocommerce-google-adwords-conversion-tracking-tag' );
         ?>
         </label>
         <?php 
-        echo  $this->get_status_icon( $this->options['google']['ads']['enhanced_conversions'], $this->is_google_ads_active(), true ) ;
+        echo  $this->get_status_icon( $this->options['google']['ads']['enhanced_conversions'], $this->is_google_ads_active(), false ) ;
         echo  $this->html_pro_feature() ;
         echo  $this->get_documentation_html( '/wgact/?utm_source=woocommerce-plugin&utm_medium=documentation-link&utm_campaign=woopt-pixel-manager-docs&utm_content=google-ads-enhanced-conversions#/pixels/google-ads?id=enhanced-conversions' ) ;
         ?>

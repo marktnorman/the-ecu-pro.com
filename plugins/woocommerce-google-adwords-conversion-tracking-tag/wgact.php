@@ -6,7 +6,7 @@
  * Author:       woopt
  * Plugin URI:   https://wordpress.org/plugins/woocommerce-google-adwords-conversion-tracking-tag/
  * Author URI:   https://woopt.com
- * Version:      1.11.0
+ * Version:      1.11.2
  * License:      GPLv2 or later
  * Text Domain:  woocommerce-google-adwords-conversion-tracking-tag
  * WC requires at least: 2.6
@@ -45,7 +45,8 @@ if ( function_exists( 'wga_fs' ) ) {
             
             if ( !isset( $wga_fs ) ) {
                 // Include Freemius SDK.
-                require_once dirname( __FILE__ ) . '/freemius/start.php';
+                //                require_once dirname(__FILE__) . '/freemius/start.php';
+                require_once dirname( __FILE__ ) . '/vendor/freemius/wordpress-sdk/start.php';
                 $wga_fs = fs_dynamic_init( [
                     'navigation'      => 'tabs',
                     'id'              => '7498',
@@ -98,7 +99,7 @@ if ( function_exists( 'wga_fs' ) ) {
     define( 'WOOPTPM_DB_VERSION', '3' );
     define( 'WOOPTPM_DB_OPTIONS_NAME', 'wgact_plugin_options' );
     define( 'WOOPTPM_DB_RATINGS', 'wgact_ratings' );
-    define( 'WOOPTPM_NOTIFICATIONS', 'wgact_notifications' );
+    define( 'WOOPTPM_DB_NOTIFICATIONS_NAME', 'wgact_notifications' );
     define( 'WOOPTPM_PLUGIN_DIR_PATH', plugin_dir_url( __FILE__ ) );
     class WGACT
     {
@@ -106,18 +107,6 @@ if ( function_exists( 'wga_fs' ) ) {
         protected  $environment_check ;
         public function __construct()
         {
-            //		$options = get_option(WGACT_DB_OPTIONS_NAME);
-            //		error_log(print_r($options, true));
-            //		$options['gads']['google_business_vertical'] = 'retail';
-            //		$options['google_business_vertical'] = 'XX';
-            //		$options['woopt'] = [];
-            //		$options['woopt']['existing'] = true;
-            //		$options['db_version'] = '2';
-            //		unset($options['google']['consent_mode']['activation']);
-            //		update_option(WGACT_DB_OPTIONS_NAME, $options);
-            //        $options = get_option('wgact_options_backup');
-            //        error_log(print_r($options, true));
-            //            error_log('test');
             // check if WooCommerce is running
             // currently this is the most reliable test for single and multisite setups
             include_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -125,6 +114,10 @@ if ( function_exists( 'wga_fs' ) ) {
             if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
                 // autoloader
                 require_once 'lib/autoload.php';
+                if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
+                    require __DIR__ . '/vendor/autoload.php';
+                }
+                $this->setup_freemius_environment();
                 $this->environment_check = new Environment_Check();
                 $plugin_data = get_file_data( __FILE__, [
                     'Version' => 'Version',
@@ -169,7 +162,13 @@ if ( function_exists( 'wga_fs' ) ) {
         
         public function environment_check_admin_notices()
         {
-            $this->environment_check->check_active_off_site_payment_gateways();
+            //            if (apply_filters('wooptpm_show_admin_notifications', true))
+            //            {
+            //
+            //            }
+            if ( apply_filters( 'wooptpm_show_admin_alerts', true ) ) {
+                $this->environment_check->check_active_off_site_payment_gateways();
+            }
         }
         
         private function run_compatibility_modes()
@@ -258,6 +257,34 @@ if ( function_exists( 'wga_fs' ) ) {
         {
             $links[] = '<a href="' . admin_url( 'admin.php?page=wgact' ) . '">Settings</a>';
             return $links;
+        }
+        
+        protected function setup_freemius_environment()
+        {
+            wga_fs()->add_filter( 'show_trial', function () {
+                
+                if ( $this->is_development_install() ) {
+                    return false;
+                } else {
+                    return apply_filters( 'wooptpm_show_admin_trial_promo', true ) && apply_filters( 'wooptpm_show_admin_notifications', true );
+                }
+            
+            } );
+            // don't reshow trial message for 10 years
+            wga_fs()->add_filter( 'reshow_trial_after_every_n_sec', function () {
+                return 60 * 60 * 24 * 7 * 52 * 10;
+            } );
+        }
+        
+        protected function is_development_install() : bool
+        {
+            
+            if ( class_exists( 'FS_Site' ) ) {
+                return FS_Site::is_localhost_by_address( get_site_url() );
+            } else {
+                return false;
+            }
+        
         }
     
     }

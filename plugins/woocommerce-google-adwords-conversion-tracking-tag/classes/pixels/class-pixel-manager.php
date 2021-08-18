@@ -89,6 +89,8 @@ class Pixel_Manager extends Pixel_Manager_Base
         add_action( 'wp_enqueue_scripts', [ $this, 'wooptpm_front_end_scripts' ] );
         add_action( 'wp_ajax_wooptpm_get_cart_items', [ $this, 'ajax_wooptpm_get_cart_items' ] );
         add_action( 'wp_ajax_nopriv_wooptpm_get_cart_items', [ $this, 'ajax_wooptpm_get_cart_items' ] );
+        add_action( 'wp_ajax_wooptpm_get_product_ids', [ $this, 'ajax_wooptpm_get_product_ids' ] );
+        add_action( 'wp_ajax_nopriv_wooptpm_get_product_ids', [ $this, 'ajax_wooptpm_get_product_ids' ] );
         add_action( 'wp_ajax_wooptpm_purchase_pixels_fired', [ $this, 'ajax_purchase_pixels_fired_handler' ] );
         add_action( 'wp_ajax_nopriv_wooptpm_purchase_pixels_fired', [ $this, 'ajax_purchase_pixels_fired_handler' ] );
         /*
@@ -238,58 +240,6 @@ class Pixel_Manager extends Pixel_Manager_Base
         return $html . $this->get_product_data_layer_script( $product );
     }
     
-    private function get_product_data_layer_script( $product, $set_position = true, $meta_tag = false ) : string
-    {
-        global  $woocommerce_wpml ;
-        
-        if ( !is_object( $product ) ) {
-            //            $this->log_problematic_product_id();
-            wc_get_logger()->debug( 'get_product_data_layer_script received an invalid product', [
-                'source' => 'wooptpm',
-            ] );
-            return '';
-        }
-        
-        $this->dyn_r_ids = $this->get_dyn_r_ids( $product );
-        
-        if ( ( new Environment_Check() )->is_wpml_woocommerce_multi_currency_active() ) {
-            $price = $woocommerce_wpml->multi_currency->prices->get_product_price_in_currency( $product->get_id(), get_woocommerce_currency() );
-        } else {
-            $price = $product->get_price();
-        }
-        
-        $data = [
-            'id'          => (string) $product->get_id(),
-            'sku'         => (string) $product->get_sku(),
-            'name'        => (string) $product->get_name(),
-            'price'       => (double) $price,
-            'brand'       => $this->get_brand_name( $product->get_id() ),
-            'category'    => $this->get_product_category( $product->get_id() ),
-            'quantity'    => 1,
-            'dyn_r_ids'   => $this->dyn_r_ids,
-            'isVariable'  => $product->get_type() == 'variable',
-            'isVariation' => false,
-        ];
-        
-        if ( $product->get_type() == 'variation' ) {
-            $parent_product = wc_get_product( $product->get_parent_id() );
-            $data['name'] = $parent_product->get_name();
-            $data['isVariation'] = true;
-            $data['parentId'] = $parent_product->get_id();
-            $data['parentId_dyn_r_ids'] = $this->get_dyn_r_ids( $parent_product );
-            $data['variant'] = $this->get_formatted_variant_text( $product );
-        }
-        
-        // if placed in <head> it must be a <meta> tag else, it can be an <input> tag
-        $tag = ( $meta_tag ? "meta" : "input" );
-        $html = "\n            <{$tag} type='hidden' class='wooptpmProductId' data-id='" . $product->get_id() . "'>\n            <script type=\"text/javascript\" data-cfasync=\"false\">\n                window.wooptpmDataLayer.products = window.wooptpmDataLayer.products || {};\n                window.wooptpmDataLayer.products[" . $product->get_id() . "] = " . json_encode( $data ) . ";";
-        if ( $set_position === true ) {
-            $html .= "\n                window.wooptpmDataLayer.products[{$product->get_id()}]['position'] = window.wooptpmDataLayer.position++;";
-        }
-        $html .= "</script>";
-        return $html;
-    }
-    
     public function woopt_wp_footer()
     {
         if ( wga_fs()->is__premium_only() && $this->options_obj->google->analytics->eec ) {
@@ -421,10 +371,18 @@ class Pixel_Manager extends Pixel_Manager_Base
             
             if ( $product->get_type() == 'variation' ) {
                 $parent_product = wc_get_product( $product->get_parent_id() );
-                $data['cart'][$product->get_id()]['name'] = $parent_product->get_name();
+                
+                if ( $parent_product ) {
+                    $data['cart'][$product->get_id()]['name'] = $parent_product->get_name();
+                    $data['cart'][$product->get_id()]['parentId'] = (string) $parent_product->get_id();
+                    $data['cart'][$product->get_id()]['parentId_dyn_r_ids'] = $this->get_dyn_r_ids( $parent_product );
+                } else {
+                    wc_get_logger()->debug( 'Variation ' . $product->get_id() . ' doesn\'t link to a valid parent product.', [
+                        'source' => 'wooptpm',
+                    ] );
+                }
+                
                 $data['cart'][$product->get_id()]['isVariation'] = true;
-                $data['cart'][$product->get_id()]['parentId'] = (string) $parent_product->get_id();
-                $data['cart'][$product->get_id()]['parentId_dyn_r_ids'] = $this->get_dyn_r_ids( $parent_product );
                 $data['cart'][$product->get_id()]['category'] = $this->get_product_category( $product->get_parent_id() );
                 $variant_text_array = [];
                 $attributes = $product->get_attributes();
@@ -444,6 +402,35 @@ class Pixel_Manager extends Pixel_Manager_Base
         }
         //        error_log(print_r($data, true));
         wp_send_json( $data );
+    }
+    
+    public function ajax_wooptpm_get_product_ids()
+    {
+        $product_ids = $_GET['productIds'];
+        
+        if ( !$product_ids ) {
+            wp_send_json_error();
+            return;
+        }
+        
+        $products = [];
+        foreach ( $product_ids as $key => $product_id ) {
+            // validate if a valid product ID has been passed in the array
+            if ( !ctype_digit( $product_id ) ) {
+                continue;
+            }
+            $product = wc_get_product( $product_id );
+            
+            if ( !is_object( $product ) ) {
+                wc_get_logger()->debug( 'ajax_wooptpm_get_product_ids received an invalid product', [
+                    'source' => 'wooptpm',
+                ] );
+                continue;
+            }
+            
+            $products[$product_id] = $this->get_product_details_for_datalayer( $product );
+        }
+        wp_send_json( $products );
     }
     
     public function ajax_purchase_pixels_fired_handler()

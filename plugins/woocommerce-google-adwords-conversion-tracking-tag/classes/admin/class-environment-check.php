@@ -30,7 +30,7 @@ class Environment_Check
 
     public function run_incompatible_plugins_checks()
     {
-        $saved_notifications = get_option(WOOPTPM_NOTIFICATIONS);
+        $saved_notifications = get_option(WOOPTPM_DB_NOTIFICATIONS_NAME);
 
         foreach ($this->get_incompatible_plugins_list() as $plugin) {
 
@@ -91,7 +91,7 @@ class Environment_Check
 
         if ($this->is_hosting_wp_engine()) $this->flush_wp_engine_cache();         // works
 //        if ($this->is_hosting_pagely()) $this->flush_pagely_cache();               // TODO test
-//        if ($this->is_hosting_kinsta()) $this->flush_kinsta_cache();               // TODO test
+        if ($this->is_hosting_kinsta()) $this->flush_kinsta_cache();               // TODO test
 //
 //        if ($this->is_nginx_helper_active()) $this->flush_nginx_cache();           // TODO test
 
@@ -101,22 +101,10 @@ class Environment_Check
     function flush_kinsta_cache()
     {
         try {
-            $ch = curl_init();
-
-            curl_setopt($ch, CURLOPT_URL, 'https://localhost/kinsta-clear-cache-all');
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-            $response = curl_exec($ch);
-
-            if (!$response) {
-                die('Error: "' . curl_error($ch) . '" - Code: ' . curl_errno($ch));
-            }
-
-//            echo 'HTTP Status Code: ' . curl_getinfo($ch, CURLINFO_HTTP_CODE) . PHP_EOL;
-//            echo 'Response Body: ' . $response . PHP_EOL;
-
-            curl_close($ch);
+            wp_remote_get('https://localhost/kinsta-clear-cache-all', [
+                'sslverify' => false,
+                'timeout'   => 5
+            ]);
 
         } catch (\Exception $e) {
             error_log($e);
@@ -257,7 +245,7 @@ class Environment_Check
 
     public function check_active_off_site_payment_gateways()
     {
-        $wgact_notifications = get_option(WOOPTPM_NOTIFICATIONS);
+        $wgact_notifications = get_option(WOOPTPM_DB_NOTIFICATIONS_NAME);
 
         if (!is_array($wgact_notifications) || !array_key_exists('dismiss_paypal_standard_warning', $wgact_notifications) || $wgact_notifications['dismiss_paypal_standard_warning'] !== true) {
 
@@ -314,9 +302,9 @@ class Environment_Check
             }
 
             if ('dismiss_wp_rocket_javascript_concatenation_error' == $set) {
-                $wooptpm_notifications                                                     = get_option(WOOPTPM_NOTIFICATIONS);
+                $wooptpm_notifications                                                     = get_option(WOOPTPM_DB_NOTIFICATIONS_NAME);
                 $wooptpm_notifications['dismiss_wp_rocket_javascript_concatenation_error'] = true;
-                update_option(WOOPTPM_NOTIFICATIONS, $wooptpm_notifications);
+                update_option(WOOPTPM_DB_NOTIFICATIONS_NAME, $wooptpm_notifications);
             }
 
             if ('disable_litespeed_inline_js_dom_ready' == $set) {
@@ -325,20 +313,20 @@ class Environment_Check
             }
 
             if ('dismiss_litespeed_inline_js_dom_ready' == $set) {
-                $wooptpm_notifications                                                = get_option(WOOPTPM_NOTIFICATIONS);
+                $wooptpm_notifications                                                = get_option(WOOPTPM_DB_NOTIFICATIONS_NAME);
                 $wooptpm_notifications['dismiss_litespeed_inline_js_dom_ready_error'] = true;
-                update_option(WOOPTPM_NOTIFICATIONS, $wooptpm_notifications);
+                update_option(WOOPTPM_DB_NOTIFICATIONS_NAME, $wooptpm_notifications);
             }
 
             if ('dismiss_paypal_standard_warning' == $set) {
-                $wooptpm_notifications                                    = get_option(WOOPTPM_NOTIFICATIONS);
+                $wooptpm_notifications                                    = get_option(WOOPTPM_DB_NOTIFICATIONS_NAME);
                 $wooptpm_notifications['dismiss_paypal_standard_warning'] = true;
-                update_option(WOOPTPM_NOTIFICATIONS, $wooptpm_notifications);
+                update_option(WOOPTPM_DB_NOTIFICATIONS_NAME, $wooptpm_notifications);
             }
         } else if (isset($_POST['disable_warning'])) {
-            $wooptpm_notifications                            = get_option(WOOPTPM_NOTIFICATIONS);
+            $wooptpm_notifications                            = get_option(WOOPTPM_DB_NOTIFICATIONS_NAME);
             $wooptpm_notifications[$_POST['disable_warning']] = true;
-            update_option(WOOPTPM_NOTIFICATIONS, $wooptpm_notifications);
+            update_option(WOOPTPM_DB_NOTIFICATIONS_NAME, $wooptpm_notifications);
 //            error_log('warning disabled for: ' . $_POST['disable_warning']);
         }
 
@@ -347,7 +335,7 @@ class Environment_Check
 
     private function check_wp_rocket_js_concatenation()
     {
-        $wgact_notifications = get_option(WOOPTPM_NOTIFICATIONS);
+        $wgact_notifications = get_option(WOOPTPM_DB_NOTIFICATIONS_NAME);
 
         if ($this->is_wp_rocket_active() && (!is_array($wgact_notifications) || false == $wgact_notifications['dismiss_wp_rocket_javascript_concatenation_error'])) {
 
@@ -364,7 +352,7 @@ class Environment_Check
 
     private function check_litespeed_js_inline_after_dom()
     {
-        $wgact_notifications = get_option(WOOPTPM_NOTIFICATIONS);
+        $wgact_notifications = get_option(WOOPTPM_DB_NOTIFICATIONS_NAME);
 
         if ($this->is_litespeed_active() && (!is_array($wgact_notifications) || false == $wgact_notifications['dismiss_litespeed_inline_js_dom_ready_error'])) {
 
@@ -932,6 +920,19 @@ class Environment_Check
         //		echo('last order: ' . $last_order_id . PHP_EOL);
         $last_order = wc_get_order($last_order_id);
 
-        return $last_order->get_checkout_order_received_url();
+        if ($last_order) {
+            return $last_order->get_checkout_order_received_url();
+        } else {
+            return '';
+        }
+    }
+
+    public function does_one_order_exist(): bool
+    {
+        if ($this->get_last_order_id()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

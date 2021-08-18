@@ -4,7 +4,7 @@ Tags: woocommerce, google ads, google analytics, facebook pixel, conversion trac
 Requires at least: 3.7
 Tested up to: 5.8
 Requires PHP: 7.2
-Stable tag: 1.11.0
+Stable tag: 1.11.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,9 +39,9 @@ Read more about the importance of tracking accuracy over [here](https://docs.woo
 
 <strong>Highlights</strong>
 
-* Google Analytics Enhanced E-Commerce (Pro version)
 * Facebook Conversion API (CAPI) (Pro version)
 * Google Ads Enhanced Conversions (Pro version)
+* Google Analytics Enhanced E-Commerce (Pro version)
 * Precise measurement by preventing duplicate reporting effectively, excluding admins and shop managers from tracking, and not counting failed payments.
 * Collects dynamic remarketing audiences for dynamic retargeting (Google Ads, Facebook, etc.)
 * Implements the new Google Add Cart Data functionality. More info about the new feature: [add cart data to the conversion](https://support.google.com/google-ads/answer/9028254)
@@ -180,6 +180,27 @@ You can send the link to the front page of your shop too if you think it would b
 1. Settings page
 
 == Changelog ==
+
+= 1.11.2 =
+
+
+* New: Added shortcodes for Snapchat and TikTok
+* New: Saving referrer in a wooptpm cookie
+
+* Tweak: Moved Freemius to composer vendor directory
+* Tweak: Improved handler to save cookies for FB session
+* Tweak: Added fallback to get an order from the order received page in case a plugin messes with query vars
+
+
+= 1.11.1 =  05.08.2021
+
+* New: Automatic cache purge for Kinsta on plugin updates and saved settings
+* Tweak: Added safeguard in order to prevent a fatal error when coming across a variation that doesn't properly link to a parent product
+* Tweak: Added filters to suppress certain admin notifications
+* Tweak: Changed global for notifications db name
+* Tweak: Changed function declaration for varExists in order to work around a Google Closure bug
+
+* Fix: Built in a safeguard for the debug info in case no order exists yet in the shop
 
 = 1.11.0 =  26.07.2021
 
