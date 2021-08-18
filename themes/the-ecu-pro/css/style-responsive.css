@@ -425,6 +425,31 @@
 
 @media only screen and (max-width: 790px) {
 
+    .woocommerce .col2-set, .woocommerce-page .col2-set {
+        width: 100% !important;
+        display: inline-block !important;
+        vertical-align: top !important;
+    }
+
+    .woocommerce form p.form-row:nth-child(odd) {
+        margin-right: 0;
+    }
+
+    .woocommerce form .form-row.form-row-postcode {
+        margin-right: 6%;
+    }
+
+    #order_review {
+        width: 100% !important;
+    }
+
+    .woocommerce form .address-field.form-row-wide {
+        clear: none;
+        width: 47%;
+        display: inline-block;
+        margin-right: 0;
+    }
+
     .page-template-page_work_order_frm_template .zf-templateWidth, .page-template-page_work_order_dme_template .zf-templateWidth {
         width: 100% !important;
     }
