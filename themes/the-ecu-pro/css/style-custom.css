@@ -2012,12 +2012,6 @@ ul.shipping-options-container li label span.woocommerce-Price-amount {
     background-color: #d03433 !important;
 }
 
-#wc-stripe-payment-request-wrapper .single_add_to_cart_button,
-#wc-stripe-payment-request-button-separator,
-.woocommerce div.product form.cart .button {
-    display: none !important;
-}
-
 .woocommerce div.product .cta-buttons-product a.call-me-back-button {
     color: #fff !important;
     padding: 15px 30px;
@@ -2036,10 +2030,45 @@ ul.shipping-options-container li label span.woocommerce-Price-amount {
     background-position-x: 22px !important;
 }
 
+#wc-stripe-payment-request-wrapper .single_add_to_cart_button {
+    background-color: #d03433 !important;
+    padding: 10px 15px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    min-width: auto;
+    border-radius: 5px;
+    box-shadow: none;
+    font-weight: 600;
+    margin: 0 auto;
+    display: block;
+    float: right;
+    margin-top: 30px;
+    clear: both;
+}
+
+button#place_order {
+    background-color: #d03433 !important;
+    padding: 15px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    min-width: auto;
+    border-radius: 5px;
+    box-shadow: none;
+    font-weight: 600;
+    margin: 0 auto;
+    display: block;
+    float: left !important;
+}
+
+#add_payment_method #payment div.form-row, .woocommerce-cart #payment div.form-row, .woocommerce-checkout #payment div.form-row {
+    display: inline-block;
+}
+
 .woocommerce form .form-row {
     padding: 0;
     margin-bottom: 10px;
     float: none;
+    display: inline-block !important;
 }
 
 span.error-no-selection {
@@ -2047,6 +2076,10 @@ span.error-no-selection {
     color: #ff3a3a;
     display: inline-block;
     width: 100%;
+}
+
+.woocommerce form p.form-row:nth-child(odd) {
+    margin-right: 3%;
 }
 
 .hide {
@@ -2328,9 +2361,9 @@ h3#order_review_heading {
 
 .woocommerce-checkout #payment ul.payment_methods li label {
     width: 100%;
-    box-shadow: 1px 1px 36px 5px rgb(181 181 181);
-    -webkit-box-shadow: 1px 1px 36px 5px rgb(181 181 181);
-    -moz-box-shadow: 1px 1px 36px 5px rgba(181 181 181, 1);
+    box-shadow: 1px 1px 12px 5px rgb(181 181 181);
+    -webkit-box-shadow: 1px 1px 12px 5px rgb(181 181 181);
+    -moz-box-shadow: 1px 1px 12px 5px rgba(181 181 181, 1);
     border-radius: 1px;
     background: #fff;
     padding: 10px;
@@ -2359,7 +2392,7 @@ select {
 
 .woocommerce form .address-field.form-row-wide {
     clear: none;
-    width: 48.5%;
+    width: 47%;
     display: inline-block;
     margin-right: 3%;
 }
