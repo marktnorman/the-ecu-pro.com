@@ -217,14 +217,14 @@ add_action('after_setup_theme', 'theecupro_setup');
 add_action('admin_enqueue_scripts', 'child_theme_admin_styles');
 function child_theme_admin_styles()
 {
-    wp_enqueue_style('admin-styles', get_stylesheet_directory_uri() . '/css/admin-style.css', '', '5.1.8');
+    wp_enqueue_style('admin-styles', get_stylesheet_directory_uri() . '/css/admin-style.css', '', '5.1.9');
 }
 
 
 add_action('wp_enqueue_scripts', 'theecupro_enqueue_assets');
 function theecupro_enqueue_assets()
 {
-    $version = '11.1.1';
+    $version = '11.2.0';
 
     // CARRY ON
     wp_enqueue_style('theecupro-default-style', get_stylesheet_uri());
@@ -352,7 +352,7 @@ function theecupro_enqueue_assets()
         // Old DME backup
         // <iframe frameborder="0" style="height:2040px;width:99%;border:none;" src='https://forms.zohopublic.com/theecupro/form/DMERepairNeworder/formperma/5WeBn72nrEr45AnXDVHTWf7cUHi7-e_zAJe_a3gsaAQ'></iframe>
 
-        }
+    }
 
 }
 
@@ -367,7 +367,7 @@ function include_dependencies()
     require_once get_stylesheet_directory() . '/inc/functions/shipping-initiator.php';
     require_once get_stylesheet_directory() . '/inc/functions/get-checkout-total-value.php';
     require_once get_stylesheet_directory() . '/inc/functions/auto-user-auth.php';
-    require_once get_stylesheet_directory() . '/inc/functions/product-generation.php';
+    //require_once get_stylesheet_directory() . '/inc/functions/product-generation.php';
     require_once get_stylesheet_directory() . '/inc/functions/product-meta-frontend-update.php';
     require_once get_stylesheet_directory() . '/inc/functions/generate-short-description.php';
     require_once get_stylesheet_directory() . '/inc/functions/generate-bottom-description.php';
@@ -1186,56 +1186,6 @@ function wc_get_product_object_type($type)
 }
 
 /**
- * Utility function that prepare product attributes before saving
- *
- * @param $attributes
- *
- * @return array
- */
-function wc_prepare_product_attributes($attributes): array
-{
-    global $woocommerce;
-
-    $data     = array();
-    $position = 0;
-
-    foreach ($attributes as $taxonomy => $values) {
-        if (!taxonomy_exists($taxonomy)) {
-            continue;
-        }
-
-        // Get an instance of the WC_Product_Attribute Object
-        $attribute = new WC_Product_Attribute();
-
-        $term_ids = array();
-
-        // Loop through the term names
-        foreach ($values['term_names'] as $term_name) {
-            if (term_exists($term_name, $taxonomy)) // Get and set the term ID in the array from the term name
-            {
-                $term_ids[] = get_term_by('name', $term_name, $taxonomy)->term_id;
-            } else {
-                continue;
-            }
-        }
-
-        $taxonomy_id = wc_attribute_taxonomy_id_by_name($taxonomy); // Get taxonomy ID
-
-        $attribute->set_id($taxonomy_id);
-        $attribute->set_name($taxonomy);
-        $attribute->set_options($term_ids);
-        $attribute->set_position($position);
-        $attribute->set_visible($values['is_visible']);
-        $attribute->set_variation($values['for_variation']);
-
-        $data[$taxonomy] = $attribute; // Set in an array
-
-        $position++; // Increase position
-    }
-    return $data;
-}
-
-/**
  * insert_term
  *
  * @param       $term
@@ -1259,7 +1209,7 @@ function insert_term($term, $taxonomy, $args = array())
     }
 }
 
-add_filter('pre_get_posts', 'remove_variations_pre_get_posts_query');
+//add_filter('pre_get_posts', 'remove_variations_pre_get_posts_query');
 
 /**
  * @param $query
@@ -1367,7 +1317,7 @@ function dummy_checkout_woo_body_class($classes)
     return $classes;
 }
 
-add_action('wp_footer', 'redirect_after_work_order_creation');
+//add_action('wp_footer', 'redirect_after_work_order_creation');
 
 /**
  * redirect_after_work_order_creation
@@ -1401,4 +1351,33 @@ function redirect_after_work_order_creation()
         }, false);
     </script>
     <?php
+}
+
+add_filter('woocommerce_add_to_cart_validation', 'add_the_date_validation', 15, 5);
+
+/**
+ * @param $passed
+ *
+ * @return false|mixed
+ */
+function add_the_date_validation($passed)
+{
+    if (empty($_REQUEST['ecu_send_validate'])) {
+        wc_add_notice(__('Please confirm the condition below.', 'woocommerce'), 'error');
+        $passed = false;
+    }
+    return $passed;
+}
+
+
+add_filter('add_to_cart_redirect', 'redirect_to_checkout');
+
+/**
+ * @return mixed
+ */
+function redirect_to_checkout()
+{
+    global $woocommerce;
+    $checkout_url = $woocommerce->cart->get_checkout_url();
+    return $checkout_url;
 }

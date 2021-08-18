@@ -81,14 +81,16 @@ class LeadinFilters {
 	 * Apply leadin_forms_script_url filter.
 	 */
 	public static function get_leadin_forms_script_url() {
-		return apply_filters( 'leadin_forms_script_url', 'https://js.hsforms.net/forms/v2.js' );
+		$hublet_domain = self::apply_hublet( 'js' );
+		return apply_filters( 'leadin_forms_script_url', "https://$hublet_domain.hsforms.net/forms/v2.js" );
 	}
 
 	/**
 	 * Apply leadin_script_loader_domain filter.
 	 */
 	public static function get_leadin_script_loader_domain() {
-		return apply_filters( 'leadin_script_loader_domain', 'js.hs-scripts.com' );
+		$hublet_domain = self::apply_hublet( 'js' );
+		return apply_filters( 'leadin_script_loader_domain', "$hublet_domain.hs-scripts.com" );
 	}
 
 	/**

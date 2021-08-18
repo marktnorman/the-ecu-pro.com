@@ -604,6 +604,15 @@
 
         });
 
+        // $(document).on('click', '.single_add_to_cart_button', function (e) {
+        //     e.preventDefault();
+        //
+        //     if ($("#validation-checkbox").prop('checked') != true) {
+        //         $("<span class='error-no-selection'>This field is required</span>").insertAfter(".validation-checkbox-label");
+        //         return false;
+        //     }
+        // });
+
         $(document).on('click', '.button-container-helper, button.filter-button', function (e) {
             e.preventDefault();
             if ($('#ecu-mmy-filter-home-wrapper.ecu-mmy-filter-home').hasClass('open')) {

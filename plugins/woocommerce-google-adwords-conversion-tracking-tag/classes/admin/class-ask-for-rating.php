@@ -8,7 +8,6 @@ if (!defined('ABSPATH')) {
 
 class Ask_For_Rating
 {
-
     private $option_name = WOOPTPM_DB_RATINGS;
 
     public function __construct()
@@ -69,7 +68,7 @@ class Ask_For_Rating
 
     public function ask_for_rating_notices_if_not_asked_before()
     {
-        if (current_user_can('administrator')) {
+        if (current_user_can('administrator') && apply_filters('wooptpm_show_admin_notifications', true)) {
 
             $wgact_ratings = get_option($this->option_name);
 
@@ -174,8 +173,6 @@ class Ask_For_Rating
                     </li>
                 </ul>
             </div>
-
-
 
 
         </div>

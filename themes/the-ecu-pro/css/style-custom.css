@@ -1959,10 +1959,6 @@ ul.shipping-options-container li label span.woocommerce-Price-amount {
     display: none !important;
 }
 
-.woocommerce div.product form.cart .single_variation_wrap .woocommerce-variation-add-to-cart {
-    display: none;
-}
-
 .woocommerce div.product form.cart .variations select {
     max-width: none;
     min-width: 75%;
@@ -2002,18 +1998,18 @@ ul.shipping-options-container li label span.woocommerce-Price-amount {
     text-align: left;
 }
 
-.woocommerce div.product form.cart .button {
-    display: none !important;
-}
-
 .woocommerce div.product .cta-buttons-product {
     max-width: 100%;
     width: 100%;
-    display: inline-block;
+    display: none !important;
     margin: 0px auto 20px auto;
     position: relative;
     z-index: 9997;
     padding: 0 20px;
+}
+
+.woocommerce-store-notice, p.demo_store {
+    background-color: #d03433 !important;
 }
 
 .woocommerce div.product .cta-buttons-product a.call-me-back-button {
@@ -2034,17 +2030,57 @@ ul.shipping-options-container li label span.woocommerce-Price-amount {
     background-position-x: 22px !important;
 }
 
+#wc-stripe-payment-request-wrapper .single_add_to_cart_button {
+    background-color: #d03433 !important;
+    padding: 10px 15px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    min-width: auto;
+    border-radius: 5px;
+    box-shadow: none;
+    font-weight: 600;
+    margin: 0 auto;
+    display: block;
+    float: right;
+    margin-top: 30px;
+    clear: both;
+}
+
+button#place_order {
+    background-color: #d03433 !important;
+    padding: 15px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    min-width: auto;
+    border-radius: 5px;
+    box-shadow: none;
+    font-weight: 600;
+    margin: 0 auto;
+    display: block;
+    float: left !important;
+}
+
+#add_payment_method #payment div.form-row, .woocommerce-cart #payment div.form-row, .woocommerce-checkout #payment div.form-row {
+    display: inline-block;
+}
+
 .woocommerce form .form-row {
     padding: 0;
     margin-bottom: 10px;
     float: none;
+    display: inline-block !important;
 }
 
 span.error-no-selection {
-    font-size: 14px;
+    font-size: 15px;
     color: #ff3a3a;
     display: inline-block;
     width: 100%;
+    margin-top: 20px;
+}
+
+.woocommerce form p.form-row:nth-child(odd) {
+    margin-right: 3%;
 }
 
 .hide {
@@ -2117,6 +2153,22 @@ h3#order_review_heading {
     margin: 15px 0 10px 0;
 }
 
+.woocommerce div.product form.cart .button {
+    background-color: #d03433 !important;
+    padding: 10px 15px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    min-width: auto;
+    border-radius: 5px;
+    box-shadow: none;
+    font-weight: 600;
+    margin: 0 auto;
+    display: block;
+    float: right !important;
+    clear: both;
+    margin-top: 30px;
+}
+
 .woocommerce-account .woocommerce .col2-set .col-1 {
     float: left;
     width: 48%;
@@ -2130,15 +2182,20 @@ h3#order_review_heading {
     width: 48.5%;
     display: inline-block;
     margin-right: 3%;
+    vertical-align: top;
+}
+
+.woocommerce .col2-set, .woocommerce-page .col2-set {
+    width: 47% !important;
+    display: inline-block !important;
+    vertical-align: top !important;
 }
 
 #order_review {
     padding: 0 15px;
-    margin: 40px 0;
-}
-
-.woocommerce #payment #place_order, .woocommerce-page #payment #place_order {
-    display: none !important;
+    margin: 0px 0;
+    width: 47%;
+    display: inline-block;
 }
 
 .woocommerce div.product .form-row.form-row-last {
@@ -2330,9 +2387,9 @@ h3#order_review_heading {
 
 .woocommerce-checkout #payment ul.payment_methods li label {
     width: 100%;
-    box-shadow: 1px 1px 36px 5px rgb(181 181 181);
-    -webkit-box-shadow: 1px 1px 36px 5px rgb(181 181 181);
-    -moz-box-shadow: 1px 1px 36px 5px rgba(181 181 181, 1);
+    box-shadow: 1px 1px 12px 5px rgb(181 181 181);
+    -webkit-box-shadow: 1px 1px 12px 5px rgb(181 181 181);
+    -moz-box-shadow: 1px 1px 12px 5px rgba(181 181 181, 1);
     border-radius: 1px;
     background: #fff;
     padding: 10px;
@@ -2361,7 +2418,7 @@ select {
 
 .woocommerce form .address-field.form-row-wide {
     clear: none;
-    width: 48.5%;
+    width: 47%;
     display: inline-block;
     margin-right: 3%;
 }
@@ -3886,14 +3943,6 @@ a.ecu-repair-request:hover {
     padding-bottom: 0px !important;
     padding-left: 0px !important;
     background-color: #0188cc !important;
-}
-
-#wc-stripe-payment-request-wrapper {
-    display: none !important;
-}
-
-#wc-stripe-payment-request-button-separator {
-    display: none !important;
 }
 
 #mini-cart .cart_list {
@@ -5623,7 +5672,7 @@ form .field-group label.focussed {
 form .field-group input[type="text"],
 form .field-group input[type="email"],
 form .field-group input[type="tel"],
-form .field-group select{
+form .field-group select {
     outline: none;
     box-shadow: none;
     text-align: left;

@@ -19,6 +19,14 @@ use Leadin\admin\Impact;
  */
 class AdminConstants {
 
+
+	/**
+	 * Development backdoor to enable the odyssey signup flow
+	 */
+	private static function is_odyssey_enabled() {
+		return ! empty( get_option( 'hsdev_odyssey_enabled' ) );
+	}
+
 	/**
 	 * Return utm_campaign to add to the signup link.
 	 */
@@ -124,6 +132,10 @@ class AdminConstants {
 
 		if ( ! Connection::is_connected() ) {
 			$hubspot_config['oauth'] = true;
+
+			if ( self::is_odyssey_enabled() ) {
+				$hubspot_config['enableOdyssey'] = true;
+			}
 
 			$signup_params  = self::get_signup_query_params_array();
 			$hubspot_config = array_merge( $hubspot_config, $signup_params, Impact::get_params() );

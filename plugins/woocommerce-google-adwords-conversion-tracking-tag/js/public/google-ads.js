@@ -1,5 +1,5 @@
 if (typeof varExists !== "function") {
-    function varExists(varName) {
+    varExists = function(varName) {
         return new Promise(function (resolve, reject) {
             (function waitForJQuery() {
                 if (typeof window[varName] !== 'undefined') return resolve();
@@ -29,6 +29,8 @@ varExists('jQuery').then(function () {
 
                 // console.log('firing google view_item_list event');
                 // console.log(product);
+
+                // console.log('send to: ' + wooptpmDataLayer.pixels.google.ads.conversionIds);
 
                 gtag('event', 'view_item_list', {
                     send_to: wooptpmDataLayer.pixels.google.ads.conversionIds,
