@@ -2152,6 +2152,22 @@ h3#order_review_heading {
     margin: 15px 0 10px 0;
 }
 
+.woocommerce div.product form.cart .button {
+    background-color: #d03433 !important;
+    padding: 10px 15px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    min-width: auto;
+    border-radius: 5px;
+    box-shadow: none;
+    font-weight: 600;
+    margin: 0 auto;
+    display: block;
+    float: right !important;
+    clear: both;
+    margin-top: 30px;
+}
+
 .woocommerce-account .woocommerce .col2-set .col-1 {
     float: left;
     width: 48%;
@@ -2165,11 +2181,20 @@ h3#order_review_heading {
     width: 48.5%;
     display: inline-block;
     margin-right: 3%;
+    vertical-align: top;
+}
+
+.woocommerce .col2-set, .woocommerce-page .col2-set {
+    width: 47% !important;
+    display: inline-block !important;
+    vertical-align: top !important;
 }
 
 #order_review {
     padding: 0 15px;
-    margin: 40px 0;
+    margin: 0px 0;
+    width: 47%;
+    display: inline-block;
 }
 
 .woocommerce div.product .form-row.form-row-last {
