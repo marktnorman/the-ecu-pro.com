@@ -1186,56 +1186,6 @@ function wc_get_product_object_type($type)
 }
 
 /**
- * Utility function that prepare product attributes before saving
- *
- * @param $attributes
- *
- * @return array
- */
-function wc_prepare_product_attributes($attributes): array
-{
-    global $woocommerce;
-
-    $data     = array();
-    $position = 0;
-
-    foreach ($attributes as $taxonomy => $values) {
-        if (!taxonomy_exists($taxonomy)) {
-            continue;
-        }
-
-        // Get an instance of the WC_Product_Attribute Object
-        $attribute = new WC_Product_Attribute();
-
-        $term_ids = array();
-
-        // Loop through the term names
-        foreach ($values['term_names'] as $term_name) {
-            if (term_exists($term_name, $taxonomy)) // Get and set the term ID in the array from the term name
-            {
-                $term_ids[] = get_term_by('name', $term_name, $taxonomy)->term_id;
-            } else {
-                continue;
-            }
-        }
-
-        $taxonomy_id = wc_attribute_taxonomy_id_by_name($taxonomy); // Get taxonomy ID
-
-        $attribute->set_id($taxonomy_id);
-        $attribute->set_name($taxonomy);
-        $attribute->set_options($term_ids);
-        $attribute->set_position($position);
-        $attribute->set_visible($values['is_visible']);
-        $attribute->set_variation($values['for_variation']);
-
-        $data[$taxonomy] = $attribute; // Set in an array
-
-        $position++; // Increase position
-    }
-    return $data;
-}
-
-/**
  * insert_term
  *
  * @param       $term
@@ -1259,7 +1209,7 @@ function insert_term($term, $taxonomy, $args = array())
     }
 }
 
-add_filter('pre_get_posts', 'remove_variations_pre_get_posts_query');
+//add_filter('pre_get_posts', 'remove_variations_pre_get_posts_query');
 
 /**
  * @param $query
