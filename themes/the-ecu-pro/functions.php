@@ -1209,14 +1209,14 @@ function insert_term($term, $taxonomy, $args = array())
     }
 }
 
-//add_filter('pre_get_posts', 'remove_variations_pre_get_posts_query');
+add_filter('pre_get_posts', 'remove_variations_pre_get_posts_query');
 
 /**
  * @param $query
  */
 function remove_variations_pre_get_posts_query($query)
 {
-    if (!is_admin() && $query->is_main_query()) {
+    if (is_archive() && $query->is_main_query()) {
         // Not a query for an admin page.
         // It's the main query for a front end page of your site.
 
