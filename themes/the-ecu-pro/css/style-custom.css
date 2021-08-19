@@ -1660,18 +1660,15 @@ body.woocommerce-order-received .main-content div.woocommerce h2 {
 }
 
 .entry-summary .tabs {
-    display: block;
-    display: -webkit-flex;
-    display: -moz-flex;
     display: flex;
     -webkit-flex-wrap: wrap;
     -moz-flex-wrap: wrap;
     flex-wrap: wrap;
     margin: 0;
     overflow: hidden;
-    box-shadow: 1px 1px 36px 5px rgb(181 181 181);
-    -webkit-box-shadow: 1px 1px 36px 5px rgb(181 181 181);
-    -moz-box-shadow: 1px 1px 36px 5px rgba(181 181 181, 1);
+    box-shadow: 1px 1px 36px 5px rgb(181, 181, 181) !important;
+    -webkit-box-shadow: 1px 1px 36px 5px rgb(181, 181, 181) !important;
+    -moz-box-shadow: 1px 1px 36px 5px rgba(181, 181, 181, 1) !important;
     border-radius: 6px;
     margin-top: 0px;
 }
@@ -2510,9 +2507,9 @@ input[type="text"]::placeholder {
     overflow: visible;
     position: relative;
     margin: 0 auto 60px auto;
-    box-shadow: 0px 4px 12px -7px rgb(181 181 181);
-    -webkit-box-shadow: 0px 4px 12px -7px rgb(181 181 181);
-    -moz-box-shadow: 0px 4px 12px -7px rgba(181 181 181, 1);
+    box-shadow: 0px 4px 12px -7px rgb(181, 181, 181);
+    -webkit-box-shadow: 0px 4px 12px -7px rgb(181, 181, 181);
+    -moz-box-shadow: 0px 4px 12px -7px rgba(181, 181, 181, 1);
     box-sizing: border-box;
 }
 
@@ -2522,9 +2519,9 @@ input[type="text"]::placeholder {
 }
 
 .woocommerce div.product .woocommerce-tabs ul.tabs li.active {
-    box-shadow: 1px 1px 36px 5px rgb(181 181 181);
-    -webkit-box-shadow: 1px 1px 36px 5px rgb(181 181 181);
-    -moz-box-shadow: 1px 1px 36px 5px rgba(181 181 181, 1);
+    box-shadow: 1px 1px 36px 5px rgb(181, 181, 181);
+    -webkit-box-shadow: 1px 1px 36px 5px rgb(181, 181, 181);
+    -moz-box-shadow: 1px 1px 36px 5px rgba(181, 181, 181, 1);
 }
 
 .woocommerce div.product .woocommerce-tabs ul.tabs li a {
@@ -3116,8 +3113,8 @@ ul.products-inner li:last-child {
     box-sizing: border-box;
     padding: 50px 0 40px 0;
     position: relative;
-    box-shadow: 0px 0px 30px 5px rgb(156 156 156 / 50%);
-    -webkit-box-shadow: 0px 0px 30px 5px rgb(156 156 156 / 50%);
+    box-shadow: 0px 0px 30px 5px rgba(156, 156, 156, 0.5);
+    -webkit-box-shadow: 0px 0px 30px 5px rgba(156, 156, 156, 0.5);
     -moz-box-shadow: 0px 0px 30px 5px rgba(156, 156, 156, 0.5);
 }
 
@@ -3962,7 +3959,7 @@ a.ecu-repair-request:hover {
     height: 20px;
     background-color: #fff;
     border-radius: 100%;
-    box-shadow: 0 2px 6px 0 rgb(0 0 0 / 50%);
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
     line-height: 19px;
     color: #000;
 }
