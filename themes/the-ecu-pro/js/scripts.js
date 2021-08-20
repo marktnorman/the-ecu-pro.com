@@ -651,6 +651,11 @@
             if ($('.single-product').length > 0) {
                 $('form.woocommerce-form-login').insertBefore($('.messages-container'));
             }
+
+            // Move notification wrapper
+            if ($('.woocommerce-notices-wrapper').length > 0) {
+                $('.woocommerce-notices-wrapper').insertAfter($('table.variations'));
+            }
         }
 
         if ($('div.our-service-outer-container').length > 0) {
