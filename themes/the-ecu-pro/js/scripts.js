@@ -655,6 +655,10 @@
             // Move notification wrapper
             if ($('.woocommerce-notices-wrapper').length > 0) {
                 $('.woocommerce-notices-wrapper').insertAfter($('table.variations'));
+
+                $('html, body').animate({
+                    scrollTop: $('#tabs-main-container').offset().top - $(window).height()
+                }, 2000);
             }
         }
 
