@@ -1382,36 +1382,28 @@ function redirect_to_checkout()
     return $checkout_url;
 }
 
-add_action('init', 'pass_on_query_vars');
+//add_action('init', 'pass_on_query_vars');
+//
+///**
+// * pass_on_query_vars
+// */
+//function pass_on_query_vars()
+//{
+//
+//}
 
-/**
- * pass_on_query_vars
- */
-function pass_on_query_vars()
+add_filter('query_vars', 'addnew_query_vars', 10, 1);
+function addnew_query_vars($vars)
 {
     if (isset($_GET)) {
         if (isset($_GET['developer'])) {
 
-            if (!isset($_SESSION)) {
-                session_start();
-            }
 
-            $_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
-
-            var_dump($_SERVER);
-            var_dump($_SERVER['QUERY_STRING']);
+            var_dump($vars);
 
         }
-    } else {
-
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-
-        if( current_user_can('editor') || current_user_can('administrator') ) {
-            $previous_page = $_SESSION['previous_page'];
-            var_dump($previous_page);
-        }
-
     }
+
+    //$vars[] = 'var1'; // var1 is the name of variable you want to add
+    return $vars;
 }
