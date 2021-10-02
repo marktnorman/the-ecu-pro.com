@@ -1381,3 +1381,19 @@ function redirect_to_checkout()
     $checkout_url = $woocommerce->cart->get_checkout_url();
     return $checkout_url;
 }
+
+add_action('init', 'pass_on_query_vars');
+
+/**
+ * pass_on_query_vars
+ */
+function pass_on_query_vars()
+{
+    if (isset($_GET)) {
+        if (isset($_GET['developer'])) {
+            global $wp_query;
+            var_dump($_SERVER['QUERY_STRING']);
+            var_dump($wp_query->query_vars);
+        }
+    }
+}
