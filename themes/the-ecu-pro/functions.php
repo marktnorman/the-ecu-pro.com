@@ -1382,28 +1382,19 @@ function redirect_to_checkout()
     return $checkout_url;
 }
 
-//add_action('init', 'pass_on_query_vars');
-//
-///**
-// * pass_on_query_vars
-// */
-//function pass_on_query_vars()
-//{
-//
-//}
+add_action('init', 'pass_on_query_vars');
 
-add_filter('query_vars', 'addnew_query_vars', 10, 1);
-function addnew_query_vars($vars)
+/**
+ * pass_on_query_vars
+ */
+function pass_on_query_vars()
 {
     if (isset($_GET)) {
         if (isset($_GET['developer'])) {
 
-
-            var_dump($vars);
+            global $wp_query;
+            var_dump($wp_query->query_vars);
 
         }
     }
-
-    //$vars[] = 'var1'; // var1 is the name of variable you want to add
-    return $vars;
 }
