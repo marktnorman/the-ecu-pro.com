@@ -1392,9 +1392,26 @@ function pass_on_query_vars()
     if (isset($_GET)) {
         if (isset($_GET['developer'])) {
 
+            if (!isset($_SESSION)) {
+                session_start();
+            }
+
+            $_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
+
             var_dump($_SERVER);
             var_dump($_SERVER['QUERY_STRING']);
 
         }
+    } else {
+
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        if( current_user_can('editor') || current_user_can('administrator') ) {
+            $previous_page = $_SESSION['previous_page'];
+            var_dump($previous_page);
+        }
+
     }
 }
