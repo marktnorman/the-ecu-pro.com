@@ -1391,9 +1391,10 @@ function pass_on_query_vars()
 {
     if (isset($_GET)) {
         if (isset($_GET['developer'])) {
-            global $wp_query;
+
+            var_dump(basename($_SERVER['PHP_SELF']));
             var_dump($_SERVER['QUERY_STRING']);
-            var_dump($wp_query->query_vars);
+
         }
     }
 }
