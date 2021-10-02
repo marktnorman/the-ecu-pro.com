@@ -1382,7 +1382,7 @@ function redirect_to_checkout()
     return $checkout_url;
 }
 
-add_action('template_redirect', 'pass_on_query_vars');
+//add_action('template_redirect', 'pass_on_query_vars');
 
 /**
  * pass_on_query_vars
@@ -1392,9 +1392,7 @@ function pass_on_query_vars()
     if (isset($_GET)) {
         if (isset($_GET['developer'])) {
 
-            global $wp_query;
-            var_dump($wp_query);
-            var_dump($wp_query->query_vars);
+            //get_query_var();
 
         }
     }
