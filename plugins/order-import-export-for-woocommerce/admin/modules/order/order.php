@@ -484,6 +484,16 @@ class Wt_Import_Export_For_Woo_Basic_Order {
             $fields['offset']['label']=__('Skip first <i>n</i> orders');
             $fields['offset']['help_text']=__('Skips specified number of orders from the beginning. e.g. Enter 10 to skip first 10 orders from export.');
 
+            $fields['orders'] = array(
+                'label' => __('Order IDs'),
+                'placeholder' => __('Enter order IDs separated by ,'),
+                'field_name' => 'orders',
+                'sele_vals' => '',
+                'help_text' => __('Enter order IDs separated by comma to export specific orders.'),
+                'type' => 'text',
+                'css_class' => '',
+            );
+            
             $fields['order_status'] = array(
                 'label' => __('Order status'),
                 'placeholder' => __('Any status'),
@@ -499,7 +509,7 @@ class Wt_Import_Export_For_Woo_Basic_Order {
                 'placeholder' => __('Search for a product&hellip;'),
                 'field_name' => 'products',
                 'sele_vals' => array(),
-                'help_text' => __('Export orders containing specific products. Key-in the specific product names to export orders accordingly.'),
+                'help_text' => __('Export orders containing specific products. Enter the product name or SKU or ID to export orders containing specified products.'),
                 'type' => 'multi_select',
                 'css_class' => 'wc-product-search',
                 'validation_rule' => array('type'=>'text_arr')

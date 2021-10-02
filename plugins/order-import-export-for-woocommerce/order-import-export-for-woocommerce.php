@@ -6,9 +6,9 @@ Plugin URI: https://wordpress.org/plugins/order-import-export-for-woocommerce/
 Description: Export and Import Order detail including line items, From and To your WooCommerce Store.
 Author: WebToffee
 Author URI: https://www.webtoffee.com/product/woocommerce-order-coupon-subscription-export-import/
-Version: 2.0.8
+Version: 2.1.0
 Text Domain: order-import-export-for-woocommerce
-WC tested up to: 5.5
+WC tested up to: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -45,7 +45,7 @@ if ( !defined( 'WT_IEW_DEBUG_BASIC_TROUBLESHOOT' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WT_O_IEW_VERSION', '2.0.8' );
+define( 'WT_O_IEW_VERSION', '2.1.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -118,6 +118,10 @@ register_deactivation_hook( __FILE__, 'deactivate_wt_import_export_for_woo_basic
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-wt-import-export-for-woo.php';
 
+$advanced_settings = get_option('wt_iew_advanced_settings', array());
+$ier_get_max_execution_time = (isset($advanced_settings['wt_iew_maximum_execution_time']) && $advanced_settings['wt_iew_maximum_execution_time'] != '') ? $advanced_settings['wt_iew_maximum_execution_time'] : ini_get('max_execution_time');
+set_time_limit($ier_get_max_execution_time);
+
 /**
  * Begins execution of the plugin.
  *
@@ -155,7 +159,7 @@ function wt_oiew_plugin_action_links_basic_order( $links ) {
 		'<a href="' . admin_url( 'admin.php?page=wt_import_export_for_woo_basic' ) . '">' . __( 'Settings' ) . '</a>',
 		'<a href="https://www.webtoffee.com/order-coupon-subscription-export-import-plugin-woocommerce-user-guide/" target="_blank">' . __( 'Documentation' ) . '</a>',
 		'<a href="https://wordpress.org/support/plugin/order-import-export-for-woocommerce/" target="_blank">' . __( 'Support' ) . '</a>',
-		'<a href="https://www.webtoffee.com/product/woocommerce-order-coupon-subscription-export-import/" target="_blank" style="color:#3db634;">' . __( 'Premium Upgrade' ) . '</a>',
+		'<a href="https://www.webtoffee.com/product/woocommerce-order-coupon-subscription-export-import/?utm_source=free_plugin_listing&utm_medium=order_imp_exp_basic&utm_campaign=Order_Import_Export&utm_content=' . WT_O_IEW_VERSION . '" style="color:#3db634;">' . __('Premium Upgrade') . '</a>'
 	);
 	if ( array_key_exists( 'deactivate', $links ) ) {
 		$links[ 'deactivate' ] = str_replace( '<a', '<a class="wforderimpexp-deactivate-link"', $links[ 'deactivate' ] );

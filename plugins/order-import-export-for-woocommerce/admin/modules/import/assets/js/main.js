@@ -870,6 +870,7 @@ var wt_iew_basic_import=(function( $ ) {
                                 
                                 /* Auto populate template file. */
 				wt_iew_dropzone.auto_populate();
+                                wt_iew_basic_import.warn_on_refresh();
 			}
 			else if(step=='mapping') /* mapping page */ 
 			{
@@ -877,10 +878,11 @@ var wt_iew_basic_import=(function( $ ) {
 				this.mapping_box_accordian();
 				this.reg_mapping_field_bulk_action();
 				wt_iew_popover.Set();
+                                wt_iew_basic_import.warn_on_refresh();
 			}
 			else if(step=='advanced')
 			{	
-						
+				wt_iew_basic_import.warn_on_refresh();		
 			}
 
 			/* common events */
@@ -1041,7 +1043,13 @@ var wt_iew_basic_import=(function( $ ) {
 		is_object:function(obj)
 		{
 		    return obj !== undefined && obj !== null && obj.constructor == Object;
-		}
+		},
+                warn_on_refresh: function () {
+                    window.onbeforeunload = function (event)
+                    {
+                        return confirm("Changes that you made may not be saved.");
+                    };
+                }
 	}
 
 	var mapping_field_editor=

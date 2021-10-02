@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Product Feed PRO for WooCommerce
- * Version:     10.5.1
+ * Version:     10.5.6
  * Plugin URI:  https://www.adtribes.io/support/?utm_source=wpadmin&utm_medium=plugin&utm_campaign=woosea_product_feed_pro
  * Description: Configure and maintain your WooCommerce product feeds for Google Shopping, Facebook, Remarketing, Bing, Yandex, Comparison shopping websites and over a 100 channels more.
  * Author:      AdTribes.io
@@ -17,7 +17,7 @@
  * Domain Path: /languages
  *
  * WC requires at least: 4.4
- * WC tested up to: 5.4
+ * WC tested up to: 5.6
  *
  * Product Feed PRO for WooCommerce is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ if (!defined('ABSPATH')) {
  * Plugin versionnumber, please do not override.
  * Define some constants
  */
-define( 'WOOCOMMERCESEA_PLUGIN_VERSION', '10.5.1' );
+define( 'WOOCOMMERCESEA_PLUGIN_VERSION', '10.5.6' );
 define( 'WOOCOMMERCESEA_PLUGIN_NAME', 'woocommerce-product-feed-pro' );
 define( 'WOOCOMMERCESEA_PLUGIN_NAME_SHORT', 'woo-product-feed-pro' );
 
@@ -352,7 +352,7 @@ function woosea_add_facebook_pixel( $product = null ){
 			unset($facebook_pixel_id);
 		}
 
-		if($facebook_pixel_id > 0){
+		if(isset($facebook_pixel_id) AND ($facebook_pixel_id > 0)){
 			// Set Facebook conversion API data
 			define('FACEBOOK_APP_ACCESS_TOKEN', $facebook_capi_token);
 			define('FACEBOOK_PIXEL_OFFLINE_EVENT_SET_ID', $facebook_pixel_id);
@@ -819,7 +819,7 @@ function woosea_add_remarketing_tags( $product = null ){
 				?>
 				<script>
   					gtag('event', 'view_item', {
-    						'send_to'	: <?php echo 'AW-'.htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>,
+    						'send_to'	: '<?php echo 'AW-'.htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>',
     						'value'		: <?php print "$ecomm_price";?>,
     						'items'		: [{
       									'id': <?php print "$ecomm_prodid";?>,
@@ -855,7 +855,7 @@ function woosea_add_remarketing_tags( $product = null ){
                                         	?>
                                         	<script>
                                                 	gtag('event', 'purchase', {
-                                                        	'send_to'       : <?php echo 'AW-'.htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>,
+                                                        	'send_to'       : '<?php echo 'AW-'.htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>',
                                                         	'value'         : <?php print "$order_real";?>,
                                                         	'items'         : [{
                                                                 	        'id': <?php print "$prod_id";?>,
@@ -866,30 +866,32 @@ function woosea_add_remarketing_tags( $product = null ){
                                         	<?php	
 					}
 				} else {
-				// This is on the cart page, no purchase yet
+					// This is on the cart page, no purchase yet
 					// Get the first product from cart and use that product ID
 					foreach( WC()->cart->get_cart() as $cart_item ){
     						$ecomm_prodid = $cart_item['product_id'];
     						break;
 					}
 
-                                        $currency = get_woocommerce_currency();
-                                        $cart_items = WC()->cart->get_cart();
-                                        $cart_quantity = count($cart_items);
-                                        $cart_total_amount = wc_format_localized_price(WC()->cart->get_cart_contents_total()+WC()->cart->tax_total);
-                                        $cart_total_amount = floatval(str_replace(',', '.', str_replace(',', '.', $cart_total_amount)));
-					?>
-					<script>
-  						gtag('event', 'add_to_cart', {
-    							'send_to'	: <?php echo 'AW-'.htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>,
-    							'value'		: <?php print "$cart_total_amount";?>,
-    							'items'		: [{
-      									'id': <?php print "$ecomm_prodid";?>,
-      									'google_business_vertical': 'retail'
-    								}]
-  						});
-					</script>
+					if($ecomm_prodid > 0){
+                                        	$currency = get_woocommerce_currency();
+                                        	$cart_items = WC()->cart->get_cart();
+                                        	$cart_quantity = count($cart_items);
+                                        	$cart_total_amount = wc_format_localized_price(WC()->cart->get_cart_contents_total()+WC()->cart->tax_total);
+                                        	$cart_total_amount = floatval(str_replace(',', '.', str_replace(',', '.', $cart_total_amount)));
+						?>
+						<script>
+  							gtag('event', 'add_to_cart', {
+    								'send_to'	: '<?php echo 'AW-'.htmlentities($adwords_conversion_id, ENT_QUOTES, 'UTF-8');?>',
+    								'value'		: <?php print "$cart_total_amount";?>,
+    								'items'		: [{
+      										'id': <?php print "$ecomm_prodid";?>,
+      										'google_business_vertical': 'retail'
+    									}]
+  							});
+						</script>
 					<?php
+					}
 				}
 			}
 		}

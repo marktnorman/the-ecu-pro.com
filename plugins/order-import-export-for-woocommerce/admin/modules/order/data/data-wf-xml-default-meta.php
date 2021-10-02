@@ -16,6 +16,7 @@ return apply_filters('hf_xml_order_default_meta_columns', array(
     '_shipping_address_2' => '_shipping_address_2',
     '_shipping_city' => '_shipping_city',
     '_shipping_company' => '_shipping_company',
+    '_shipping_phone' => '_shipping_phone',    
     '_shipping_country' => '_shipping_country',
     '_shipping_first_name' => '_shipping_first_name',
     '_shipping_last_name' => '_shipping_last_name',

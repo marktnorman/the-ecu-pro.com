@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-return apply_filters('hf_csv_order_post_columns', array(
+$base_columns = array(
     'order_id' => 'ID',
     'order_number' => 'Order number',
     'order_date' => 'Order date',
@@ -25,7 +25,7 @@ return apply_filters('hf_csv_order_post_columns', array(
     'payment_method_title' => 'Payment method title',
     'transaction_id' => 'Transaction ID',
     'customer_ip_address' => 'Customer IP address',
-    'customer_user_agent' => 'Customer user agent',     
+    'customer_user_agent' => 'Customer user agent',
     'shipping_method' => 'Shipping method',
     'customer_id' => 'Customer ID',
     'customer_user' => 'Customer user',
@@ -44,6 +44,7 @@ return apply_filters('hf_csv_order_post_columns', array(
     'shipping_first_name' => 'Shipping first name',
     'shipping_last_name' => 'Shipping last name',
     'shipping_company' => 'Shipping company',
+    'shipping_phone' => 'Shipping phone',    
     'shipping_address_1' => 'Shipping address 1',
     'shipping_address_2' => 'Shipping address 2',
     'shipping_postcode' => 'Shipping postcode',
@@ -59,4 +60,14 @@ return apply_filters('hf_csv_order_post_columns', array(
     'refund_items' => 'Refund items',
     'order_notes' => 'Order notes',
     'download_permissions' => 'Download permissions'
-));
+);
+
+if (!function_exists('is_plugin_active'))
+    require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+
+if (is_plugin_active('wt-woocommerce-packing-list/wf-woocommerce-packing-list.php')):
+    $base_columns['meta:wf_invoice_number'] = 'WT Invoice number';
+    $base_columns['meta:_wf_invoice_date'] = 'WT Invoice date';
+endif;
+
+return apply_filters('hf_csv_order_post_columns', $base_columns);

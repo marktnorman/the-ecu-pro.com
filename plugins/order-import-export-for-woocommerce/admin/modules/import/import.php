@@ -105,7 +105,17 @@ class Wt_Import_Export_For_Woo_Basic_Import
 	*/
 	public function advanced_setting_fields($fields)
 	{
-		$fields['enable_import_log']=array(
+		
+                $fields['maximum_execution_time'] = array(
+                        'label' => __("Maximum execution time"),
+                        'type' => 'number',
+                        'value' => ini_get('max_execution_time'), /* Default max_execution_time settings value */
+                        'field_name' => 'maximum_execution_time',
+                        'field_group' => 'advanced_field',
+                        'help_text' => __('The maximum execution time, in seconds(eg:- 300, 600, 1800, 3600). If set to zero, no time limit is imposed. Increasing this will reduce the chance of export/import timeouts.'),
+                        'validation_rule' => array('type' => 'int'),
+                );            
+                $fields['enable_import_log']=array(
 			'label'=>__("Generate Import log"),
 			'type'=>'radio',
 			'radio_fields'=>array(
@@ -136,6 +146,7 @@ class Wt_Import_Export_For_Woo_Basic_Import
 			'help_text'=>__('Provide the default count for the records to be imported in a batch.'),
 			'validation_rule'=>array('type'=>'absint'),
 		);
+
 		return $fields;
 	}
 

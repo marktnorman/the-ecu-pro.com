@@ -50,6 +50,7 @@ if (!defined('ABSPATH')) {
         'shipping_state' => 'shipping_state',
         'shipping_country' => 'shipping_country',
         'shipping_company' => 'shipping_company',
+        'shipping_phone' => 'shipping_phone',        
         'customer_note' => 'customer_note',
         'order_items' => 'order_items',
         'order_notes' => 'order_notes',

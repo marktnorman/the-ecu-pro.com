@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
     <div class="ier-premium-upgrade">
         <div class="wt-ier-sidebar-wrapper wt-ier-p-5">
             <img src="<?php echo WT_O_IEW_PLUGIN_URL; ?>assets/images/upgrade/crown.svg" class="wt-ier-sidebar-img">
-            <h3 class="wt-ier-sidebar-title wt-ier-center"><?php _e('Do not leave any data behind!<br>Upgrade to pro.');?></h3>
+            <h3 class="wt-ier-sidebar-title wt-ier-center"><?php _e('Migrate all your WooCommerce data in a go!<br>Upgrade to pro.');?></h3>
             <div class="wt-ier-row">
                 <div class="wt-ier-col-12 wt-ier-col-md-6 wt-ier-border-md-right">
                     <div class="wt-ier-flex wt-ier-v-center ">

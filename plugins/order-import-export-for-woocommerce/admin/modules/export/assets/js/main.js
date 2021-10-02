@@ -674,7 +674,7 @@ var wt_iew_basic_export=(function( $ ) {
 					{ 
 						wt_iew_basic_export.load_pending_steps();
 					}					
-				});
+				});                                
 
 				$('.wt-iew-export-template-sele').unbind('change').change(function(){
 					wt_iew_basic_export.selected_template=$(this).val();
@@ -688,17 +688,20 @@ var wt_iew_basic_export=(function( $ ) {
 						wt_iew_basic_export.load_pending_steps();
 					}
 				});
+                                wt_iew_basic_export.warn_on_refresh();
 			}
 			else if(step=='filter') /* filter page */ 
 			{
 				$('.wc-enhanced-select').select2();
 				$( document.body ).trigger( 'wc-enhanced-select-init' );
+                                wt_iew_basic_export.warn_on_refresh();
 			}
 			else if(step=='mapping') /* mapping page */ 
 			{
 				this.enable_sortable();
 				this.mapping_box_accordian();
 				this.reg_mapping_field_bulk_action();
+                                wt_iew_basic_export.warn_on_refresh();
 			}
 			else if(step=='advanced')
 			{	
@@ -752,6 +755,7 @@ var wt_iew_basic_export=(function( $ ) {
 				$('[name="wt_iew_file_as"]').unbind('change').change(function(){
 					$('.wt_iew_file_ext_info').html('.'+$(this).val());
 				});
+                                wt_iew_basic_export.warn_on_refresh();
 			}
 
 			/* common events */
@@ -887,7 +891,13 @@ var wt_iew_basic_export=(function( $ ) {
 	            'data_type': data_type,
 	            'export_method': this.export_method,
 	        };
-		}
+		},
+                warn_on_refresh: function () {
+                    window.onbeforeunload = function (event)
+                    {
+                        return confirm("Changes that you made may not be saved.");
+                    };
+                }
 	}
 	return wt_iew_basic_export;
 	

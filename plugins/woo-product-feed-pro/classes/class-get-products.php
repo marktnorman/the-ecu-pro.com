@@ -768,8 +768,11 @@ class WooSEA_Get_Products {
 							}
 							$taxable = $v->tax_status;
 
-							if(isset($v->instance_settings['cost'])){
-								$shipping_cost = $v->instance_settings['cost'];
+                                                        if(isset($v->instance_settings['cost'])){
+                                                                $shipping_cost = $v->instance_settings['cost'];
+                                                                $shipping_cost = str_replace("* [qty]", "", $shipping_cost);
+                                                                $shipping_cost = trim($shipping_cost);     // trim white spaces
+
 								if($shipping_cost > 0){
 
 									// Do we need to convert the shipping costs with the Aelia Currency Switcher
@@ -1713,7 +1716,9 @@ class WooSEA_Get_Products {
 							
 							} else {
 								if(count($value) > 0){
-									$product = $xml->addChild('product');
+									if(is_object($xml)){
+										$product = $xml->addChild('product');
+									}
 								}
 							}
 
@@ -3221,11 +3226,13 @@ class WooSEA_Get_Products {
 									$product_data[$taxo] = rtrim($product_data[$taxo],',');
 								}
 							}
+
 							foreach($skroutz_att_array as $skrtz_value){
 								$product_data[$taxo] .= ",". $skrtz_value;
 							}	
 							$product_data[$taxo] = ltrim($product_data[$taxo],',');
 							$product_data[$taxo] = rtrim($product_data[$taxo],',');
+
 						} else {
 							// Simple Skroutz product
 							foreach($term_value as $term){
@@ -3453,7 +3460,7 @@ class WooSEA_Get_Products {
 						if(isset($sz_attribute)){
                                 			$skroutz_size = get_post_meta( $product_data['id'], "attribute_".$sz_attribute, true );
 						}					
-				
+
 						if((!empty($skroutz_color)) AND (!empty($skroutz_size))){
 
 							foreach($variations as $kvar => $vvar){
@@ -3787,7 +3794,7 @@ class WooSEA_Get_Products {
                                         	$new_key = str_replace("var","product",$new_key);
 						if(!empty( $custom_value )){
 							$product_data[$new_key] = $custom_value;
-                       				}
+						}
 					}
 				}
 
@@ -4076,6 +4083,7 @@ class WooSEA_Get_Products {
 										$product_data[$sz_attribute] = str_replace(", , ",",",$product_data[$sz_attribute]);
 										$product_data[$sz_attribute] = rtrim($product_data[$sz_attribute], " ");
 										$product_data[$sz_attribute] = rtrim($product_data[$sz_attribute], ",");
+
 									}	
 								}
 							}

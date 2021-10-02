@@ -113,6 +113,8 @@ class Wt_Import_Export_For_Woo_Admin_Basic {
 				'settings_success'=>__('Settings updated.'),
 				'all_fields_mandatory'=>__('All fields are mandatory'),
 				'settings_error'=>__('Unable to update Settings.'),
+                                'template_del_error'=>__('Unable to delete template'),
+                                'template_del_loader'=>__('Deleting template...'),                            
 				'value_empty'=>__('Value is empty.'),
 				'error'=>sprintf(__('An unknown error has occurred! Refer to our %stroubleshooting guide%s for assistance.'), '<a href="'.WT_IEW_DEBUG_BASIC_TROUBLESHOOT.'" target="_blank">', '</a>'),
 				'success'=>__('Success.'),
@@ -237,6 +239,33 @@ class Wt_Import_Export_For_Woo_Admin_Basic {
 		exit();
 	}
 
+        /**
+	* 	Delete pre-saved temaplates entry from DB - ajax hook
+	*/
+        public function delete_template() {
+            $out = array(
+                'status' => false,
+                'msg' => __('Error'),
+            );
+
+            if (Wt_Iew_Sh::check_write_access(WT_IEW_PLUGIN_ID_BASIC)) {
+                if (isset($_POST['template_id'])) {
+
+                    global $wpdb;
+                    $template_id = absint($_POST['template_id']);
+                    $tb = $wpdb->prefix . Wt_Import_Export_For_Woo_Basic::$template_tb;
+                    $where = "=%d";
+                    $where_data = array($template_id);
+                    $wpdb->query($wpdb->prepare("DELETE FROM $tb WHERE id" . $where, $where_data));
+                    $out['status'] = true;
+                    $out['msg'] = __('Template deleted successfully');
+                    $out['template_id'] = $template_id;
+                }
+            }
+            wp_send_json($out);
+
+        }        
+        
 	/**
 	 Registers modules: admin	 
 	 */
@@ -301,6 +330,7 @@ class Wt_Import_Export_For_Woo_Admin_Basic {
                     'order'=>'order-import-export-for-woocommerce',
                     'coupon'=>'order-import-export-for-woocommerce',  
                     'product'=>'product-import-export-for-woo',
+                    'product_review'=>'product-import-export-for-woo',
                     'user'=>'users-customers-import-export-for-wp-woocommerce',                                                          
                 );
                 foreach ($addon_modules_basic as $module_key => $module_path)

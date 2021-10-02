@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: Product Feed, Google Shopping, Google Shopping Feed, WooCommerce Product Feed, WooCommerce Product Feed PRO, Bing Shopping, Bing product feed, Bing remarking, Google Merchant Feed, Google DRM Feed, Google Dynamic Remarketing Feed, Facebook feed, Google feed, Bing feed, Facebook Product Feed, Facebook pixel, Facebook Conversion API, Facebook CAPI,Facebook Dynamic remarketing, Data Feed, WooCommerce Feed, XML product feed, CSV product feed, TSV, TXT product feed, comparison shopping engines, comparison shopping websites, vergelijk.nl, vergelijk.be, vertaa.fi, beslist.nl, kieskeurig.nl, bol.com, raketten, pricerunner, pricegrabber, Buy, leGuide, Kelkoo, Twenga, Yandex, Etsy, Dealtime, Shopzilla, Billiger, Google Product Review feed
 Requires at least: 4.5
 Tested up to: 5.8
-Stable tag: 10.5.1
+Stable tag: 10.5.6
 
 == Description ==
 
@@ -334,6 +334,22 @@ Questions left or unanswered? Please do not hesitate to contact us at support@ad
 8. Set the basic configurations for your product feed
 
 === Changelog ===
+
+= 10.5.6 (2021-09-03) =
+* Fixed an undefined variable issue for the facebook pixel id
+
+= 10.5.5 (2021-09-01) =
+* Fixed a Google Remarketing Pixel issue on the cart page
+
+= 10.5.4 (2021-09-01) =
+* Fixed a shipping cost issue where shipping classes that had no shipping costs set where empty
+* Fixed a Google Remarketing pixel, added apostrophe on the AW-XXXXXX parameter
+
+= 10.5.3 (2021-08-29) =
+* Solved a bug: when the XML variable was not an object is returned a fatal error. Issue is solved now.
+
+= 10.5.2 (2021-08-25) =
+* Tested for compatibility with WooCommerce 5.6
 
 = 10.5.1 (2021-08-18) =
 * Fixed an issue where the visibility attribute did not return anything
@@ -3355,6 +3371,22 @@ Questions left or unanswered? Please do not hesitate to contact us at support@ad
 * Strip HTML from the (short) description attributes
 
 == Upgrade Notice ==
+
+= 1.5.6 =
+Fixed an undefined variable issue for the facebook pixel id
+
+= 10.5.5 =
+Fixed a Google Remarketing Pixel issue on the cart page
+
+= 10.5.4 =
+Fixed a shipping cost issue where shipping classes that had no shipping costs set where empty
+Fixed a Google Remarketing pixel, added apostrophe on the AW-XXXXXX parameter
+
+= 10.5.3 =
+Solved a bug: when the XML variable was not an object is returned a fatal error. Issue is solved now.
+
+= 10.5.2 =
+Tested for compatibility with WooCommerce 5.6
 
 = 10.5.1 =
 Fixed an issue where the visibility attribute did not return anything

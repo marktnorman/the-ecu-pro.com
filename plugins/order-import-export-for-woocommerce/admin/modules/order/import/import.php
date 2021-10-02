@@ -183,7 +183,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
                 $column = strtolower($column);
                                  
                 if ('order_number' == $column) {
-                    $this->item_data['order_number'] = ($value);
+                    $this->item_data['order_number'] = $this->wt_parse_order_number_field($value);
                     continue;
                 }
 
@@ -309,7 +309,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
                     continue;
                 }
                 if ('billing_phone' == $column ) {
-                     $this->item_data['billing']['phone'] = ($value);
+                     $this->item_data['billing']['phone'] = trim($value,'\'');
                     continue;
                 }
                 if ('billing_address_1' == $column ) {
@@ -348,6 +348,10 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
                      $this->item_data['shipping']['company'] = ($value);
                     continue;
                 }
+                if ('shipping_phone' == $column ) {
+                     $this->item_data['shipping']['phone'] = trim($value,'\'');
+                    continue;
+                }                
                 if ('shipping_address_1' == $column) {
                     $this->item_data['shipping']['address_1'] = ($value);
                     continue;
@@ -410,6 +414,16 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
                     $this->item_data['meta_data'][] = array('key'=>'_wt_import_key','value'=>$value);
                     continue;
                 }
+                
+                if ('meta:wf_invoice_number' == $column ) {
+                    $this->item_data['meta_data'][] = array('key'=>'wf_invoice_number','value'=>$value);
+                    continue;
+                }
+                if ('meta:_wf_invoice_date' == $column ) {
+                    $this->item_data['meta_data'][] = array('key'=>'_wf_invoice_date','value'=> strtotime($value));
+                    continue;
+                }                
+                
                 if(strstr($column, 'line_item_')){
                     $this->item_data['order_items'][] = $this->wt_parse_line_item_field($value,$column);
                     continue;                
@@ -504,8 +518,9 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
     }
     
     public function wt_parse_order_number_field($value) {
-        $order_number_formatted = $data['order_id'];
-        $order_number = (!empty($data['order_number']) ? $data['order_number'] : ( is_numeric($order_number_formatted) ? $order_number_formatted : 0 ) );
+        $order_number_formatted = $this->order_id;
+        $order_number = (!empty($value) ? $value : ( is_numeric($order_number_formatted) ? $order_number_formatted : 0 ) );
+        
         if ($order_number_formatted) {
             // verify that this order number isn't already in use
             $query_args = array(
@@ -529,7 +544,12 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
                 // skip if order ID already exist.                 
                 throw new Exception(sprintf('Skipped. %s already exists.', ucfirst($this->parent_module->module_base)) );
             }
-        }  
+        }
+        if ($order_number_formatted)
+            $this->item_data['order_number_formatted'] = $order_number_formatted;      
+            
+        if (!is_null($order_number))
+            return $order_number;  // optional order number, for convenience
         
     }
     
@@ -1732,6 +1752,15 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
 
                         
             $this->set_meta_data($order, $data);  
+            
+            if(isset($data['order_number']))
+            update_post_meta($order_id, '_order_number', $data['order_number']);           
+            // was an original order number provided?
+            if (!empty($data['order_number_formatted'])) {                
+                //Provide custom order number functionality , also allow 3rd party plugins to provide their own custom order number facilities
+                do_action('woocommerce_set_order_number', $order, $data['order_number'], $data['order_number_formatted']);
+                $order->add_order_note(sprintf(__("Original order #%s", 'wf_order_import_export'), $data['order_number_formatted']));                
+            }
       
             if($this->status_mail == true){   
                 $order->update_status('wc-' . preg_replace('/^wc-/', '', $status)); 
@@ -1922,6 +1951,15 @@ class Wt_Import_Export_For_Woo_Basic_Order_Import {
                 if (( 'Download Permissions Granted' == $meta['key'] || '_download_permissions_granted' == $meta['key'] ) && $meta['value']) {
                     $add_download_permissions = true;
                 }
+                
+                if ('wf_invoice_number' ==  $meta['key']) {
+                    update_post_meta($order_id, 'wf_invoice_number',$meta['value']);
+                    continue;
+                }
+                if ('_wf_invoice_date' == $meta['key'] ) {
+                    update_post_meta($order_id, '_wf_invoice_date',$meta['value']);
+                    continue;
+                }     
                 
                 if('_wt_import_key' == $meta['key']){
                     $object->update_meta_data('_wt_import_key', apply_filters('wt_importing_order_reference_key', $meta['value'], $data)); // for future reference, this holds the order number which in the csv.

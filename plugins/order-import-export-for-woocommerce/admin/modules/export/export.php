@@ -86,7 +86,7 @@ class Wt_Import_Export_For_Woo_Basic_Export
 		);
 
 		/* advanced plugin settings */
-		add_filter('wt_iew_advanced_setting_fields_basic', array($this, 'advanced_setting_fields'));
+		add_filter('wt_iew_advanced_setting_fields_basic', array($this, 'advanced_setting_fields'), 11);
 
 		/* setting default values, this method must be below of advanced setting filter */
 		$this->get_defaults();

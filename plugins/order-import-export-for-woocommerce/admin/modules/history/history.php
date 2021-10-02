@@ -47,7 +47,7 @@ class Wt_Import_Export_For_Woo_Basic_History
 		add_filter('wt_iew_admin_menu_basic', array($this, 'add_admin_pages'), 10, 1);
 
 		/* advanced plugin settings */
-		add_filter('wt_iew_advanced_setting_fields_basic', array($this, 'advanced_setting_fields'), 11);
+		add_filter('wt_iew_advanced_setting_fields_basic', array($this, 'advanced_setting_fields'), 12);
 
 		/* main ajax hook. The callback function will decide which action is to execute. */
 		add_action('wp_ajax_iew_history_ajax_basic', array($this, 'ajax_main'), 11);

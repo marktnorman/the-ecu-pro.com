@@ -5,7 +5,7 @@ Tags: order export, order import, woocommerce, csv, coupon, woocommerce export o
 Requires at least: 3.0.1
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 2.0.8
+Stable tag: 2.1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,7 +29,7 @@ The following are functionalities offered by the basic version of the plugin.
  &#128312; Supports various export filters (order status, product, coupon, customer, date range)
  &#128312; Export Subscription orders to a CSV file(Premium Feature).
  &#128312; Import Subscription orders from a CSV file(Premium Feature).
- &#128312; Tested OK with WooCommerce 5.5
+ &#128312; Tested OK with WooCommerce 5.6
  &#128312; Tested OK with WP 5.8
  &#128312; Tested OK with PHP 8.0
 
@@ -44,6 +44,11 @@ Additional features that will help you in the CSV export and import process:
  &#128312; Log of the import and export will help in identifying what went wrong for debugging purposes.
 
 More information about the setup of the plugin and a sample CSV that is taken as input by the plugin are given in the <a rel="nofollow" href="https://www.webtoffee.com/order-coupon-subscription-export-import-plugin-woocommerce-user-guide/">free order export import plugin</a> setup guide.
+
+= Compatible plugins =
+ 
+* [Sequential Order Number for WooCommerce by WebToffee](https://wordpress.org/plugins/wt-woocommerce-sequential-order-numbers/)
+* [WooCommerce PDF Invoices, Packing Slips, Delivery Notes & Shipping Labels by WebToffee](https://wordpress.org/plugins/print-invoices-packing-slip-labels-for-woocommerce/)
 
 <blockquote>
 
@@ -220,6 +225,13 @@ Yes.
 
 == Changelog ==
 
+= 2.1.0 =
+* Fix:- WC compatibility with shipping phone number
+= 2.0.9 =
+* Added support for shipping phone number import export
+* Added import export compatibility for WooCommerce PDF Invoices, Packing Slips, Delivery Notes & Shipping Labels plugin by WebToffee
+* Added import export compatibility for Sequential Order Number for WooCommerce plugin by WebToffee
+* WC 5.6 tested OK
 = 2.0.8 =
 * Fixed: Grant download permission issue on import
 * Fixed: Trash orders getting exported with coupon filter applied
@@ -451,8 +463,5 @@ Yes.
 
 == Upgrade Notice ==
 
-= 2.0.8 =
-* Fixed: Grant download permission issue on import
-* Fixed: Trash orders getting exported with coupon filter applied
-* WC 5.5 tested OK
-* WP 5.8 tested OK
+= 2.1.0 =
+* Fix:- WC compatibility with shipping phone number

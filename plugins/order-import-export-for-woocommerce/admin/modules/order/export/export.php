@@ -11,6 +11,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
     private $line_items_max_count = 0;
     private $export_to_separate_columns = false;
     private $line_item_meta;
+    private $is_wt_invoice_active = false;
 
     public function __construct($parent_object) {
 
@@ -22,6 +23,9 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
         $export_columns = $this->parent_module->get_selected_column_names();
 
         $this->line_item_meta = self::get_all_line_item_metakeys();
+        if (is_plugin_active('wt-woocommerce-packing-list/wf-woocommerce-packing-list.php')):
+            $this->is_wt_invoice_active = true;
+        endif;
 		
         $max_line_items = $this->line_items_max_count;
 
@@ -61,6 +65,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
         $start_date = !empty($form_data['filter_form_data']['wt_iew_date_from']) ? $form_data['filter_form_data']['wt_iew_date_from'] . ' 00:00:00' : date('Y-m-d 00:00:00', 0);
         $end_date = !empty($form_data['filter_form_data']['wt_iew_date_to']) ? $form_data['filter_form_data']['wt_iew_date_to'] . ' 23:59:59.99' : date('Y-m-d 23:59:59.99', current_time('timestamp'));        
         $coupons = !empty($form_data['filter_form_data']['wt_iew_coupons']) ? array_filter(explode(',', strtolower($form_data['filter_form_data']['wt_iew_coupons'])),'trim') : array();
+        $orders = !empty($form_data['filter_form_data']['wt_iew_orders']) ? array_filter(explode(',', strtolower($form_data['filter_form_data']['wt_iew_orders'])),'trim') : array();
 
         $export_limit = !empty($form_data['filter_form_data']['wt_iew_limit']) ? intval($form_data['filter_form_data']['wt_iew_limit']) : 999999999; //user limit
         $current_offset = !empty($form_data['filter_form_data']['wt_iew_offset']) ? intval($form_data['filter_form_data']['wt_iew_offset']) : 0; //user offset
@@ -203,6 +208,9 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                             'compare' => 'NOT EXISTS',
                         ));
                     }
+                    if(!empty($orders)){
+                        $query_args['post__in'] = $orders;
+                    }
                     $query_args = apply_filters('wt_orderimpexpcsv_export_query_args', $query_args);
                     $query_args['offset'] = $current_offset; //user given offset
                     $query_args['posts_per_page'] = $export_limit; //user given limit
@@ -330,6 +338,9 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                         'value' => FALSE,
                         'compare' => 'NOT EXISTS',
                     ));
+                }
+                if(!empty($orders)){
+                        $query_args['post__in'] = $orders;
                 }
                 $query_args = apply_filters('wt_orderimpexpcsv_export_query_args', $query_args);                
                 $query_args['offset'] = $real_offset;
@@ -561,6 +572,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                 'shipping_first_name' => $order->shipping_first_name,
                 'shipping_last_name' => $order->shipping_last_name,
                 'shipping_company' => $order->shipping_company,
+                'shipping_phone' => isset($order->shipping_phone) ? $order->shipping_phone : '',                
                 'shipping_address_1' => $order->shipping_address_1,
                 'shipping_address_2' => $order->shipping_address_2,
                 'shipping_postcode' => $order->shipping_postcode,
@@ -618,6 +630,7 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                 'shipping_first_name' => $order->get_shipping_first_name(),
                 'shipping_last_name' => $order->get_shipping_last_name(),
                 'shipping_company' => $order->get_shipping_company(),
+                'shipping_phone' =>  (version_compare(WC_VERSION, '5.6', '<')) ? '' : $order->get_shipping_phone(), 
                 'shipping_address_1' => $order->get_shipping_address_1(),
                 'shipping_address_2' => $order->get_shipping_address_2(),
                 'shipping_postcode' => $order->get_shipping_postcode(),
@@ -635,7 +648,14 @@ class Wt_Import_Export_For_Woo_Basic_Order_Export {
                 'download_permissions' => $order->is_download_permitted() ? $order->is_download_permitted() : 0,                
             );
         }
-                                        
+        
+        if ($this->is_wt_invoice_active):
+            $invoice_date = get_post_meta($order_data['order_id'], '_wf_invoice_date', true);
+            $invoice_number = get_post_meta($order_data['order_id'], 'wf_invoice_number', true);
+            $order_data['meta:wf_invoice_number'] = empty($invoice_number) ? '' : $invoice_number;
+            $order_data['meta:_wf_invoice_date'] = empty($invoice_date) ? '' : date_i18n(get_option( 'date_format' ), $invoice_date);
+        endif;
+
         $order_export_data = array();
         foreach ($csv_columns as $key => $value) {
             if (!$order_data || array_key_exists($key, $order_data)) {
