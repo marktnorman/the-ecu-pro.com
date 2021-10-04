@@ -10,6 +10,19 @@
     }
 
     $(document).ready(function () {
+
+        // Read a page's GET URL variables and return them as an associative array.
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
         //Hide a option in the selector
         $("select.ecu-mmy-filter-selector").find("[slug=bmw-ecu-service]").css("display", "none");
         $("select.ecu-mmy-filter-selector").find("[slug=mini-ecu-service]").css("display", "none");
@@ -35,6 +48,7 @@
                 }
 
                 console.log(new_link);
+                console.log(getUrlVars());
 
                 //window.location.href = new_link;
             }
@@ -690,7 +704,7 @@
 
                 $('#video-popup-container-overlay').fadeIn(300);
 
-                if( $('#video-popup-container iframe').attr('src').length <= 0 ) {
+                if ($('#video-popup-container iframe').attr('src').length <= 0) {
                     $('#video-popup-container iframe').attr('src', source);
                 }
             });
@@ -720,25 +734,25 @@
                 label.addClass('focussed');
             });
 
-            $('#work-order-tag-container').on('input', function() {
+            $('#work-order-tag-container').on('input', function () {
                 var input = $(this);
                 var label = $(this).closest('.field-group').find('label');
                 label.addClass('focussed');
             });
 
-            $('#work-order-tag-container').on('textarea', function() {
+            $('#work-order-tag-container').on('textarea', function () {
                 var input = $(this);
                 var label = $(this).closest('.field-group').find('label');
                 label.addClass('focussed');
             });
 
-            $('#work-order-tag-container').on('select', function() {
+            $('#work-order-tag-container').on('select', function () {
                 var input = $(this);
                 var label = $(this).closest('.field-group').find('label');
                 label.addClass('focussed');
             });
 
-            $('#work-order-tag-container label').click(function() {
+            $('#work-order-tag-container label').click(function () {
                 var label = $(this);
                 var input = $(this).closest('.field-group').find('input');
                 input.focus();
