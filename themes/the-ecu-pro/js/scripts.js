@@ -47,8 +47,20 @@
                     }
                 }
 
+                let counter = 1;
+
+                $.each(getUrlVars(), function(index, value){
+                    if (value !== undefined) {
+                        if (counter === 1) {
+                            new_link += "?" + index + "=" + value;
+                        } else {
+                            new_link += "&" + index + "=" + value;
+                        }
+                    }
+                    counter++;
+                });
+
                 console.log(new_link);
-                console.log(getUrlVars());
 
                 //window.location.href = new_link;
             }
