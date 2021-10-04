@@ -50,16 +50,18 @@
                 let counter = 1;
 
                 $.each(getUrlVars(), function(index, value){
-                    if (value !== undefined) {
+
+                    if (getUrlVars()[value] !== undefined) {
                         if (counter === 1) {
-                            new_link += "?" + index + "=" + value;
+                            new_link += "?" + value + "=" + getUrlVars()[value];
                         } else {
-                            new_link += "&" + index + "=" + value;
+                            new_link += "&" + value + "=" + getUrlVars()[value];
                         }
                     }
                     counter++;
                 });
 
+                console.log(getUrlVars());
                 console.log(new_link);
 
                 //window.location.href = new_link;
