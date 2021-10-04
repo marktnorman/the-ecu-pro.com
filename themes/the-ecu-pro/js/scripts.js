@@ -33,7 +33,10 @@
                         }
                     }
                 }
-                window.location.href = new_link;
+
+                console.log(new_link);
+
+                //window.location.href = new_link;
             }
 
         });
