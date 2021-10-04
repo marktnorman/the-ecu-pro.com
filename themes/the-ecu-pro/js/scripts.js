@@ -49,8 +49,7 @@
 
                 let counter = 1;
 
-                $.each(getUrlVars(), function(index, value){
-
+                $.each(getUrlVars(), function (index, value) {
                     if (getUrlVars()[value] !== undefined) {
                         if (counter === 1) {
                             new_link += "?" + value + "=" + getUrlVars()[value];
@@ -61,10 +60,7 @@
                     counter++;
                 });
 
-                console.log(getUrlVars());
-                console.log(new_link);
-
-                //window.location.href = new_link;
+                window.location.href = new_link;
             }
 
         });
