@@ -79,15 +79,11 @@ $show_number = isset($_GET['show-number']) && $_GET['show-number'] == 'true';
     document.querySelectorAll('[data-js-ref="ctvnf-click-to-show"]').forEach(toggle => {
         toggle.addEventListener('click', e => {
             e.preventDefault()
-            ctvnfFormCont.classList.add('is-open')
+            window.scrollTo(0, 0);
+            ctvnfFormContSm.classList.add('is-open')
+            ctvnfFormCont.classList.remove('is-open')
+            document.querySelector('[data-js-ref="ctvnf-number"]').innerText = '+1-888-723-2080'
+            document.querySelector('[data-js-ref="ctvnf-click-msg"]').remove()
         })
-    })
-    document.querySelector('[data-js-ref="ctvnf-skip"]').addEventListener('click', e => {
-        e.preventDefault()
-        window.scrollTo(0, 0);
-        ctvnfFormContSm.classList.add('is-open')
-        ctvnfFormCont.classList.remove('is-open')
-        document.querySelector('[data-js-ref="ctvnf-number"]').innerText = '+1-888-723-2080'
-        document.querySelector('[data-js-ref="ctvnf-click-msg"]').remove()
     })
 </script>
