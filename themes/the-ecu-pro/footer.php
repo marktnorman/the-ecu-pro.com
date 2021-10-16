@@ -41,8 +41,6 @@
                 $how_it_works_product_copy = !empty($how_it_works_product_copy) ? $how_it_works_product_copy : '';
 
                 $accordian_product_items = get_sub_field('associated_product_accordian');
-                var_dump($accordian_product_items);
-                die();
                 $accordian_product_html = '';
                 $counter = 1;
                 foreach ($accordian_product_items as $accordian_product_item) {
