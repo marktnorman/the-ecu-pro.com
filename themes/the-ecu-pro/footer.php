@@ -41,12 +41,14 @@
                 $how_it_works_product_copy = !empty($how_it_works_product_copy) ? $how_it_works_product_copy : '';
 
                 $accordian_product_items = get_sub_field('associated_product_accordian');
+                var_dump($accordian_product_items);
+                die();
                 $accordian_product_html = '';
                 $counter = 1;
                 foreach ($accordian_product_items as $accordian_product_item) {
 
-                    $accordian_title = $accordian_product_item['accordian_item_title'];
-                    $accordian_copy = $accordian_product_item['accordian_item_copy'];
+                    $accordian_title = $accordian_product_item['accordian_product_group_object']['accordian_item_title'];
+                    $accordian_copy = $accordian_product_item['accordian_product_group_object']['accordian_item_copy'];
 
                     $accordian_product_html .= '<div class="wrap-' . $counter . '">';
                     $accordian_product_html .= '<input type="radio" id="tab-' . $counter . '" name="tabs">';
