@@ -19,12 +19,12 @@
     );
     $product_video_url = !empty($product_video_url) ? $product_video_url : 'https://www.youtube.com/embed/JESCRzDYdqE';
 
-    if (!empty($dynamic_product_how_it_works_content) && $dynamic_product_how_it_works_content == '1') {
+    if ($dynamic_product_how_it_works_content) {
 
         // Product dynamic data retrieval
-        if (have_rows('how_it_works_product_section')):
+        if (have_rows('how_it_works_product_section', $id)):
 
-            while (have_rows('how_it_works_product_section')) : the_row();
+            while (have_rows('how_it_works_product_section', $id)) : the_row();
 
                 $associated_product_title = get_field("associated_product_title", $id);
 
@@ -159,10 +159,7 @@
             endwhile;
         endif;
     }
-
-
-    ?>
-<?php } ?>
+} ?>
 
 <?php if (is_front_page()) { ?>
 
