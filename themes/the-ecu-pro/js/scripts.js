@@ -12,7 +12,7 @@
     $(document).ready(function () {
 
         // Form click sahow number
-        $(".header-contact a.text-white").on("click", function () {
+        $(".header-contact a.text-white").on("click", function (e) {
             e.preventDefault();
             window.scrollTo(0, 0);
             document.querySelector('[data-js-ref="ctvnf-number"]').innerText = '+1-888-723-2080';

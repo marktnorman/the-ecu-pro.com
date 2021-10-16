@@ -215,13 +215,9 @@
                                                 </li>
                                                 <li class="text-white"><i class="porto-icon-phone"
                                                                           style="font-size: 20px; margin-right: 5px; margin-left: -3px;"></i>
-                                                    <?php global $tecup_form_show_number;
-                                                    if ($tecup_form_show_number) { ?>
-                                                        <b>+1-888-723-2080</b>
-                                                    <?php } else { ?>
-                                                        <span data-js-ref="ctvnf-number">+1 888-723-<a href="#"
-                                                                                                       data-js-ref="ctvnf-open"> CLICK to show number</a></span>
-                                                    <?php } ?>
+
+                                                    <span data-js-ref="ctvnf-number">+1 888-723-<a href="#"
+                                                                                                   data-js-ref="ctvnf-open"> CLICK to show number</a></span>
                                                 </li>
                                                 <li><i class="fab fa-skype"
                                                        style="font-size: 18px; margin-right: 10px;"></i>
