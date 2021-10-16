@@ -25,13 +25,19 @@
             $how_it_works_product_title = "";
 
             if (!empty($product_vehicle_date) && !empty($product_ecu)) {
-                $how_it_works_product_title = "How " . $product_vehicle_date . " " . $product_ecu . " DME / ECU repairs works";
+                $how_it_works_product_title = '<h2 class="homepage-section-title long-unique">';
+                $how_it_works_product_title .= "How " . $product_vehicle_date . " " . $product_ecu . " DME / ECU repairs works";
+                $how_it_works_product_title .= '</h2>';
             }
 
             if (empty($how_it_works_product_title)) {
                 $how_it_works_product_title = get_sub_field(
                     'how_it_works_product_title'
                 );
+
+                $how_it_works_product_title = '<h2 class="homepage-section-title">';
+                $how_it_works_product_title .= $how_it_works_product_title;
+                $how_it_works_product_title .= '</h2>';
             }
 
             $how_it_works_product_copy = get_sub_field(
@@ -60,7 +66,7 @@
             } ?>
 
             <div class="how-it-works-outer-container homepage-section-outer">
-                <h2 class="homepage-section-title"><?php echo $how_it_works_product_title; ?></h2>
+                <?php echo $how_it_works_product_title; ?>
                 <div class="col-lg-12">
                     <div class="col-lg-6 first">
                         <?php echo $how_it_works_product_copy; ?>

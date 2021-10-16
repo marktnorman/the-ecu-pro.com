@@ -2811,6 +2811,27 @@ h2.homepage-section-title::after {
     margin-left: 1rem;
 }
 
+h2.homepage-section-title.long-unique {
+    margin-bottom: 35px;
+    font-family: Roboto;
+    font-size: 34px;
+    font-style: italic;
+    font-weight: 600;
+    color: #224180;
+    position: relative;
+    max-width: 50%;
+}
+
+h2.homepage-section-title.long-unique::after {
+    content: '';
+    width: 177px;
+    height: 2px;
+    background: #224180;
+    position: absolute;
+    top: 77%;
+    margin-left: 1rem;
+}
+
 .homepage-section-outer .col-lg-12,
 .homepage-section-outer .col-lg-6 {
     padding: 0;
