@@ -6,9 +6,9 @@
 <?php if (is_product()) {
 
     global $product;
-    $id           = $product->get_id();
+    $id = $product->get_id();
     $product_type = get_post_meta($id, 'product_type', true);
-    $term_object  = get_term_by('name', $product_type, 'pa_product-type-data');
+    $term_object = get_term_by('name', $product_type, 'pa_product-type-data');
 
     $product_video_url = get_field(
         'video_embed_url',
@@ -31,12 +31,12 @@
             $how_it_works_product_copy = !empty($how_it_works_product_copy) ? $how_it_works_product_copy : '';
 
             $accordian_product_items = get_sub_field('how_it_works_accordian_data');
-            $accordian_product_html  = '';
-            $counter                 = 1;
+            $accordian_product_html = '';
+            $counter = 1;
             foreach ($accordian_product_items as $accordian_product_item) {
 
                 $accordian_title = $accordian_product_item['product_accordian_title'];
-                $accordian_copy  = $accordian_product_item['product_accordian_body'];
+                $accordian_copy = $accordian_product_item['product_accordian_body'];
 
                 $accordian_product_html .= '<div class="wrap-' . $counter . '">';
                 $accordian_product_html .= '<input type="radio" id="tab-' . $counter . '" name="tabs">';
@@ -82,16 +82,11 @@
             <ul>
                 <li class="phone-container">
                     <h3>Call us</h3>
-                    <?php
-                    global $tecup_form_show_number;
-                    if ($tecup_form_show_number) { ?>
-                        <b>+1-888-723-2080</b>
-                    <?php } else { ?>
-                        <a class="revealed-number" data-js-ref="ctvnf-open"><span
-                                    data-js-ref="ctvnf-number">+1 888-723-</span></a>
-                        <a class="reveal-action" href="#" data-js-ref="ctvnf-open"> <span data-js-ref="ctvnf-click-msg">CLICK <span
-                                        class="helper-text">to show number</span></span></a>
-                    <?php } ?>
+
+                    <a class="revealed-number" data-js-ref="ctvnf-open"><span
+                                data-js-ref="ctvnf-number">+1 888-723-</span></a>
+                    <a class="reveal-action" href="#" data-js-ref="ctvnf-open"> <span data-js-ref="ctvnf-click-msg">CLICK <span
+                                    class="helper-text">to show number</span></span></a>
                 </li>
                 <li class="chat-container">
                     <h3>Online Chat</h3>
