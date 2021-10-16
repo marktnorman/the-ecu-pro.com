@@ -586,6 +586,19 @@
                 $("label[for='pa_variation']").html('SELECT YOUR PREFERRED SERVICE:');
             }
 
+            var variationOptions = {
+                "ECU Testing (Recommended) ": "ecu-testing-recommended",
+                "ECU Testing + Repair": "ecu-repair",
+                "ECU Testing + Clone + Replacement Part": "ecu-clone"
+            };
+
+            var $el = $("#pa_variation");
+            $el.empty(); // remove old options
+            $.each(variationOptions, function (key, value) {
+                $el.append($("<option></option>")
+                    .attr("value", value).text(key));
+            });
+
             setTimeout(
                 function () {
                     let primary_image_title = $('.woocommerce-product-gallery__image:first img').attr('data-o_title');
