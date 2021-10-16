@@ -22,11 +22,11 @@
     if ($dynamic_product_how_it_works_content) {
 
         // Product dynamic data retrieval
-        if (have_rows('how_it_works_product_section', $id)):
+        if (have_rows('product_flexible_content', $id)):
 
-            while (have_rows('how_it_works_product_section', $id)) : the_row();
+            while (have_rows('product_flexible_content', $id)) : the_row();
 
-                $associated_product_title = get_field("associated_product_title", $id);
+                $associated_product_title = get_sub_field("associated_product_title", $id);
 
                 if (!empty($associated_product_title)) {
                     $how_it_works_product_title = '<h2 class="homepage-section-title long-unique">';
@@ -40,7 +40,7 @@
 
                 $how_it_works_product_copy = !empty($how_it_works_product_copy) ? $how_it_works_product_copy : '';
 
-                $accordian_product_items = get_sub_field('accordian_product_group_object');
+                $accordian_product_items = get_sub_field('associated_product_accordian');
                 $accordian_product_html = '';
                 $counter = 1;
                 foreach ($accordian_product_items as $accordian_product_item) {
