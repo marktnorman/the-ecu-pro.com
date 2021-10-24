@@ -1395,12 +1395,3 @@ function pass_on_query_vars()
         }
     }
 }
-
-/**
- * @param $string
- * @return array|string|string[]|null
- */
-function clean($string)
-{
-    return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
-}

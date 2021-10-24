@@ -113,7 +113,7 @@ function update_product_description_meta_yoast($data)
                 $how_it_works_product_copy = get_sub_field('associated_product_body');
                 $how_it_works_product_copy = !empty($how_it_works_product_copy) ? $how_it_works_product_copy : '';
 
-                $product_dynamic_data = clean($associated_product_title) . ' - ' . clean($how_it_works_product_copy);
+                $product_dynamic_data = strip_tags($associated_product_title) . ' - ' . strip_tags($how_it_works_product_copy);
 
             endwhile;
         endif;
