@@ -25,14 +25,14 @@ function change_attachment_image_attributes($attr, $attachment)
     $product_image1_id = get_post_thumbnail_id($product_ID);
 
     if ($product_image1_id == $attachment->ID) {
-        $product_image1_alt         = get_post_meta($product_ID, 'product_image1_alt_text', true);
-        $product_image1_title       = get_post_meta($product_ID, 'product_image1_title', true);
-        $product_image1_caption     = get_post_meta($product_ID, 'product_image1_caption', true);
+        $product_image1_alt = get_post_meta($product_ID, 'product_image1_alt_text', true);
+        $product_image1_title = get_post_meta($product_ID, 'product_image1_title', true);
+        $product_image1_caption = get_post_meta($product_ID, 'product_image1_caption', true);
         $product_image1_description = get_post_meta($product_ID, 'product_image1_description', true);
 
-        $attr['alt']         = $product_image1_alt;
-        $attr['title']       = $product_image1_title;
-        $attr['caption']     = $product_image1_caption;
+        $attr['alt'] = $product_image1_alt;
+        $attr['title'] = $product_image1_title;
+        $attr['caption'] = $product_image1_caption;
         $attr['description'] = $product_image1_description;
 
         return $attr;
@@ -49,18 +49,18 @@ function change_attachment_image_attributes($attr, $attachment)
         $counter = 2;
         foreach ($attachment_ids as $attachment_id) {
             if ($attachment_id == $attachment->ID) {
-                $product_image_alt         = get_post_meta($product_ID, 'product_image' . $counter . '_alt_text', true);
-                $product_image_title       = get_post_meta($product_ID, 'product_image' . $counter . '_title', true);
-                $product_image_caption     = get_post_meta($product_ID, 'product_image' . $counter . '_caption', true);
+                $product_image_alt = get_post_meta($product_ID, 'product_image' . $counter . '_alt_text', true);
+                $product_image_title = get_post_meta($product_ID, 'product_image' . $counter . '_title', true);
+                $product_image_caption = get_post_meta($product_ID, 'product_image' . $counter . '_caption', true);
                 $product_image_description = get_post_meta(
                     $product_ID,
                     'product_image' . $counter . '_description',
                     true
                 );
 
-                $attr['alt']         = $product_image_alt;
-                $attr['title']       = $product_image_title;
-                $attr['caption']     = $product_image_caption;
+                $attr['alt'] = $product_image_alt;
+                $attr['title'] = $product_image_title;
+                $attr['caption'] = $product_image_caption;
                 $attr['description'] = $product_image_description;
             }
             $counter++;
@@ -85,6 +85,40 @@ function update_product_description_meta_yoast($data)
     }
 
     global $product;
+    $product_dynamic_data = '';
+
+    $id = $product->get_id();
+
+    // Lets generate the unique title
+    $dynamic_product_how_it_works_content = get_field("dynamic_product_how_it_works_content", $id);
+
+    $product_type = get_post_meta($id, 'product_type', true);
+    $term_object = get_term_by('name', $product_type, 'pa_product-type-data');
+
+    $product_video_url = get_field(
+        'video_embed_url',
+        $id
+    );
+
+    if ($dynamic_product_how_it_works_content) {
+
+        // Product dynamic data retrieval
+        if (have_rows('product_flexible_content', $id)):
+
+            while (have_rows('product_flexible_content', $id)) : the_row();
+
+                $associated_product_title = get_sub_field("associated_product_title", $id);
+                $associated_product_title = !empty($associated_product_title) ? $associated_product_title : '';
+
+                $how_it_works_product_copy = get_sub_field('associated_product_body');
+                $how_it_works_product_copy = !empty($how_it_works_product_copy) ? $how_it_works_product_copy : '';
+
+                $product_dynamic_data = clean($associated_product_title) . ' - ' . clean($how_it_works_product_copy);
+
+            endwhile;
+        endif;
+
+    }
 
     // generate our description from short and bottom
     $short_copy = strip_tags(generate_product_short_description());
@@ -94,12 +128,6 @@ function update_product_description_meta_yoast($data)
     $bottom_copy = str_replace('[i]', '', $bottom_copy);
 
     $full_copy = $short_copy . $bottom_copy;
-
-//    if (isset($_GET['developing'])) {
-//        var_dump(strip_tags(generate_product_short_description()));
-//        var_dump(strip_tags(generate_product_bottom_description()));
-//        var_dump($full_copy);
-//    }
 
     $attribute_name = 'pa_variation';
 
@@ -133,7 +161,12 @@ function update_product_description_meta_yoast($data)
     $data['url'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
     // Update price to variation price
-    $data['offers'][0]['price'] = number_format((float) $selected_variation_price, 2, '.', '');
+    $data['offers'][0]['price'] = number_format((float)$selected_variation_price, 2, '.', '');
 
+    // Update the dynamic data
+    if (!empty($product_dynamic_data)) {
+        $data['product_highlight'] = $product_dynamic_data;
+    }
+    
     return $data;
 }

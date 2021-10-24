@@ -17,11 +17,11 @@ if (!function_exists('theecupro_setup')) {
         #=======
         register_nav_menus(
             array(
-                'main_menu'         => __('Main Menu', 'theecupro'),
-                'secondary_menu'    => __('Secondary Menu', 'theecupro'),
-                'sidebar_menu'      => __('Sidebar Menu', 'theecupro'),
-                'top_nav'           => __('Top Navigation', 'theecupro'),
-                'view_switcher'     => __('View Switcher', 'theecupro'),
+                'main_menu' => __('Main Menu', 'theecupro'),
+                'secondary_menu' => __('Secondary Menu', 'theecupro'),
+                'sidebar_menu' => __('Sidebar Menu', 'theecupro'),
+                'top_nav' => __('Top Navigation', 'theecupro'),
+                'view_switcher' => __('View Switcher', 'theecupro'),
                 'currency_switcher' => __('Currency Switcher', 'theecupro'),
             )
         );
@@ -31,34 +31,34 @@ if (!function_exists('theecupro_setup')) {
         #===================
         register_sidebar(
             array(
-                'name'          => __('Blog Sidebar', 'theecupro'),
-                'id'            => 'blog-sidebar',
+                'name' => __('Blog Sidebar', 'theecupro'),
+                'id' => 'blog-sidebar',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
 
         register_sidebar(
             array(
-                'name'          => __('Home Sidebar', 'theecupro'),
-                'id'            => 'home-sidebar',
+                'name' => __('Home Sidebar', 'theecupro'),
+                'id' => 'home-sidebar',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
 
         register_sidebar(
             array(
-                'name'          => __('Secondary Sidebar', 'theecupro'),
-                'id'            => 'secondary-sidebar',
+                'name' => __('Secondary Sidebar', 'theecupro'),
+                'id' => 'secondary-sidebar',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
 
@@ -66,34 +66,34 @@ if (!function_exists('theecupro_setup')) {
 
             register_sidebar(
                 array(
-                    'name'          => __('Woo Category Sidebar', 'theecupro'),
-                    'id'            => 'woo-category-sidebar',
+                    'name' => __('Woo Category Sidebar', 'theecupro'),
+                    'id' => 'woo-category-sidebar',
                     'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                    'after_widget'  => '</aside>',
-                    'before_title'  => '<h3 class="widget-title">',
-                    'after_title'   => '</h3>',
+                    'after_widget' => '</aside>',
+                    'before_title' => '<h3 class="widget-title">',
+                    'after_title' => '</h3>',
                 )
             );
 
             register_sidebar(
                 array(
-                    'name'          => __('Woo Category Filter', 'theecupro'),
-                    'id'            => 'woo-category-filter-sidebar',
+                    'name' => __('Woo Category Filter', 'theecupro'),
+                    'id' => 'woo-category-filter-sidebar',
                     'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                    'after_widget'  => '</aside>',
-                    'before_title'  => '<h3 class="widget-title">',
-                    'after_title'   => '</h3>',
+                    'after_widget' => '</aside>',
+                    'before_title' => '<h3 class="widget-title">',
+                    'after_title' => '</h3>',
                 )
             );
 
             register_sidebar(
                 array(
-                    'name'          => __('Woo Product Sidebar', 'theecupro'),
-                    'id'            => 'woo-product-sidebar',
+                    'name' => __('Woo Product Sidebar', 'theecupro'),
+                    'id' => 'woo-product-sidebar',
                     'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                    'after_widget'  => '</aside>',
-                    'before_title'  => '<h3 class="widget-title">',
-                    'after_title'   => '</h3>',
+                    'after_widget' => '</aside>',
+                    'before_title' => '<h3 class="widget-title">',
+                    'after_title' => '</h3>',
                 )
             );
 
@@ -101,111 +101,111 @@ if (!function_exists('theecupro_setup')) {
 
         register_sidebar(
             array(
-                'name'          => __('Content Bottom Widget 1', 'theecupro'),
-                'id'            => 'content-bottom-1',
+                'name' => __('Content Bottom Widget 1', 'theecupro'),
+                'id' => 'content-bottom-1',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
 
         register_sidebar(
             array(
-                'name'          => __('Content Bottom Widget 2', 'theecupro'),
-                'id'            => 'content-bottom-2',
+                'name' => __('Content Bottom Widget 2', 'theecupro'),
+                'id' => 'content-bottom-2',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
 
         register_sidebar(
             array(
-                'name'          => __('Content Bottom Widget 3', 'theecupro'),
-                'id'            => 'content-bottom-3',
+                'name' => __('Content Bottom Widget 3', 'theecupro'),
+                'id' => 'content-bottom-3',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
 
         register_sidebar(
             array(
-                'name'          => __('Content Bottom Widget 4', 'theecupro'),
-                'id'            => 'content-bottom-4',
+                'name' => __('Content Bottom Widget 4', 'theecupro'),
+                'id' => 'content-bottom-4',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
 
         register_sidebar(
             array(
-                'name'          => __('Footer Top Widget', 'theecupro'),
-                'id'            => 'footer-top',
+                'name' => __('Footer Top Widget', 'theecupro'),
+                'id' => 'footer-top',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
 
         register_sidebar(
             array(
-                'name'          => __('Footer Widget 1', 'theecupro'),
-                'id'            => 'footer-column-1',
+                'name' => __('Footer Widget 1', 'theecupro'),
+                'id' => 'footer-column-1',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
 
         register_sidebar(
             array(
-                'name'          => __('Footer Widget 2', 'theecupro'),
-                'id'            => 'footer-column-2',
+                'name' => __('Footer Widget 2', 'theecupro'),
+                'id' => 'footer-column-2',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
 
         register_sidebar(
             array(
-                'name'          => __('Footer Widget 3', 'theecupro'),
-                'id'            => 'footer-column-3',
+                'name' => __('Footer Widget 3', 'theecupro'),
+                'id' => 'footer-column-3',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
 
         register_sidebar(
             array(
-                'name'          => __('Footer Widget 4', 'theecupro'),
-                'id'            => 'footer-column-4',
+                'name' => __('Footer Widget 4', 'theecupro'),
+                'id' => 'footer-column-4',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
 
         register_sidebar(
             array(
-                'name'          => __('Footer Bottom Widget', 'theecupro'),
-                'id'            => 'footer-bottom',
+                'name' => __('Footer Bottom Widget', 'theecupro'),
+                'id' => 'footer-bottom',
                 'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</aside>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+                'after_widget' => '</aside>',
+                'before_title' => '<h3 class="widget-title">',
+                'after_title' => '</h3>',
             )
         );
     }
@@ -284,10 +284,10 @@ function theecupro_enqueue_assets()
         'theecupro-main-js',
         'ecu_ajax_object',
         array(
-            'nonce'     => wp_create_nonce('ajax-nonce'),
+            'nonce' => wp_create_nonce('ajax-nonce'),
             'child_url' => get_stylesheet_directory_uri(),
-            'site_url'  => site_url(),
-            'ajax_url'  => admin_url('admin-ajax.php')
+            'site_url' => site_url(),
+            'ajax_url' => admin_url('admin-ajax.php')
         )
     );
 
@@ -404,12 +404,10 @@ function getHomepageProduct($id): string
                     <a class="product-loop-title" href="' . $product->get_permalink() . '">
                         <h3 class="woocommerce-loop-product__title">' . $product->get_name() . '</h3>
                     </a>
-                    <span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>' . $product->get_price(
-        ) . '</span></span>
+                    <span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>' . $product->get_price() . '</span></span>
                     <div class="add-links-wrap">
                         <div class="add-links clearfix">
-                            <a href="' . $product->get_permalink(
-        ) . '" data-quantity="1" class="viewcart-style-2 button product_type_simple add_to_cart_button" data-product_id="' . $id . '" rel="nofollow">Select options</a>
+                            <a href="' . $product->get_permalink() . '" data-quantity="1" class="viewcart-style-2 button product_type_simple add_to_cart_button" data-product_id="' . $id . '" rel="nofollow">Select options</a>
                             <div class="quickview" data-id="' . $id . '" title="Quick View">Quick View</div>
                         </div>
                     </div>
@@ -426,12 +424,12 @@ function getHomepageProduct($id): string
 function getFilterCategories($parent)
 {
     $args = array(
-        'taxonomy'     => 'product_cat',
-        'orderby'      => 'name',
-        'order'        => 'asc',
-        'hide_empty'   => false,
+        'taxonomy' => 'product_cat',
+        'orderby' => 'name',
+        'order' => 'asc',
+        'hide_empty' => false,
         'hierarchical' => false,
-        'parent'       => (int) $parent,
+        'parent' => (int)$parent,
     );
     return get_terms($args);
 }
@@ -442,21 +440,21 @@ add_action('wp_ajax_nopriv_get_ajax_products', 'get_ajax_products');
 function get_ajax_products($category)
 {
     $categoryPost = $_POST['category'];
-    $args         = array(
-        'post_type'           => 'product',
-        'post_status'         => 'publish',
+    $args = array(
+        'post_type' => 'product',
+        'post_status' => 'publish',
         'ignore_sticky_posts' => 1,
-        'posts_per_page'      => 5,
-        'tax_query'           => array(
+        'posts_per_page' => 5,
+        'tax_query' => array(
             array(
                 'taxonomy' => 'product_cat',
-                'field'    => 'slug', //This is optional, as it defaults to 'term_id'
-                'terms'    => getHierarchicalTermTree($categoryPost),
+                'field' => 'slug', //This is optional, as it defaults to 'term_id'
+                'terms' => getHierarchicalTermTree($categoryPost),
                 'operator' => 'IN' // Possible values are 'IN', 'NOT IN', 'AND'.
             ),
         )
     );
-    $products     = new WP_Query($args);
+    $products = new WP_Query($args);
 
     $html = '
         <div class="col-12 col-md-6">
@@ -475,8 +473,8 @@ function get_ajax_products($category)
 
     if (count($products->posts) > 4) {
         $topCatTerm = get_term_by('slug', $categoryPost, 'product_cat');
-        $topCatID   = $topCatTerm->term_id;
-        $html       .= '<div class="col-12 text-center"><h4><a href="' . get_term_link(
+        $topCatID = $topCatTerm->term_id;
+        $html .= '<div class="col-12 text-center"><h4><a href="' . get_term_link(
                 $topCatID,
                 'product_cat'
             ) . '">All products...</a></h4></div>';
@@ -489,7 +487,7 @@ function get_ajax_products($category)
 function getHierarchicalTermTree($categorySlug)
 {
     $topCatTerm = get_term_by('slug', $categorySlug, 'product_cat');
-    $topCatID   = $topCatTerm->term_id;
+    $topCatID = $topCatTerm->term_id;
     $categories = [];
     array_push($categories, $categorySlug);
     if ($topCatTerm) {
@@ -774,25 +772,25 @@ function additional_product_tabs($tabs)
     unset($tabs['technical_data']);
 
     $tabs['description'] = array(
-        'title'    => __('Description', 'woocommerce'),
+        'title' => __('Description', 'woocommerce'),
         'priority' => 45,
         'callback' => 'descriptionDataCallback'
     );
 
     $tabs['contact_us'] = array(
-        'title'    => __('Contact us', 'woocommerce'),
+        'title' => __('Contact us', 'woocommerce'),
         'priority' => $contact_tab_priority,
         'callback' => 'contactUsCallback'
     );
 
     $tabs['shipping_returns'] = array(
-        'title'    => __('Shipping & Returns', 'woocommerce'),
+        'title' => __('Shipping & Returns', 'woocommerce'),
         'priority' => 60,
         'callback' => 'ShippingReturnsCallback'
     );
 
     $tabs['warranty'] = array(
-        'title'    => __('Warranty', 'woocommerce'),
+        'title' => __('Warranty', 'woocommerce'),
         'priority' => 65,
         'callback' => 'WarrantyCallback'
     );
@@ -823,8 +821,8 @@ function advanced_search_query($query)
                 array(
                     array(
                         'taxonomy' => 'product_cat',
-                        'field'    => 'slug',
-                        'terms'    => array($_GET['category'])
+                        'field' => 'slug',
+                        'terms' => array($_GET['category'])
                     )
                 )
             );
@@ -871,12 +869,12 @@ add_action('woocommerce_email_before_order_table', 'woocommerce_email_before_ord
 function woocommerce_email_before_order_table_func($order)
 {
 
-    $order       = wc_get_order($order->get_id());
-    $items       = $order->get_items();
+    $order = wc_get_order($order->get_id());
+    $items = $order->get_items();
     $productType = '';
-    $prodCnt     = 0;
+    $prodCnt = 0;
     foreach ($items as $item) {
-        $product_id  = $item->get_product_id();
+        $product_id = $item->get_product_id();
         $productType .= ($prodCnt <= 0) ? get_field("product_type", $product_id) : ',' . get_field(
                 "product_type",
                 $product_id
@@ -967,11 +965,11 @@ function create_product_variation($product_id, $variation_data, $variation_type)
     $product = wc_get_product($product_id);
 
     $variation_post_args = array(
-        'post_title'  => $product->get_name() . ' ' . $variation_type,
+        'post_title' => $product->get_name() . ' ' . $variation_type,
         'post_status' => 'publish',
         'post_parent' => $product_id,
-        'post_type'   => 'product_variation',
-        'guid'        => $product->get_permalink()
+        'post_type' => 'product_variation',
+        'guid' => $product->get_permalink()
     );
 
     // Creating the product variation
@@ -1205,7 +1203,7 @@ function insert_term($term, $taxonomy, $args = array())
     if ($result == false || $result == 0) {
         return wp_insert_term($term, $taxonomy, $args);
     } else {
-        return (array) $result;
+        return (array)$result;
     }
 }
 
@@ -1221,9 +1219,9 @@ function remove_variations_pre_get_posts_query($query)
         // It's the main query for a front end page of your site.
 
         if (is_archive()) {
-            $meta_query   = $query->get('meta_query');
+            $meta_query = $query->get('meta_query');
             $meta_query[] = array(
-                'key'     => 'attribute_pa_variation',
+                'key' => 'attribute_pa_variation',
                 'compare' => 'NOT EXISTS',
             );
 
@@ -1240,11 +1238,11 @@ function work_order_form_redirection()
         $order = wc_get_order($_GET['order-id']);
 
         if (!empty($order)) {
-            $items       = $order->get_items();
+            $items = $order->get_items();
             $productType = '';
 
             foreach ($items as $item) {
-                $product_id  = $item->get_product_id();
+                $product_id = $item->get_product_id();
                 $productType = get_field("product_type", $product_id);
             }
 
@@ -1272,10 +1270,10 @@ function redirect_host_correction()
         return;
     }
 
-    $live_allowed_host     = 'the-ecu-pro.com';
+    $live_allowed_host = 'the-ecu-pro.com';
     $referred_allowed_host = 'development.the-ecu-pro.com';
-    $referred_host         = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
-    $sub_str               = substr($referred_host, 0 - strlen($live_allowed_host));
+    $referred_host = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+    $sub_str = substr($referred_host, 0 - strlen($live_allowed_host));
 
     // If the referred host is development redirect to live
     if (($sub_str == $live_allowed_host) && ($referred_host != $referred_allowed_host)) {
@@ -1396,4 +1394,15 @@ function pass_on_query_vars()
 
         }
     }
+}
+
+/**
+ * @param $string
+ * @return array|string|string[]|null
+ */
+function clean($string)
+{
+    $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+
+    return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
 }
