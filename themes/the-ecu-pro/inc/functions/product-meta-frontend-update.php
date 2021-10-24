@@ -167,6 +167,6 @@ function update_product_description_meta_yoast($data)
     if (!empty($product_dynamic_data)) {
         $data['product_highlight'] = $product_dynamic_data;
     }
-    
+
     return $data;
 }
