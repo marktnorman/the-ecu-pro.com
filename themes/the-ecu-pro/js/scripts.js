@@ -12,12 +12,12 @@
     $(document).ready(function () {
 
         // Form click sahow number
-        $(".header-contact a.text-white").on("click", function (e) {
-            e.preventDefault();
-            window.scrollTo(0, 0);
-            document.querySelector('[data-js-ref="ctvnf-number"]').innerText = '+1-888-723-2080';
-            document.querySelector('[data-js-ref="ctvnf-click-msg"]').remove();
-        });
+        // $(".header-contact a.text-white").on("click", function (e) {
+        //     e.preventDefault();
+        //     window.scrollTo(0, 0);
+        //     document.querySelector('[data-js-ref="ctvnf-number"]').innerText = '+1-888-723-2080';
+        //     document.querySelector('[data-js-ref="ctvnf-click-msg"]').remove();
+        // });
 
         // Read a page's GET URL variables and return them as an associative array.
         function getUrlVars() {
