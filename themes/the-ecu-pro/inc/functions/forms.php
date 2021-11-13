@@ -52,7 +52,19 @@ function insertNewComment($name, $wp_comment_content)
     <?php
 
     // Check before submission
-    if ( check_comment( $name, $_POST['email'], '', wpautop($wp_comment_content), '', '', '' ) ) {
+    global $wpdb;
+
+    $comments_table = 'wp_comments';
+
+    $comments_id = $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT comment_ID AS ID FROM $wpdb->comments WHERE comment_author_email LIKE '%s' LIMIT 1;",
+            '%' . $_POST['email'] . '%'
+        )
+    );
+
+    // Doesnt exist so submit
+    if (empty($comments_id)) {
         wp_new_comment($comment_data);
     }
 
