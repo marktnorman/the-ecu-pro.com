@@ -51,52 +51,52 @@ $show_ctvnf_form_with_error = $tecup_form_error && isset($_POST['which-form']) &
 <!--    </div>-->
 <!--</div>-->
 <script>
-    // const ctvnfFormCont = document.querySelector('[data-js-ref="ctvnf"]')
-    // const ctvnfFormContSm = document.querySelector('[data-js-ref="ctvnf-sm"]')
-    // const ctvnfFormContSkip = document.querySelector('[data-js-ref="ctvnf-skip"]')
-    // const ctvnfOpen = document.querySelectorAll('[data-js-ref="ctvnf-open"]')
-    // const ctvnfClose = document.querySelectorAll('[data-js-ref="ctvnf-close"]')
-    // const ctvnfNumber = document.querySelectorAll('[data-js-ref="ctvnf-number"]')
-    // const ctvnfMsg = document.querySelectorAll('[data-js-ref="ctvnf-click-msg"]')
-    //
-    // // Retrieve from storage
-    // let form_status = localStorage.getItem('form-submitted');
-    //
-    // ctvnfOpen.forEach(toggle => {
-    //     toggle.addEventListener('click', e => {
-    //         e.preventDefault()
-    //
-    //         if (!form_status) {
-    //             ctvnfFormCont.classList.add('is-open');
-    //         } else {
-    //             ctvnfFormContSm.classList.add('is-open');
-    //             ctvnfNumber.forEach(numberSlot => {
-    //                 numberSlot.innerText = '+1-888-723-2080'
-    //             })
-    //             ctvnfMsg.forEach(msgSlot => {
-    //                 msgSlot.remove()
-    //             })
-    //         }
-    //     })
-    // })
-    // if (ctvnfFormContSkip) {
-    //     ctvnfFormContSkip.addEventListener('click', e => {
-    //         e.preventDefault()
-    //         ctvnfFormContSm.classList.add('is-open')
-    //         ctvnfFormCont.classList.remove('is-open')
-    //         ctvnfNumber.forEach(numberSlot => {
-    //             numberSlot.innerText = '+1-888-723-2080'
-    //         })
-    //         ctvnfMsg.forEach(msgSlot => {
-    //             msgSlot.remove()
-    //         })
-    //     })
-    // }
-    // ctvnfClose.forEach(close => {
-    //     close.addEventListener('click', e => {
-    //         e.preventDefault()
-    //         ctvnfFormCont.classList.remove('is-open')
-    //         ctvnfFormContSm.classList.remove('is-open')
-    //     })
-    // })
+    const ctvnfFormCont = document.querySelector('[data-js-ref="ctvnf"]')
+    const ctvnfFormContSm = document.querySelector('[data-js-ref="ctvnf-sm"]')
+    const ctvnfFormContSkip = document.querySelector('[data-js-ref="ctvnf-skip"]')
+    const ctvnfOpen = document.querySelectorAll('[data-js-ref="ctvnf-open"]')
+    const ctvnfClose = document.querySelectorAll('[data-js-ref="ctvnf-close"]')
+    const ctvnfNumber = document.querySelectorAll('[data-js-ref="ctvnf-number"]')
+    const ctvnfMsg = document.querySelectorAll('[data-js-ref="ctvnf-click-msg"]')
+
+    // Retrieve from storage
+    let form_status = localStorage.getItem('form-submitted');
+
+    ctvnfOpen.forEach(toggle => {
+        toggle.addEventListener('click', e => {
+            e.preventDefault()
+
+            if (!form_status) {
+                ctvnfFormCont.classList.add('is-open');
+            } else {
+                ctvnfFormContSm.classList.add('is-open');
+                ctvnfNumber.forEach(numberSlot => {
+                    numberSlot.innerText = '+1-888-723-2080'
+                })
+                ctvnfMsg.forEach(msgSlot => {
+                    msgSlot.remove()
+                })
+            }
+        })
+    })
+    if (ctvnfFormContSkip) {
+        ctvnfFormContSkip.addEventListener('click', e => {
+            e.preventDefault()
+            ctvnfFormContSm.classList.add('is-open')
+            ctvnfFormCont.classList.remove('is-open')
+            ctvnfNumber.forEach(numberSlot => {
+                numberSlot.innerText = '+1-888-723-2080'
+            })
+            ctvnfMsg.forEach(msgSlot => {
+                msgSlot.remove()
+            })
+        })
+    }
+    ctvnfClose.forEach(close => {
+        close.addEventListener('click', e => {
+            e.preventDefault()
+            ctvnfFormCont.classList.remove('is-open')
+            ctvnfFormContSm.classList.remove('is-open')
+        })
+    })
 </script>
