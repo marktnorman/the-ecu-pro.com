@@ -51,7 +51,10 @@ function insertNewComment($name, $wp_comment_content)
 
     <?php
 
-    wp_new_comment($comment_data);
+    // Check before submission
+    if ( check_comment( $name, $_POST['email'], '', wpautop($wp_comment_content), '', '', '' ) ) {
+        wp_new_comment($comment_data);
+    }
 
     if (!empty($_POST['redirect_url'])) {
         wp_redirect($_POST['redirect_url']);
